@@ -14,6 +14,9 @@ We are a team based in the [School of Computing, National University of Singapor
 
 [[github](https://github.com/greyhat262)]
 
+* Role:
+* Responsibilities: 
+
 ### Charlize Tee
 
 <img src="images/charqxx.png" width="200px">
@@ -21,25 +24,7 @@ We are a team based in the [School of Computing, National University of Singapor
 [[github](https://github.com/charqxx)]
 
 * Role: Project Advisor
-
-### Jane Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Team Lead
-* Responsibilities: UI
-
-### Johnny Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: Data
+* Responsibilities:
 
 ### Nelson Wee
 
