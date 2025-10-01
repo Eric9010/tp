@@ -41,11 +41,11 @@ We are a team based in the [School of Computing, National University of Singapor
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Nelson Wee
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/nelsonweena.png" width = "200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/Nelsonweena)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
@@ -60,4 +60,3 @@ We are a team based in the [School of Computing, National University of Singapor
 
 * Role: Developer
 * Responsibilities: UI
-
