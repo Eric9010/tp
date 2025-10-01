@@ -57,3 +57,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI
+
+### Nelson Wee 
+<img src="images/nelsonweena.png" width = "200px">
+
+[[github](http://github.com/Nelsonweena)]
