@@ -50,3 +50,14 @@ We are a team based in the [School of Computing, National University of Singapor
 
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
+
+### Wei Yi
+
+<img src="images/eric9010.png" width="200px">
+
+[[github](http://github.com/Eric9010)]
+[[portfolio](team/johndoe.md)]
+
+* Role: Developer
+* Responsibilities: UI
+
