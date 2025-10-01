@@ -7,11 +7,18 @@ We are a team based in the [School of Computing, National University of Singapor
 
 ## Project team
 
+
 ### Teh Xin Hui
 
 <img src="images/greyhat262.png" width="200px">
 
 [[github](https://github.com/greyhat262)]
+
+### Charlize Tee
+
+<img src="images/charqxx.png" width="200px">
+
+[[github](https://github.com/charqxx)]
 
 * Role: Project Advisor
 
