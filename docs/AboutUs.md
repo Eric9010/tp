@@ -9,13 +9,11 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Charlize Tee
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/charqxx.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](https://github.com/charqxx)]
 
 * Role: Project Advisor
 
