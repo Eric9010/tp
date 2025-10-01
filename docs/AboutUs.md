@@ -5,9 +5,14 @@ title: About Us
 
 We are a team based in the [School of Computing, National University of Singapore](https://www.comp.nus.edu.sg).
 
-You can reach us at the email `seer[at]comp.nus.edu.sg`
-
 ## Project team
+
+
+### Teh Xin Hui
+
+<img src="images/greyhat262.png" width="200px">
+
+[[github](https://github.com/greyhat262)]
 
 ### Charlize Tee
 
@@ -55,3 +60,4 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI
+
