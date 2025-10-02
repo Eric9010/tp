@@ -427,16 +427,38 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+#### Environment
+* Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+* The system should be runnable as a standalone JAR file without requiring installation.
 
-*{More to be added}*
+#### Performance
+* The system should start up within 5 seconds.
+* The system should be able to hold up to 1000 contacts without a noticeable sluggishness in performance for typical usage.
+
+#### Usability
+* A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+* GUI feedback should update instantly after a command.
+* The system should be usable on screens with a minimum resolution of 1280×720.
+* Command syntax should be consistent and intuitive to minimise learning time.
+
+#### Maintainability
+* The system should adhere to OOP principles.
+
+#### Scalability
+* The app should handle increasing data sizes (up to 1000 contacts) without significant slowdown.
+* The system should remain responsive as the number of commands executed in a session grows.
+
+#### Testability
+* Features must be designed to be testable via automated JUnit tests (e.g. commands should return structured results that can be asserted and not just printed text).
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Command**: A text-based instruction entered by the user to perform an action in the system (e,g, `add`).
+* **Index**: A positive integer automatically assigned to each contact in the list, starting from 1.
+* **Contact**: A recruiter's information (name, phone number, email, etc.) that is stored in the system.
+* **Event**: A scheduled meeting, interview, or call associated with a specific contact with certain details (title, date, time etc.).
+* **Note**: A short piece of user-defined text attached to a contact  for recording personal remarks or reminders.
 
 --------------------------------------------------------------------------------------------------------------------
 
