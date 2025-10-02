@@ -262,42 +262,78 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+* undergraduate student at NUS going through the internship or job search process
+* meets numerous recruiters over many platforms e.g. LinkedIn, career fairs
+* has a need to manage a significant number of recruiter contacts and related information
+* prefers desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**: manage recruiter contact details, meeting context and follow-up actions to stay on top of the internship/job search process
 
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​                | I want to …​                                                              | So that I can…​                                             |
+|----------|------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------|
+| `* * *`  | new user               | see some sample data when first opening the app                           | get an overview of how the user interface is like           |
+| `* * *`  | user                   | add a new recruiter                                                       |                                                             |
+| `* * *`  | user                   | delete a recruiter contact                                                | remove recruiter contacts which are no longer useful        |
+| `* * *`  | user                   | view all recruiter contacts                                               | see who I have added and manage them easily                 |
+| `* * *`  | user                   | tag recruiter contacts (by company, industry, role)                       | organise and filter them easily                             |
+| `* * *`  | user                   | add events associated with a recruiter                                    | keep track of meeting calls or interviews                   |
+| `* * *`  | user                   | attach notes to a recruiter contact                                       | remember important details from conversations               |
+| `* *`    | new user               | see a tutorial explaining the features of the app                         | understand how to utilise all the app's different functions |
+| `* *`    | new user               | purge all data                                                            | get rid of sample data and start adding my real data        |
+| `* *`    | user                   | edit a recruiter contact                                                  | update existing recruiter contact easily                    |
+| `* *`    | user                   | search for a recruiter                                                    | quickly find a recruiter                                    |
+| `* *`    | user                   | see upcoming events on the next day                                       | know the events I need to prepare for                       |
+| `* *`    | user                   | pin recruiter contacts to the top                                         | easily find recruiters                                      |
+| `* *`    | user                   | archive recruiter contacts                                                | reduce clutter in the user interface                        |
+| `* *`    | forgetful user         | receive reminders for upcoming events                                     | remember to attend the events                               |
+| `* *`    | forgetful user         | merge duplicate recruiter contacts                                        | avoid confusion due to identical entries                    |
+| `* *`    | user with wide network | mark a recruiter's priority level                                         | focus on important connections first                        |
+| `* *`    | busy user              | find available blocks of time                                             | plan my schedule easily                                     |
+| `* *`    | busy user              | be warned of clashes                                                      | reschedule events to a better time                          |
+| `*`      | new user               | set up career preferences (industries, roles)                             | prioritise reminders for me                                 |
+| `*`      | forgetful user         | view recruiter contacts as a timeline                                     | easily find recruiters I have contacted recently            |
+| `*`      | busy user              | snooze a reminder                                                         | reschedule it to a better time                              |
+| `*`      | user                   | see a summary dashboard e.g. number of recruiters, pending follow-ups etc | have an overview of internship or job search progress       |
+| `*`      | user                   | undo most recent command                                                  | easily backtrack to a previous state in case of mistakes    |
+| `*`      | experienced user       | set up shortcuts for certain commands                                     | save time on typing                                         |
 
-*{More to be added}*
 
 ### Use cases
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**UC01: Add a new recruiter**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to add a new recruiter
+2.  AddressBook adds the recruiter to the list
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The add request is not the specified format.
+    * 3a1. AddressBook shows an error message.
+    
+      Use case ends.
+
+**UC02: Delete a recruiter contact**
+
+**MSS**
+
+1.  User requests to list recruiters
+2.  AddressBook shows a list of recruiters
+3.  User requests to delete a specific recruiter in the list
+4.  AddressBook deletes the recruiter contact
 
     Use case ends.
 
@@ -313,7 +349,81 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-*{More to be added}*
+**UC03: Tag a recruiter contact**
+
+**MSS**
+
+1.  User requests to list recruiters
+2.  AddressBook shows a list of recruiters
+3.  User requests to tag a specific recruiter in the list
+4.  AddressBook adds the tag to the recruiter contact
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+**UC04: Add an event associated with a recruiter**
+
+**MSS**
+
+1.  User requests to list recruiters
+2.  AddressBook shows a list of recruiters
+3.  User requests to add an event under a specific recruiter in the list
+4.  AddressBook adds the event under the recruiter contact
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+* 3b. The given event is invalid.
+
+    * 3b1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+**UC05: Find available blocks of time**
+
+**MSS**
+
+1.  User requests to find a block of time of a specific duration within a specific timeframe
+2.  AddressBook shows a list of blocks of time which fit the criteria
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The request is of an invalid format.
+
+    * 1a1. AddressBook shows an error message.
+  
+      Use case ends.
+
+* 2a. No period of time fits the user's requirements.
+
+    * 2a1. AddressBook shows a message that it cannot find such a time block.
+
+      Use case ends.
+
 
 ### Non-Functional Requirements
 
