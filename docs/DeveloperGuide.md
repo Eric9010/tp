@@ -332,7 +332,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * Command syntax should be consistent and intuitive to minimise learning time.
 
 #### Maintainability
-* The system should adhere to OOP principles
+* The system should adhere to OOP principles.
 
 #### Scalability
 * The app should handle increasing data sizes (up to 1000 contacts) without significant slowdown.
@@ -344,10 +344,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Command**: A text-based instruction entered by the user to perform an action in the system (e,g, `add`)
+* **Command**: A text-based instruction entered by the user to perform an action in the system (e,g, `add`).
 * **Index**: A positive integer automatically assigned to each contact in the list, starting from 1.
-* **Contact**: A recruiter's information (name, phone number, email, etc.) that is stored in the system
-* **Event**: A scheduled meeting, interview, or call associated with a specific contact with certain details (title, date, time etc.)
+* **Contact**: A recruiter's information (name, phone number, email, etc.) that is stored in the system.
+* **Event**: A scheduled meeting, interview, or call associated with a specific contact with certain details (title, date, time etc.).
 * **Note**: A short piece of user-defined text attached to a contact  for recording personal remarks or reminders.
 
 --------------------------------------------------------------------------------------------------------------------
