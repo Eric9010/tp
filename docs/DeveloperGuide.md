@@ -321,7 +321,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
-*{More to be added}*
+#### Performance
+* The system should process user commands and return results within 1 second for datasets with up to 500 contacts. 
+
+#### Usability
+* Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+* A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+* GUI feedback should update instantly after a command.
+* Command syntax should be consistent and intuitive to minimise learning time.
+
+#### Scalability
+* The app should handle increasing data sizes (up to 1000 contacts) without significant slowdown.
+* The system should remain responsive as the number of commands executed in a session grows.
+#### Testability
+* Features must be designed to be testable via automated JUnit tests (e.g. commands should return structured results that can be asserted and not just printed text).
 
 ### Glossary
 
