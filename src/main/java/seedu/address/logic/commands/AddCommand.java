@@ -56,8 +56,17 @@ public class AddCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
+        String successMessage = String.format(
+                "CONTACT ADDED: %s | %s\nEmail: %s | Phone: %s\nTags: %s",
+                toAdd.getName(),
+                toAdd.getAddress(),
+                toAdd.getEmail(),
+                toAdd.getPhone(),
+                toAdd.getTags().toString().replaceAll("[\\[\\]]", "") // Removes brackets from tags
+        );
+
         model.addPerson(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(successMessage);
     }
 
     @Override
