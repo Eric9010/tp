@@ -26,6 +26,7 @@ public class Event {
             2. Mode is optional. Valid modes are F2F, CALL and ZOOM.
             3. Location is optional and can take any string values.
             4. Description is optional and can take any string values with a maximum of 500 characters.
+            5. Note: Optional fields do not accept empty strings.
             """;
 
     private final String title;
@@ -49,20 +50,34 @@ public class Event {
         requireNonNull(title);
         requireNonNull(date);
         requireNonNull(time);
-        checkArgument(isValidEvent(date, time, mode), MESSAGE_CONSTRAINTS);
+
+        checkArgument(isValidEvent(title, date, time, mode, location, description), MESSAGE_CONSTRAINTS);
+
         this.title = title;
         this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.time = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
-        this.mode = Mode.valueOf(mode);
+        this.mode = mode == null ? null : Mode.valueOf(mode.toUpperCase());
         this.location = location;
         this.description = description;
     }
 
-    private boolean isValidTitle() {
+    /**
+     * Checks if the title is valid.
+     *
+     * @param title User input title.
+     * @return false if title is an empty string, true otherwise.
+     */
+    public static boolean isValidTitle(String title) {
         return !title.isEmpty();
     }
 
-    private boolean isValidDate(String date) {
+    /**
+     * Checks if the date is valid.
+     *
+     * @param date User input date.
+     * @return true if date matches the pattern yyyy-MM-dd, false otherwise.
+     */
+    public static boolean isValidDate(String date) {
         try {
             LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             return true;
@@ -71,41 +86,75 @@ public class Event {
         }
     }
 
-    private boolean isValidTime(String time) {
+    /**
+     * Checks if the time is valid.
+     *
+     * @param time User input time.
+     * @return true if time matches the pattern HH:mm, false otherwise.
+     */
+    public static boolean isValidTime(String time) {
         try {
-            LocalDate.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+            LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
             return true;
         } catch (DateTimeParseException e) {
             return false;
         }
     }
 
-    private boolean isValidMode(String mode) {
+    /**
+     * Checks if the mode is valid.
+     *
+     * @param mode User input mode.
+     * @return true if mode is null, F2F, CALL or ZOOM (upper or lower case both acceptable), false otherwise.
+     */
+    public static boolean isValidMode(String mode) {
         if (mode == null) {
             return true;
         }
+
         try {
-            Mode.valueOf(mode);
+            Mode.valueOf(mode.toUpperCase());
             return true;
         } catch (IllegalArgumentException e) {
             return false;
         }
     }
 
-    private boolean isValidDescription() {
-        return description == null || description.length() <= 500;
+    /**
+     * Checks if location is valid.
+     *
+     * @param location User input location.
+     * @return false if location is an empty string, true otherwise.
+     */
+    public static boolean isValidLocation(String location) {
+        return location == null || !location.isEmpty();
+    }
+
+    /**
+     * Checks if description is valid.
+     *
+     * @param description User input description.
+     * @return false if description is an empty string or a string with over 500 characters, true otherwise.
+     */
+    public static boolean isValidDescription(String description) {
+        return description == null || (!description.isEmpty() && description.length() <= 500);
     }
 
     /**
      * Checks if the event is valid.
      *
+     * @param title User input title.
      * @param date User input date.
      * @param time User input time.
      * @param mode User input mode.
+     * @param location User input location.
+     * @param description User input description.
      * @return true if the all fields of the event is valid, false otherwise.
      */
-    public boolean isValidEvent(String date, String time, String mode) {
-        return isValidTitle() && isValidDate(date) && isValidTime(time) && isValidMode(mode) && isValidDescription();
+    public static boolean isValidEvent(String title, String date, String time, String mode, String location,
+                                       String description) {
+        return isValidTitle(title) && isValidDate(date) && isValidTime(time) && isValidMode(mode)
+                && isValidLocation(location) && isValidDescription(description);
     }
 
     @Override
@@ -114,7 +163,6 @@ public class Event {
             return true;
         }
 
-        // instanceof handles nulls
         if (!(other instanceof Event)) {
             return false;
         }
@@ -127,8 +175,13 @@ public class Event {
     public String toString() {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-        return title + " " + date.format(dateFormatter) + " " + time.format(timeFormatter) + " " + mode
-                + " " + location + " " + description;
+
+        String modeString = mode == null ? "" : " " + mode;
+        String locationString = location == null ? "" : " " + location;
+        String descriptionString = description == null ? "" : "\n" + description;
+
+        return title + " " + date.format(dateFormatter) + " " + time.format(timeFormatter) + modeString
+                + locationString + descriptionString;
     }
 
     @Override
