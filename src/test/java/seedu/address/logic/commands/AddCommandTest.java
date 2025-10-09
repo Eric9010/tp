@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
@@ -37,11 +38,17 @@ public class AddCommandTest {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
         Person validPerson = new PersonBuilder().build();
 
-        CommandResult commandResult = new AddCommand(validPerson).execute(modelStub);
+        String expectedMessage = String.format(
+                "CONTACT ADDED: %s | %s\nEmail: %s | Phone: %s\nTags: %s",
+                validPerson.getName(),
+                validPerson.getAddress(),
+                validPerson.getEmail(),
+                validPerson.getPhone(),
+                validPerson.getTags().toString().replaceAll("[\\[\\]]", "")
+        );
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
-                commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertCommandSuccess(new AddCommand(validPerson), modelStub, expectedMessage,
+                new ModelStubAcceptingPersonAdded());
     }
 
     @Test
