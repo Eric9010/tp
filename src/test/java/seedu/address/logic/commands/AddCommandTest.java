@@ -206,6 +206,23 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public boolean equals(Object other) {
+            // short circuit if same object
+            if (other == this) {
+                return true;
+            }
+
+            // instanceof handles nulls
+            if (!(other instanceof ModelStubAcceptingPersonAdded)) {
+                return false;
+            }
+
+            // state check
+            ModelStubAcceptingPersonAdded that = (ModelStubAcceptingPersonAdded) other;
+            return personsAdded.equals(that.personsAdded);
+        }
     }
 
 }
