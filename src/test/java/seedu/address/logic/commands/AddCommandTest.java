@@ -36,6 +36,9 @@ public class AddCommandTest {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
         Person validPerson = new PersonBuilder().build();
 
+        ModelStubAcceptingPersonAdded expectedModel = new ModelStubAcceptingPersonAdded();
+        expectedModel.addPerson(validPerson);
+
         String expectedMessage = String.format(
                 "CONTACT ADDED: %s | %s\nEmail: %s | Phone: %s\nTags: %s",
                 validPerson.getName(),
@@ -45,8 +48,7 @@ public class AddCommandTest {
                 validPerson.getTags().toString().replaceAll("[\\[\\]]", "")
         );
 
-        assertCommandSuccess(new AddCommand(validPerson), modelStub, expectedMessage,
-                new ModelStubAcceptingPersonAdded());
+        assertCommandSuccess(new AddCommand(validPerson), modelStub, expectedMessage, expectedModel);
     }
 
     @Test
