@@ -25,6 +25,12 @@ public class PersonTest {
     }
 
     @Test
+    public void asObservableList_modifyEventsList_throwsUnsupportedOperationException() {
+        Person person = new PersonBuilder().build();
+        assertThrows(UnsupportedOperationException.class, () -> person.getEvents().remove(0));
+    }
+
+    @Test
     public void isSamePerson() {
         // same object -> returns true
         assertTrue(ALICE.isSamePerson(ALICE));
@@ -49,6 +55,13 @@ public class PersonTest {
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
         assertFalse(BOB.isSamePerson(editedBob));
+
+        // all attributes except events are the same -> returns true
+        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+                "f2f", "Google Headquarters", "Final Round");
+        editedAlice = new PersonBuilder(ALICE).build();
+        editedAlice.addEvent(event);
+        assertTrue(ALICE.isSamePerson(editedAlice));
     }
 
     @Test
@@ -88,12 +101,20 @@ public class PersonTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // different events -> returns true
+        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+                "f2f", "Google Headquarters", "Final Round");
+        editedAlice = new PersonBuilder(ALICE).build();
+        editedAlice.addEvent(event);
+        assertTrue(ALICE.equals(editedAlice));
     }
 
     @Test
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
-                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags() + "}";
+                + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags()
+                + ", events=" + ALICE.getEvents() + "}";
         assertEquals(expected, ALICE.toString());
     }
 }
