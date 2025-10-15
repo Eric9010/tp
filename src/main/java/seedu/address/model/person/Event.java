@@ -25,7 +25,7 @@ public class Event {
             non-empty time in the HH:mm format.
             2. Mode is optional. Valid modes are F2F, CALL and ZOOM.
             3. Location is optional and can take any string values.
-            4. Description is optional and can take any string values with a maximum of 500 characters.
+            4. Remarks is optional and can take any string values with a maximum of 500 characters.
             5. Note: Optional fields do not accept empty strings.
             """;
 
@@ -34,7 +34,7 @@ public class Event {
     private final LocalTime time;
     private final Mode mode;
     private final String location;
-    private final String description;
+    private final String remarks;
 
     /**
      * Constructs an event.
@@ -44,21 +44,21 @@ public class Event {
      * @param time User input time.
      * @param mode User input mode.
      * @param location User input location.
-     * @param description User input description.
+     * @param remarks User input remarks.
      */
-    public Event(String title, String date, String time, String mode, String location, String description) {
+    public Event(String title, String date, String time, String mode, String location, String remarks) {
         requireNonNull(title);
         requireNonNull(date);
         requireNonNull(time);
 
-        checkArgument(isValidEvent(title, date, time, mode, location, description), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidEvent(title, date, time, mode, location, remarks), MESSAGE_CONSTRAINTS);
 
         this.title = title;
         this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.time = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
         this.mode = mode == null ? null : Mode.valueOf(mode.toUpperCase());
         this.location = location;
-        this.description = description;
+        this.remarks = remarks;
     }
 
     /**
@@ -131,13 +131,13 @@ public class Event {
     }
 
     /**
-     * Checks if description is valid.
+     * Checks if remarks is valid.
      *
-     * @param description User input description.
-     * @return false if description is an empty string or a string with over 500 characters, true otherwise.
+     * @param remarks User input remarks.
+     * @return false if remarks is an empty string or a string with over 500 characters, true otherwise.
      */
-    public static boolean isValidDescription(String description) {
-        return description == null || (!description.isEmpty() && description.length() <= 500);
+    public static boolean isValidRemark(String remarks) {
+        return remarks == null || (!remarks.isEmpty() && remarks.length() <= 500);
     }
 
     /**
@@ -148,13 +148,13 @@ public class Event {
      * @param time User input time.
      * @param mode User input mode.
      * @param location User input location.
-     * @param description User input description.
+     * @param remarks User input remarks.
      * @return true if the all fields of the event is valid, false otherwise.
      */
     public static boolean isValidEvent(String title, String date, String time, String mode, String location,
-                                       String description) {
+                                       String remarks) {
         return isValidTitle(title) && isValidDate(date) && isValidTime(time) && isValidMode(mode)
-                && isValidLocation(location) && isValidDescription(description);
+                && isValidLocation(location) && isValidRemark(remarks);
     }
 
     @Override
@@ -178,10 +178,10 @@ public class Event {
 
         String modeString = mode == null ? "" : " " + mode;
         String locationString = location == null ? "" : " " + location;
-        String descriptionString = description == null ? "" : "\n" + description;
+        String remarksString = remarks == null ? "" : "\n" + remarks;
 
         return title + " " + date.format(dateFormatter) + " " + time.format(timeFormatter) + modeString
-                + locationString + descriptionString;
+                + locationString + remarksString;
     }
 
     @Override
