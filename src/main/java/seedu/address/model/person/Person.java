@@ -24,6 +24,7 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final Set<Event> events = new HashSet<>();
 
     /**
      * Every field must be present and not null.
@@ -59,6 +60,27 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public void addEvent(Event event) {
+        events.add(event);
+    }
+
+    /**
+     * Check if the Person object already contains the event.
+     * @param event Event to be compared.
+     * @return true if there is an identical event, false otherwise.
+     */
+    public boolean hasEvent(Event event) {
+        return events.contains(event);
+    }
+
+    /**
+     * Returns an immutable events set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Event> getEvents() {
+        return Collections.unmodifiableSet(events);
     }
 
     /**
@@ -111,7 +133,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
+                .add("events", events)
                 .toString();
     }
-
 }
