@@ -76,7 +76,7 @@ public class EventCommand extends Command {
         }
 
         personToAddEvent.addEvent(event);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personToAddEvent)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, event.toString()));
     }
 
     @Override

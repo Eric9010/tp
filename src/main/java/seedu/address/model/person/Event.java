@@ -178,7 +178,7 @@ public class Event {
 
         String modeString = mode == null ? "" : " " + mode;
         String locationString = location == null ? "" : " " + location;
-        String remarksString = remarks == null ? "" : "\n" + remarks;
+        String remarksString = remarks == null ? "" : "\nRemarks: " + remarks;
 
         return title + " " + date.format(dateFormatter) + " " + time.format(timeFormatter) + modeString
                 + locationString + remarksString;

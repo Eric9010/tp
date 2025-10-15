@@ -62,7 +62,12 @@ public class EventCommandParser implements Parser<EventCommand> {
             remarks = argMultimap.getValue(PREFIX_REMARKS).get();
         }
 
-        Event event = new Event(eventName, date, time, mode, location, remarks);
+        Event event;
+        try {
+            event = new Event(eventName, date, time, mode, location, remarks);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
 
         return new EventCommand(index, event);
     }
