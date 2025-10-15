@@ -2,6 +2,8 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.EventCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -70,6 +72,52 @@ public class EventCommandTest {
                 "f2f", "Google Headquarters", "Final Round");
         assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1), event)
                 .execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
+    }
+
+    @Test
+    public void equals_sameEventCommand() {
+        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+                "f2f", "Google Headquarters", "Final Round");
+        EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), event);
+        assertEquals(eventCommand, eventCommand);
+    }
+
+    @Test
+    public void equals_notEventCommand() {
+        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+                "f2f", "Google Headquarters", "Final Round");
+        EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), event);
+        DeleteCommand deleteCommand = new DeleteCommand(Index.fromOneBased(1));
+        assertNotEquals(eventCommand, deleteCommand);
+    }
+
+    @Test
+    public void equals_sameAttributes() {
+        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+                "f2f", "Google Headquarters", "Final Round");
+        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event);
+        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), event);
+        assertEquals(eventCommand1, eventCommand2);
+    }
+
+    @Test
+    public void equals_differentIndex() {
+        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+                "f2f", "Google Headquarters", "Final Round");
+        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event);
+        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(2), event);
+        assertNotEquals(eventCommand1, eventCommand2);
+    }
+
+    @Test
+    public void equals_differentEvent() {
+        Event event1 = new Event("Google Interview", "2025-09-10", "15:50",
+                "f2f", "Google Headquarters", "Final Round");
+        Event event2 = new Event("Google Interview", "2025-09-10", "16:50",
+                "f2f", "Google Headquarters", "Final Round");
+        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event1);
+        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), event2);
+        assertNotEquals(eventCommand1, eventCommand2);
     }
 
     /**
