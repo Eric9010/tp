@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT;
@@ -8,16 +9,22 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
 
+import java.util.stream.Stream;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EventCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Event;
 
-import java.util.stream.Stream;
-
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Parses input arguments and creates a new EventCommand object.
+ */
 public class EventCommandParser implements Parser<EventCommand> {
+    /**
+     * Parses the given {@code String} of arguments in the context of the EventCommand
+     * and returns an EventCommand object for execution.
+     * @throws ParseException if the user input does not conform to the expected format
+     */
     public EventCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_EVENT, PREFIX_DATE, PREFIX_TIME,
@@ -35,8 +42,8 @@ public class EventCommandParser implements Parser<EventCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT, PREFIX_DATE, PREFIX_TIME, PREFIX_MODE, PREFIX_LOCATION
-                , PREFIX_REMARKS);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT, PREFIX_DATE, PREFIX_TIME, PREFIX_MODE, PREFIX_LOCATION,
+                PREFIX_REMARKS);
 
         String eventName = argMultimap.getValue(PREFIX_EVENT).get();
         String date = argMultimap.getValue(PREFIX_DATE).get();
