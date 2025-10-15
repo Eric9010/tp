@@ -48,7 +48,7 @@ public class ViewAllCommand extends Command {
                 person.getTags().forEach(tag -> output.append(tag).append(" "));
                 output.append("\n");
 
-                //events 
+                //events
                 if (person.getEvents() != null && !person.getEvents().isEmpty()) {
                     output.append("   Events:\n");
                     int eventIndex = 1;
