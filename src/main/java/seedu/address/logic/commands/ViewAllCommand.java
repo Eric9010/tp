@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import javafx.collections.ObservableList;
-import seedu.address.logic.Messages;
 import seedu.address.model.Model;
+import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 
 /**
@@ -38,8 +38,27 @@ public class ViewAllCommand extends Command {
 
             int index = 1;
             for (Person person : persons) {
-                output.append(String.format("%d. ", index));
-                output.append(Messages.format(person));
+                output.append(String.format("%d. Name: %s\n", index, person.getName()));
+                output.append(String.format("   Phone: %s\n", person.getPhone()));
+                output.append(String.format("   Email: %s\n", person.getEmail()));
+                output.append(String.format("   Address: %s\n", person.getAddress()));
+
+                //tags
+                output.append("   Tags: ");
+                person.getTags().forEach(tag -> output.append(tag).append(" "));
+                output.append("\n");
+
+                //events 
+                if (person.getEvents() != null && !person.getEvents().isEmpty()) {
+                    output.append("   Events:\n");
+                    int eventIndex = 1;
+                    for (Event event : person.getEvents()) {
+                        output.append(String.format("      %d) %s\n", eventIndex, event));
+                        eventIndex++;
+                    }
+                } else {
+                    output.append("   Events: (none)\n");
+                }
                 output.append("\n\n");
                 index++;
             }
