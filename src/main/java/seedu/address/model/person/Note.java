@@ -2,6 +2,9 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Represents a note associated to a person in the address book.
+ */
 public class Note {
     public final String value;
 
