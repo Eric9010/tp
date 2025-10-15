@@ -25,20 +25,21 @@ public class EventCommand extends Command {
     public static final String COMMAND_WORD = "event";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds an event to a recruiter identified by the index number used in the displayed person list.\n"
+            + ": Adds an event to a recruiter identified by the index number used in the displayed\n"
+            + "person list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + PREFIX_EVENT + "EVENT "
             + PREFIX_DATE + "DATE (yyyy-MM-dd) "
-            + PREFIX_TIME + "TIME (HH:mm)\n"
+            + PREFIX_TIME + "TIME (HH:mm) "
             + "[" + PREFIX_MODE + "MODE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
-            + "[" + PREFIX_REMARKS + "DESCRIPTION]\n"
+            + "[" + PREFIX_REMARKS + "REMARKS]\n"
             + "Example: " + COMMAND_WORD + " 2 "
             + PREFIX_EVENT + "Google Interview "
             + PREFIX_DATE + "2025-10-12 "
             + PREFIX_TIME + "15:00 "
             + PREFIX_MODE + "F2F "
-            + PREFIX_LOCATION + "Google Headquarters "
+            + PREFIX_LOCATION + "Google Headquarters\n"
             + PREFIX_REMARKS + "Final Round";
 
     public static final String MESSAGE_SUCCESS = "New event added.\n%1$s";
