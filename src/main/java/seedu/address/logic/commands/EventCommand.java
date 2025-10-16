@@ -76,6 +76,7 @@ public class EventCommand extends Command {
         }
 
         personToAddEvent.addEvent(event);
+        model.setPerson(lastShownList.get(targetIndex.getZeroBased()), personToAddEvent);
         return new CommandResult(String.format(MESSAGE_SUCCESS, event.toString()));
     }
 

@@ -254,7 +254,7 @@ public class EventTest {
                 "f2f", "Google Headquarters", "Final Round");
         assertEquals("""
                 Google Interview 2025-09-10 15:50 F2F Google Headquarters
-                Final Round""", event.toString());
+                Remarks: Final Round""", event.toString());
     }
 
     @Test

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.EventCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -19,7 +20,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -54,7 +54,7 @@ public class EventCommandTest {
         Person personWithEvent = new PersonBuilder(ALICE).build();
         personWithEvent.addEvent(event);
 
-        String expectedMessage = String.format(MESSAGE_SUCCESS, Messages.format(personWithEvent));
+        String expectedMessage = String.format(MESSAGE_SUCCESS, event);
         assertCommandSuccess(eventCommand, model, expectedMessage, model);
     }
 
@@ -209,6 +209,11 @@ public class EventCommandTest {
         @Override
         public ObservableList<Person> getFilteredPersonList() {
             return FXCollections.observableList(List.of(person));
+        }
+
+        @Override
+        public void setPerson(Person target, Person editedPerson) {
+            requireAllNonNull(target, editedPerson);
         }
     }
 

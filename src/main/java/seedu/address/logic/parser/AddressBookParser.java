@@ -81,8 +81,8 @@ public class AddressBookParser {
 
         case EventCommand.COMMAND_WORD:
             return new EventCommandParser().parse(arguments);
-        
-	case ViewAllCommand.COMMAND_WORD:
+
+        case ViewAllCommand.COMMAND_WORD:
             return new ViewAllCommand();
 
         default:

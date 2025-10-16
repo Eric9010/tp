@@ -20,7 +20,7 @@ public class Event {
         F2F, CALL, ZOOM;
     }
 
-    private static final String MESSAGE_CONSTRAINTS = """
+    public static final String MESSAGE_CONSTRAINTS = """
             1. Events should have a non-empty title, a non-empty date in the YYYY-MM-DD format and a \
             non-empty time in the HH:mm format.
             2. Mode is optional. Valid modes are F2F, CALL and ZOOM.
@@ -59,6 +59,30 @@ public class Event {
         this.mode = mode == null ? null : Mode.valueOf(mode.toUpperCase());
         this.location = location;
         this.remarks = remarks;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDate() {
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    public String getTime() {
+        return time.format(DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
+    public String getMode() {
+        return mode == null ? "" : mode.toString();
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getRemarks() {
+        return remarks;
     }
 
     /**
