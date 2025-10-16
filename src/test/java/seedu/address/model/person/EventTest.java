@@ -53,14 +53,14 @@ public class EventTest {
     }
 
     @Test
-    public void constructor_invalidDescription_throwsIllegalArgumentException() {
+    public void constructor_invalidRemarks_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> new Event("Google Interview", "2025-09-10",
-                "15:50", null, null, "Very long descriptionnnnnnnnnnnnnnnnnnnnnnn"
-                + "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-                + "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-                + "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-                + "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-                + "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"));
+                "15:50", null, null, "Very long remarkssssssssssssssssssssssssssssss"
+                + "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+                + "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+                + "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+                + "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+                + "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"));
     }
 
     @Test
@@ -146,20 +146,20 @@ public class EventTest {
     }
 
     @Test
-    public void isValidDescription_invalidDescription() {
-        assertFalse(Event.isValidDescription(""));
-        assertFalse(Event.isValidDescription("Very long descriptionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-                + "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-                + "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-                + "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-                + "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"
-                + "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn"));
+    public void isValidRemark_invalidRemark() {
+        assertFalse(Event.isValidRemark(""));
+        assertFalse(Event.isValidRemark("Very long remarksssssssssssssssssssssssssssssssssssssssssssssss"
+                + "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+                + "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+                + "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+                + "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+                + "sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"));
     }
 
     @Test
-    public void isValidDescription_validDescription() {
-        assertTrue(Event.isValidDescription(null));
-        assertTrue(Event.isValidDescription("Final Round"));
+    public void isValidRemark_validRemark() {
+        assertTrue(Event.isValidRemark(null));
+        assertTrue(Event.isValidRemark("Final Round"));
     }
 
     @Test
@@ -254,7 +254,7 @@ public class EventTest {
                 "f2f", "Google Headquarters", "Final Round");
         assertEquals("""
                 Google Interview 2025-09-10 15:50 F2F Google Headquarters
-                Final Round""", event.toString());
+                Remarks: Final Round""", event.toString());
     }
 
     @Test
