@@ -35,8 +35,6 @@ public class EditCommandParser implements Parser<EditCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
-        Index index;
-
         String preamble = argMultimap.getPreamble();
         if (preamble.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
@@ -65,14 +63,24 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         try {
-            index = ParserUtil.parseIndex(preamble);
+            // Try to parse preamble as an index
+            Index index = ParserUtil.parseIndex(preamble);
             return new EditCommand(index, editPersonDescriptor);
-        } catch (ParseException pe) {
+        } catch (ParseException peIndex) {
+            // If it failed as an index, check *why* before trying as a name.
+
+            // This regex checks if the preamble is a number (e.g., "0", "-5").
+            if (preamble.matches("-?\\d+")) {
+                // It's an invalid number. Fail immediately with the index error.
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), peIndex);
+            }
+
+            // If it wasn't a number (e.g., "Alex Yeoh"), *then* try to parse it as a name.
             try {
                 Name name = ParserUtil.parseName(preamble);
                 return new EditCommand(name, editPersonDescriptor);
             } catch (ParseException peName) {
-                // If both fail, throw the invalid command format error
+                // If it fails as a name too, throw the invalid command format error.
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), peName);
             }

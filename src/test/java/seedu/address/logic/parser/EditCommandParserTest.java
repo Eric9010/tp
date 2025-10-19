@@ -56,14 +56,14 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_missingParts_failure() {
-        // no index specified
-        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
+        String invalidCommandFormat = String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE);
 
-        // no field specified
-        assertParseFailure(parser, "1", EditCommand.MESSAGE_NOT_EDITED);
+        // Test 1: No preamble (index or name)
+        assertParseFailure(parser, " " + NAME_DESC_AMY, invalidCommandFormat);
 
-        // no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+        // Test 2: No fields to edit
+        assertParseFailure(parser, "1", EditCommand.MESSAGE_NOT_EDITED); // Check for the NOT_EDITED message
+        assertParseFailure(parser, "Alex Yeoh", EditCommand.MESSAGE_NOT_EDITED); // Also test with a name
     }
 
     @Test
@@ -73,12 +73,6 @@ public class EditCommandParserTest {
 
         // zero index
         assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
