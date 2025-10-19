@@ -31,11 +31,17 @@ public class DeleteCommand extends Command {
     private final Index targetIndex;
     private final Name targetName;
 
+    /**
+     * @param targetIndex of the person in the filtered person list to delete
+     */
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
         this.targetName = null;
     }
 
+    /**
+     * @param targetName of the person in the filtered person list to delete
+     */
     public DeleteCommand(Name targetName) {
         this.targetName = targetName;
         this.targetIndex = null;

@@ -42,7 +42,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_ADDRESS + "ORGANISATION] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -72,6 +72,10 @@ public class EditCommand extends Command {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
+    /**
+     * @param targetName of the person in the filtered person list to edit
+     * @param editPersonDescriptor details to edit the person with
+     */
     public EditCommand(Name targetName, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(targetName);
         requireNonNull(editPersonDescriptor);
@@ -262,7 +266,7 @@ public class EditCommand extends Command {
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
-                    .add("address", address)
+                    .add("organisation", address)
                     .add("tags", tags)
                     .toString();
         }

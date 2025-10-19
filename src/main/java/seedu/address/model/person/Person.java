@@ -131,7 +131,7 @@ public class Person {
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
-                .add("address", address)
+                .add("organisation", address)
                 .add("tags", tags)
                 .add("events", events)
                 .toString();
