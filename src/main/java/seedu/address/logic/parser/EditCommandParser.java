@@ -72,7 +72,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             // This regex checks if the preamble is a number (e.g., "0", "-5").
             if (preamble.matches("-?\\d+")) {
                 // It's an invalid number. Fail immediately with the index error.
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), peIndex);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        EditCommand.MESSAGE_USAGE), peIndex);
             }
 
             // If it wasn't a number (e.g., "Alex Yeoh"), *then* try to parse it as a name.
