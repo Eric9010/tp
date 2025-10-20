@@ -37,7 +37,7 @@ public class SampleDataUtil {
                 new Email("charlotte@example.com"), new Address("NUS"), getTagSet("Friend"), null,
                 new HashSet<Event>());
         charlotte.addEvent(new Event("Coffee Chat", "2025-10-19", "12:00", null,
-                "Starbucks @ Vivo",null));
+                "Starbucks @ Vivo", null));
 
         return new Person[] {
             alex, bernice, charlotte
