@@ -30,27 +30,30 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Event> events) {
+        requireAllNonNull(name, phone, email, address, tags, events);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
         this.pinTimestamp = null;
+        this.events.addAll(events);
     }
 
     /**
      * Second constructor for pinned contacts.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Long pinTimestamp) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Long pinTimestamp,
+                  Set<Event> events) {
+        requireAllNonNull(name, phone, email, address, tags, events);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
         this.pinTimestamp = pinTimestamp;
+        this.events.addAll(events);
     }
 
     public Name getName() {
@@ -110,14 +113,14 @@ public class Person {
      * Returns a new Person object with the pin timestamp set to the current time.
      */
     public Person pin() {
-        return new Person(name, phone, email, address, tags, System.currentTimeMillis());
+        return new Person(name, phone, email, address, tags, System.currentTimeMillis(), this.events);
     }
 
     /**
      * Returns a new Person object with the pin timestamp removed.
      */
     public Person unpin() {
-        return new Person(name, phone, email, address, tags, null);
+        return new Person(name, phone, email, address, tags, null, this.events);
     }
 
     /**
@@ -154,13 +157,14 @@ public class Person {
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
-                && Objects.equals(pinTimestamp, otherPerson.pinTimestamp);
+                && Objects.equals(pinTimestamp, otherPerson.pinTimestamp)
+                && events.equals(otherPerson.events);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, pinTimestamp);
+        return Objects.hash(name, phone, email, address, tags, pinTimestamp, events);
     }
 
     @Override

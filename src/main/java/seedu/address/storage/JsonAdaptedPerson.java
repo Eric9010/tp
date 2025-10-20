@@ -80,8 +80,9 @@ class JsonAdaptedPerson {
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
         }
+        final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        final List<Event> personEvents = new ArrayList<>();
+        final Set<Event> personEvents = new HashSet<>();
         for (JsonAdaptedEvent event : events) {
             personEvents.add(event.toModelType());
         }
@@ -118,9 +119,8 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-
-        Person person = new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, pinTimestamp);
+        Person person = new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, pinTimestamp,
+                personEvents);
         for (Event event : personEvents) {
             person.addEvent(event);
         }
