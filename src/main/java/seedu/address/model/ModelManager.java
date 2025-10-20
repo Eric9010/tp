@@ -20,13 +20,9 @@ import seedu.address.model.person.Person;
  * Represents the in-memory model of the address book data.
  */
 public class ModelManager implements Model {
-    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
     public static final String MESSAGE_MAX_PINNED_PERSONS_REACHED = "You can only pin a maximum of 3 contacts.";
 
-    private final AddressBook addressBook;
-    private final UserPrefs userPrefs;
-    private final FilteredList<Person> filteredPersons;
-    private final SortedList<Person> sortedPersons;
+    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     /**
      * Comparator for sorting pinned contacts
@@ -47,6 +43,11 @@ public class ModelManager implements Model {
             return p1.getName().fullName.compareToIgnoreCase(p2.getName().fullName);
         }
     };
+
+    private final AddressBook addressBook;
+    private final UserPrefs userPrefs;
+    private final FilteredList<Person> filteredPersons;
+    private final SortedList<Person> sortedPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
