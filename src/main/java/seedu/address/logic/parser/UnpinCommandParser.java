@@ -25,5 +25,4 @@ public class UnpinCommandParser implements Parser<UnpinCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnpinCommand.MESSAGE_USAGE), pe);
         }
     }
-
 }
