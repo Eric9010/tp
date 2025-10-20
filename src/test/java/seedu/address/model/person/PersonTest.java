@@ -107,7 +107,7 @@ public class PersonTest {
                 "f2f", "Google Headquarters", "Final Round");
         editedAlice = new PersonBuilder(ALICE).build();
         editedAlice.addEvent(event);
-        assertTrue(ALICE.equals(editedAlice));
+        assertFalse(ALICE.equals(editedAlice));
     }
 
     @Test
