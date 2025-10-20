@@ -26,6 +26,7 @@
           </minWidth>
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+        <Label fx:id="pinIndicator" text=" 📌" style="-fx-font-size: 10px;" visible="false" />
         <Label text="  |  " styleClass="cell_small_label" />
         <Label fx:id="address" styleClass="cell_small_label"
                style="-fx-font-weight: bold; -fx-font-style: italic;"
