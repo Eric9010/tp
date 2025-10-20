@@ -31,6 +31,7 @@ class JsonAdaptedPerson {
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final List<JsonAdaptedEvent> events = new ArrayList<>();
+    private final Long pinTimestamp;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -49,6 +50,7 @@ class JsonAdaptedPerson {
         if (events != null) {
             this.events.addAll(events);
         }
+        this.pinTimestamp = null;
     }
 
     /**
@@ -65,6 +67,7 @@ class JsonAdaptedPerson {
         events.addAll(source.getEvents().stream()
                 .map(JsonAdaptedEvent::new)
                 .collect(Collectors.toList()));
+        pinTimestamp = source.getPinTimestamp();
     }
 
     /**
@@ -117,7 +120,7 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        Person person = new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        Person person = new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, pinTimestamp);
         for (Event event : personEvents) {
             person.addEvent(event);
         }
