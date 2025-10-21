@@ -8,6 +8,11 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 public class NoteCommand extends Command {
     public static final String COMMAND_WORD = "note";
 
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Attaches a note to the person identified by the index number used in the displayed person list.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
     private final Index index;
     private final String note;
     
