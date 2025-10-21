@@ -145,4 +145,7 @@ public class ModelManager implements Model {
                 && filteredPersons.equals(otherModelManager.filteredPersons);
     }
 
+    //returns sorted list of persons by name
+
+
 }
