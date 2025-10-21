@@ -22,6 +22,9 @@ public class TagCategories {
     private TagCategories() {}
 
     public static boolean isIndustry(String tagName) {
+        if (tagName == null || tagName.isBlank()) {
+            return false;
+        }
         return INDUSTRY_TAGS.contains(tagName.toLowerCase());
     }
 }
