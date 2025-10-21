@@ -6,6 +6,9 @@ import java.util.Comparator;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * Sorts all persons in the address book by name in alphabetical order.
+ */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
     public static final String MESSAGE_SUCCESS = "Sorted all persons by name";
