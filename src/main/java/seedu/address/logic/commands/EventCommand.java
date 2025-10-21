@@ -28,9 +28,9 @@ public class EventCommand extends Command {
             + ": Adds an event to a recruiter identified by the index number used in the displayed\n"
             + "person list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + PREFIX_TITLE + "EVENT "
+            + PREFIX_TITLE + "TITLE "
             + PREFIX_START + "START (yyyy-MM-dd HH:mm) "
-            + PREFIX_END + "END (HH:mm) "
+            + PREFIX_END + "END (yyyy-MM-dd HH:mm) "
             + "[" + PREFIX_MODE + "MODE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "[" + PREFIX_REMARKS + "REMARKS]\n"
@@ -39,7 +39,7 @@ public class EventCommand extends Command {
             + PREFIX_START + "2025-10-12 14:00 "
             + PREFIX_END + "2025-10-12 15:00 "
             + PREFIX_MODE + "F2F "
-            + PREFIX_LOCATION + "Google Headquarters\n"
+            + PREFIX_LOCATION + "Google Headquarters "
             + PREFIX_REMARKS + "Final Round";
 
     public static final String MESSAGE_SUCCESS = "New event added.\n%1$s";
