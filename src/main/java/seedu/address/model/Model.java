@@ -91,5 +91,5 @@ public interface Model {
      * Updates the sorting comparator of the sorted person list to sort by the given {@code comparator}.
      * @throws NullPointerException if {@code comparator} is null.
      */
-    public void updateSortedPersonList(Comparator<Person> comparator);
+    void updateSortedPersonList(Comparator<Person> comparator);
 }
