@@ -7,7 +7,6 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,7 +45,7 @@ public class FilterTagCommandTest {
 
     @Test
     public void execute_singleTagMatch_success() {
-        FilterTagCommand command = new FilterTagCommand(Collections.singletonList("friends"));
+        FilterTagCommand command = new FilterTagCommand(Arrays.asList("friends"));
 
         expectedModel.updateFilteredPersonList(person ->
                 person.getTags().stream().anyMatch(tag -> tag.tagName.equalsIgnoreCase("friends")));
@@ -73,7 +72,7 @@ public class FilterTagCommandTest {
 
     @Test
     public void execute_noMatch_returnsEmptyList() {
-        FilterTagCommand command = new FilterTagCommand(Collections.singletonList("nonexistentTag"));
+        FilterTagCommand command = new FilterTagCommand(Arrays.asList("nonexistentTag"));
 
         expectedModel.updateFilteredPersonList(person -> false);
 
@@ -84,8 +83,8 @@ public class FilterTagCommandTest {
 
     @Test
     public void equals() {
-        FilterTagCommand firstCommand = new FilterTagCommand(Collections.singletonList("friends"));
-        FilterTagCommand sameCommand = new FilterTagCommand(Collections.singletonList("friends"));
+        FilterTagCommand firstCommand = new FilterTagCommand(Arrays.asList("friends"));
+        FilterTagCommand sameCommand = new FilterTagCommand(Arrays.asList("friends"));
         FilterTagCommand differentCommand = new FilterTagCommand(Arrays.asList("colleagues"));
 
         assertEquals(firstCommand, sameCommand);
@@ -98,7 +97,7 @@ public class FilterTagCommandTest {
 
     @Test
     public void toStringMethod() {
-        FilterTagCommand command = new FilterTagCommand(Collections.singletonList("friends"));
+        FilterTagCommand command = new FilterTagCommand(Arrays.asList("friends"));
         String expected = FilterTagCommand.class.getCanonicalName() + "{tagKeywords=" + "[friends]" + "}";
         assertEquals(expected, command.toString());
     }

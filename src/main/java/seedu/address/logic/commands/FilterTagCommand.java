@@ -4,10 +4,10 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
+import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,17 +31,7 @@ public class FilterTagCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
 
-        model.updateFilteredPersonList(person -> {
-            Set<Tag> tags = person.getTags();
-            for (String keyword : taglist) {
-                for (Tag tag : tags) {
-                    if (tag.tagName.equalsIgnoreCase(keyword)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        model.updateFilteredPersonList(person -> hasMatchingTag(person, taglist));
 
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW,
@@ -59,6 +49,17 @@ public class FilterTagCommand extends Command {
         return new FilterTagCommand(Arrays.asList(trimmed.split("\\s+")));
     }
 
+    private boolean hasMatchingTag(Person person, List<String> tagKeywords) {
+        for (String keyword : tagKeywords) {
+            for (Tag tag : person.getTags()) {
+                if (tag.tagName.equalsIgnoreCase(keyword)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
@@ -70,8 +71,8 @@ public class FilterTagCommand extends Command {
             return false;
         }
 
-        FilterTagCommand Command2 = (FilterTagCommand) other;
-        return taglist.equals(Command2.taglist);
+        FilterTagCommand otherCommand = (FilterTagCommand) other;
+        return taglist.equals(otherCommand.taglist);
     }
 
     @Override
