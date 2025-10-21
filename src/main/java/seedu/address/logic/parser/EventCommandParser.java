@@ -2,12 +2,12 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.stream.Stream;
 
@@ -27,10 +27,10 @@ public class EventCommandParser implements Parser<EventCommand> {
      */
     public EventCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_EVENT, PREFIX_DATE, PREFIX_TIME,
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_START, PREFIX_END,
                 PREFIX_MODE, PREFIX_LOCATION, PREFIX_REMARKS);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_EVENT, PREFIX_DATE, PREFIX_TIME)) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_TITLE, PREFIX_START, PREFIX_END)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventCommand.MESSAGE_USAGE));
         }
 
@@ -42,12 +42,12 @@ public class EventCommandParser implements Parser<EventCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT, PREFIX_DATE, PREFIX_TIME, PREFIX_MODE, PREFIX_LOCATION,
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TITLE, PREFIX_START, PREFIX_END, PREFIX_MODE, PREFIX_LOCATION,
                 PREFIX_REMARKS);
 
-        String eventName = argMultimap.getValue(PREFIX_EVENT).get();
-        String date = argMultimap.getValue(PREFIX_DATE).get();
-        String time = argMultimap.getValue(PREFIX_TIME).get();
+        String title = argMultimap.getValue(PREFIX_TITLE).get();
+        String start = argMultimap.getValue(PREFIX_START).get();
+        String end = argMultimap.getValue(PREFIX_END).get();
         String mode = null;
         String location = null;
         String remarks = null;
@@ -64,7 +64,7 @@ public class EventCommandParser implements Parser<EventCommand> {
 
         Event event;
         try {
-            event = new Event(eventName, date, time, mode, location, remarks);
+            event = new Event(title, start, end, mode, location, remarks);
         } catch (IllegalArgumentException e) {
             throw new ParseException(e.getMessage());
         }
