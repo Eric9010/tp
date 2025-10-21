@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -29,6 +30,18 @@ public class FilterTagCommandTest {
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+    }
+
+    @Test
+    public void parse_validArgs_returnsFilterTagCommand() throws Exception {
+        FilterTagCommand command = FilterTagCommand.parse("friends colleagues");
+        assertEquals(new FilterTagCommand(Arrays.asList("friends", "colleagues")), command);
+    }
+
+    @Test
+    public void parse_emptyArgs_throwsException() {
+        Exception e = assertThrows(Exception.class, () -> FilterTagCommand.parse("   "));
+        assertEquals("Tag keywords cannot be empty!", e.getMessage());
     }
 
     @Test
@@ -75,19 +88,10 @@ public class FilterTagCommandTest {
         FilterTagCommand sameCommand = new FilterTagCommand(Collections.singletonList("friends"));
         FilterTagCommand differentCommand = new FilterTagCommand(Arrays.asList("colleagues"));
 
-        // same values → true
         assertEquals(firstCommand, sameCommand);
-
-        // same object → true
         assertEquals(firstCommand, firstCommand);
-
-        // null → false
-        assertNotEquals(null, firstCommand);
-
-        // different type → false
-        assertNotEquals(1, firstCommand);
-
-        // different keywords → false
+        assertNotEquals(firstCommand, null);
+        assertNotEquals(firstCommand, 1);
         assertNotEquals(firstCommand, differentCommand);
     }
 
