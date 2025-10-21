@@ -150,6 +150,11 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public ObservableList<Person> getSortedPersonList() {
+        return sortedPersons;
+    }
+
+    @Override
     public void updateSortedPersonList(Comparator<Person> comparator) {
         requireNonNull(comparator);
         sortedPersons.setComparator(comparator);
