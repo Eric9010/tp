@@ -59,4 +59,24 @@ public class FilterTagCommand extends Command {
         return new FilterTagCommand(Arrays.asList(trimmed.split("\\s+")));
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof FilterTagCommand)) {
+            return false;
+        }
+
+        FilterTagCommand Command2 = (FilterTagCommand) other;
+        return taglist.equals(Command2.taglist);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getCanonicalName() + "{tagKeywords=" + taglist + "}";
+    }
+
 }
