@@ -83,7 +83,7 @@ public class AddressBookParserTest {
                 FilterTagCommand.COMMAND_WORD + " " + String.join(" ", tags));
         assertEquals(new FilterTagCommand(tags), command);
     }
-    
+
     @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
