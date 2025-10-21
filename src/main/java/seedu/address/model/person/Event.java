@@ -3,9 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
@@ -101,8 +99,7 @@ public class Event {
      *
      * @param startString User input start date and time.
      * @param endString User input end date and time.
-     * @return true if start and end date and time matches the pattern yyyy-MM-dd HH:mm and start is before end,
-     * false otherwise.
+     * @return true if start and end matches the pattern yyyy-MM-dd HH:mm and start is before end, false otherwise.
      */
     public static boolean isValidStartEnd(String startString, String endString) {
         try {
