@@ -21,4 +21,20 @@ public class NoteCommand extends Command {
     public CommandResult execute(Model model) {
         return new CommandResult("hello from note");
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof NoteCommand)) {
+            return false;
+        }
+
+        NoteCommand e = (NoteCommand) other;
+        return index.equals(e.index)
+                && note.equals(e.note);
+    }
 }
