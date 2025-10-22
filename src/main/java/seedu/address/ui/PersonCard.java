@@ -45,6 +45,8 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private VBox events;
+    @FXML
+    private Label note;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -57,13 +59,12 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-
         if (person.isPinned()) {
             pinIndicator.setVisible(true);
         } else {
             pinIndicator.setVisible(false);
         }
-
+        note.setText(person.getNote().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
