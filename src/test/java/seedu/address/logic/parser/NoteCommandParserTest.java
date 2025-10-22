@@ -12,20 +12,20 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 public class NoteCommandParserTest {
-    private String nonEmptyRemark = "hey";
+    private String nonEmptyNote = "Test";
     private NoteCommandParser parser = new NoteCommandParser();
 
     @Test
     public void parse_indexSpecified_success() {
         // have remark
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + PREFIX_NOTE + nonEmptyRemark;
-        NoteCommand expectedCommand = new NoteCommand(INDEX_FIRST_PERSON, nonEmptyRemark);
+        String userInput = targetIndex.getOneBased() + " " + PREFIX_NOTE + nonEmptyNote;
+        NoteCommand expectedCommand = new NoteCommand(INDEX_FIRST_PERSON, new Note(nonEmptyNote));
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // no remark
         userInput = targetIndex.getOneBased() + " " + PREFIX_NOTE;
-        expectedCommand = new NoteCommand(INDEX_FIRST_PERSON, "");
+        expectedCommand = new NoteCommand(INDEX_FIRST_PERSON, new Note(""));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
@@ -37,6 +37,6 @@ public class NoteCommandParserTest {
         assertParseFailure(parser, NoteCommand.COMMAND_WORD, expectedMessage);
 
         // no index
-        assertParseFailure(parser, NoteCommand.COMMAND_WORD + " " + nonEmptyRemark, expectedMessage);
+        assertParseFailure(parser, NoteCommand.COMMAND_WORD + " " + nonEmptyNote, expectedMessage);
     }
 }
