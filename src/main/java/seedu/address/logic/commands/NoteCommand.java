@@ -26,11 +26,11 @@ public class NoteCommand extends Command {
     private final Index index;
     private final Note note;
     
-    public NoteCommand(Index index, String note) {
+    public NoteCommand(Index index, Note note) {
         requireAllNonNull(index, note);
 
         this.index = index;
-        this.note = new Note(note);
+        this.note = note;
     }
     @Override
     public CommandResult execute(Model model) throws CommandException {
