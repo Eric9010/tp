@@ -4,24 +4,50 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
 /**
  * Represents the in-memory model of the address book data.
  */
 public class ModelManager implements Model {
+    public static final String MESSAGE_MAX_PINNED_PERSONS_REACHED = "You can only pin a maximum of 3 contacts.";
+
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
+
+    /**
+     * Comparator for sorting pinned contacts
+     * 1. Pinned status
+     * 2. Pin timestamp
+     * 3. Name (alphabetical)
+     */
+    private static final Comparator<Person> PIN_COMPARATOR = (p1, p2) -> {
+        if (p1.isPinned() && !p2.isPinned()) {
+            return -1; // p1 comes before p2
+        } else if (!p1.isPinned() && p2.isPinned()) {
+            return 1; // p2 comes before p1
+        } else if (p1.isPinned() && p2.isPinned()) {
+            // Both are pinned, sort by timestamp (earlier first)
+            return p1.getPinTimestamp().compareTo(p2.getPinTimestamp());
+        } else {
+            // Neither is pinned, sort by name (alphabetical)
+            return p1.getName().fullName.compareToIgnoreCase(p2.getName().fullName);
+        }
+    };
 
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final SortedList<Person> sortedPersons;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -33,7 +59,14 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+
+        // Wrap the base list in the SortedList
+        sortedPersons = new SortedList<>(this.addressBook.getPersonList());
+
+        // Set the comparator on the SortedList
+        sortedPersons.setComparator(PIN_COMPARATOR);
+
+        filteredPersons = new FilteredList<>(sortedPersons);
     }
 
     public ModelManager() {
@@ -109,6 +142,34 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         addressBook.setPerson(target, editedPerson);
+    }
+
+    //=========== Pin Contact Methods ========================================================================
+
+    @Override
+    public void pinPerson(Person personToPin) throws CommandException {
+        long pinnedCount = addressBook.getPersonList().stream().filter(Person::isPinned).count();
+        if (pinnedCount >= 3 && !personToPin.isPinned()) {
+            throw new CommandException(MESSAGE_MAX_PINNED_PERSONS_REACHED);
+        }
+
+        Person pinnedPerson = personToPin.pin();
+        setPerson(personToPin, pinnedPerson);
+        updatePersonListSort(); // Re-sort the list
+    }
+
+    @Override
+    public void unpinPerson(Person personToUnpin) {
+        Person unpinnedPerson = personToUnpin.unpin();
+        setPerson(personToUnpin, unpinnedPerson);
+        updatePersonListSort(); // Re-sort the list
+    }
+
+    @Override
+    public void updatePersonListSort() {
+        // This forces the SortedList to re-evaluate its order
+        sortedPersons.setComparator(null);
+        sortedPersons.setComparator(PIN_COMPARATOR);
     }
 
     //=========== Filtered Person List Accessors =============================================================

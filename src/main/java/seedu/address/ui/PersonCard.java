@@ -40,6 +40,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label pinIndicator;
+    @FXML
     private FlowPane tags;
     @FXML
     private VBox events;
@@ -55,6 +57,13 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
+
+        if (person.isPinned()) {
+            pinIndicator.setVisible(true);
+        } else {
+            pinIndicator.setVisible(false);
+        }
+
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
