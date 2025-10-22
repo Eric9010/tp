@@ -46,6 +46,14 @@ public class RemindCommand extends Command {
         currentDateTime = LocalDateTime.now();
     }
 
+    /**
+     * Creates a RemindCommand. Used for testing purposes only.
+     * @param dateTime Test date and time.
+     */
+    RemindCommand(LocalDateTime dateTime) {
+        currentDateTime = dateTime;
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -89,7 +97,7 @@ public class RemindCommand extends Command {
      * @param eventList List of events
      * @return String which shows the eventList as a numbered list.
      */
-    private String formatNumberedList(List<Event> eventList) {
+    public static String formatNumberedList(List<Event> eventList) {
         StringBuilder str = new StringBuilder();
 
         for (int i = 0; i < eventList.size(); i++) {
