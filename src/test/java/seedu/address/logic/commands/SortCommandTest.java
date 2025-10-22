@@ -1,15 +1,16 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBookUnsorted;
+
+import java.util.Comparator;
+
 import org.junit.jupiter.api.Test;
+
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
-
-import java.util.Comparator;
-
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBookUnsorted;
 
 public class SortCommandTest {
     private Model model = new ModelManager(getTypicalAddressBookUnsorted(), new UserPrefs());

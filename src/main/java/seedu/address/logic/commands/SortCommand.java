@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.Model;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Comparator;
 
-import static java.util.Objects.requireNonNull;
+import seedu.address.model.Model;
 
 /**
  * Sorts all persons in the address book by name in alphabetical order.
@@ -16,7 +16,8 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateSortedPersonList(Comparator.comparing(person -> person.getName().fullName, String.CASE_INSENSITIVE_ORDER));
+        model.updateSortedPersonList(Comparator.comparing(person ->
+                person.getName().fullName, String.CASE_INSENSITIVE_ORDER));
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }
