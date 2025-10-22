@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_HOURS;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class FreeTimeCommand extends Command {
         @Override
         public String toString() {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            return "(" + start.format(formatter) + "-" + end.format(formatter) + ")";
+            return "[" + start.format(formatter) + " to " + end.format(formatter) + "]";
         }
     }
 
@@ -40,13 +39,13 @@ public class FreeTimeCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Finds a duration of time when you do not have any events.\n"
             + "Parameters: "
-            + PREFIX_HOURS + "NO_OF_HOURS (1 - 23) "
+            + PREFIX_HOURS + "NO_OF_HOURS (1 - 24) "
             + PREFIX_DATE + "DATE (yyyy-MM-dd)\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_HOURS + " 2 "
+            + PREFIX_HOURS + "2 "
             + PREFIX_DATE + "2025-10-13\n";
 
-    public static final String MESSAGE_SUCCESS = "%1$s time slots are found: %2$s\n";
+    public static final String MESSAGE_SUCCESS = "%1$s time slots are found:\n%2$s\n";
     public static final String MESSAGE_NOT_FOUND = "No such time slots can be found.\n";
 
 
@@ -67,7 +66,7 @@ public class FreeTimeCommand extends Command {
         LocalDateTime start = date.atStartOfDay();
         LocalDateTime end = start.plusHours(hours);
 
-        while (start.isBefore(date.plusDays(1).atStartOfDay())) {
+        while (end.isBefore(date.plusDays(1).atStartOfDay().plusSeconds(1))) {
             availableTimes.add(new Duration(start, end));
             start = start.plusHours(1);
             end = end.plusHours(1);
@@ -94,12 +93,28 @@ public class FreeTimeCommand extends Command {
             return new CommandResult(MESSAGE_NOT_FOUND);
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, availableTimes.size(), availableTimes));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, availableTimes.size(),
+                formatNumberedList(availableTimes)));
     }
 
     private boolean notOverlapping(Duration duration1, Duration duration2) {
         boolean isBefore = duration1.end.isBefore(duration2.start) || duration1.end.equals(duration2.start);
         boolean isAfter = duration1.start.isAfter(duration2.end) || duration1.start.equals(duration2.end);
         return isBefore || isAfter;
+    }
+
+    /**
+     * Formats list of durations into a numbered list.
+     * @param durationList List of events
+     * @return String which shows the eventList as a numbered list.
+     */
+    private static String formatNumberedList(List<Duration> durationList) {
+        StringBuilder str = new StringBuilder();
+
+        for (int i = 0; i < durationList.size(); i++) {
+            str.append(i + 1).append(". ").append(durationList.get(i)).append("\n");
+        }
+
+        return str.toString();
     }
 }
