@@ -35,9 +35,10 @@ public class JsonAdaptedPersonTest {
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
 
-    private static final List<Event> EVENTS = List.of(new Event("Google Interview", "2025-09-10",
-            "15:50", "f2f", "Google Headquarters", "Final Round"), new Event("Amazon Interview",
-            "2025-09-10", "15:50", null, null, "Final Round"));
+    private static final List<Event> EVENTS = List.of(new Event("Google Interview", "2025-09-10 15:00",
+            "2025-09-10 15:50", "f2f", "Google Headquarters", "Final Round"),
+            new Event("Amazon Interview", "2025-09-10 15:00", "2025-09-10 15:50", null,
+                    null, "Final Round"));
     private static final List<JsonAdaptedEvent> VALID_EVENTS = EVENTS.stream()
             .map(JsonAdaptedEvent::new)
             .collect(Collectors.toList());
@@ -124,7 +125,7 @@ public class JsonAdaptedPersonTest {
     @Test
     public void toModelType_validPersonDetailsWithEvent_returnsPerson() throws Exception {
         Person personWithEvent = new PersonBuilder(BENSON).build();
-        personWithEvent.addEvent(new Event("Google Interview", "2025-09-10", "15:50",
+        personWithEvent.addEvent(new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round"));
         JsonAdaptedPerson person = new JsonAdaptedPerson(personWithEvent);
         assertEquals(personWithEvent, person.toModelType());

@@ -37,14 +37,14 @@ public class EventCommandTest {
 
     @Test
     public void constructor_hasEvent_success() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:50", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         assertDoesNotThrow(() -> new EventCommand(Index.fromZeroBased(1), event));
     }
 
     @Test
     public void execute_validIndexAndEvent_addedToPerson() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), event);
 
@@ -60,7 +60,7 @@ public class EventCommandTest {
 
     @Test
     public void execute_invalidIndex_throwsCommandException() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(2), event)
                 .execute(new ModelStubWithPerson(new PersonBuilder(ALICE).build())));
@@ -68,7 +68,7 @@ public class EventCommandTest {
 
     @Test
     public void execute_duplicateEvent_throwsCommandException() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1), event)
                 .execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
@@ -76,7 +76,7 @@ public class EventCommandTest {
 
     @Test
     public void equals_sameEventCommand() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), event);
         assertEquals(eventCommand, eventCommand);
@@ -84,7 +84,7 @@ public class EventCommandTest {
 
     @Test
     public void equals_notEventCommand() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), event);
         DeleteCommand deleteCommand = new DeleteCommand(Index.fromOneBased(1));
@@ -93,7 +93,7 @@ public class EventCommandTest {
 
     @Test
     public void equals_sameAttributes() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event);
         EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), event);
@@ -102,7 +102,7 @@ public class EventCommandTest {
 
     @Test
     public void equals_differentIndex() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event);
         EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(2), event);
@@ -111,9 +111,9 @@ public class EventCommandTest {
 
     @Test
     public void equals_differentEvent() {
-        Event event1 = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event1 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
-        Event event2 = new Event("Google Interview", "2025-09-10", "16:50",
+        Event event2 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 16:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event1);
         EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), event2);
@@ -235,7 +235,7 @@ public class EventCommandTest {
         ModelStubWithPersonAndEvent(Person person) {
             requireNonNull(person);
             this.person = person;
-            Event event = new Event("Google Interview", "2025-09-10", "15:50",
+            Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                     "f2f", "Google Headquarters", "Final Round");
             this.person.addEvent(event);
         }

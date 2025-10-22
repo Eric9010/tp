@@ -57,7 +57,7 @@ public class PersonTest {
         assertFalse(BOB.isSamePerson(editedBob));
 
         // all attributes except events are the same -> returns true
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         editedAlice = new PersonBuilder(ALICE).build();
         editedAlice.addEvent(event);
@@ -103,7 +103,7 @@ public class PersonTest {
         assertFalse(ALICE.equals(editedAlice));
 
         // different events -> returns true
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         editedAlice = new PersonBuilder(ALICE).build();
         editedAlice.addEvent(event);

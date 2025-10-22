@@ -1,12 +1,12 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.List;
 
@@ -28,18 +28,18 @@ public class EventCommand extends Command {
             + ": Adds an event to a recruiter identified by the index number used in the displayed\n"
             + "person list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + PREFIX_EVENT + "EVENT "
-            + PREFIX_DATE + "DATE (yyyy-MM-dd) "
-            + PREFIX_TIME + "TIME (HH:mm) "
+            + PREFIX_TITLE + "TITLE "
+            + PREFIX_START + "START (yyyy-MM-dd HH:mm) "
+            + PREFIX_END + "END (yyyy-MM-dd HH:mm) "
             + "[" + PREFIX_MODE + "MODE] "
             + "[" + PREFIX_LOCATION + "LOCATION] "
             + "[" + PREFIX_REMARKS + "REMARKS]\n"
             + "Example: " + COMMAND_WORD + " 2 "
-            + PREFIX_EVENT + "Google Interview "
-            + PREFIX_DATE + "2025-10-12 "
-            + PREFIX_TIME + "15:00 "
+            + PREFIX_TITLE + "Google Interview "
+            + PREFIX_START + "2025-10-12 14:00 "
+            + PREFIX_END + "2025-10-12 15:00 "
             + PREFIX_MODE + "F2F "
-            + PREFIX_LOCATION + "Google Headquarters\n"
+            + PREFIX_LOCATION + "Google Headquarters "
             + PREFIX_REMARKS + "Final Round";
 
     public static final String MESSAGE_SUCCESS = "New event added.\n%1$s";
