@@ -21,6 +21,9 @@ public class TagCategories {
 
     private TagCategories() {}
 
+    /**
+     * Returns true if the given {@code tagName} represents an industry tag
+     */
     public static boolean isIndustry(String tagName) {
         if (tagName == null || tagName.isBlank()) {
             return false;
