@@ -12,38 +12,44 @@ import org.junit.jupiter.api.Test;
 public class EventTest {
     @Test
     public void constructor_nullTitle_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Event(null, "2025-09-10", "15:50",
-                null, null, null));
+        assertThrows(NullPointerException.class, () -> new Event(null, "2025-09-10 15:50",
+                "2025-09-10 15:50", null, null, null));
     }
 
     @Test
-    public void constructor_nullDate_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Event("Google Interview", null, "15:50",
-                null, null, null));
+    public void constructor_nullStart_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new Event("Google Interview", null,
+                "2025-09-10 15:50", null, null, null));
     }
 
     @Test
-    public void constructor_nullTime_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Event("Google Interview", "2025-09-10", null,
-                null, null, null));
+    public void constructor_nullEnd_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new Event("Google Interview", "2025-09-10 15:50",
+                null, null, null, null));
     }
 
     @Test
     public void constructor_invalidTitle_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> new Event("", "2025-09-10", "15:50",
-                null, null, null));
+        assertThrows(IllegalArgumentException.class, () -> new Event("", "2025-09-10 15:50",
+                "2025-09-10 15:50", null, null, null));
     }
 
     @Test
-    public void constructor_invalidDate_throwsIllegalArgumentException() {
+    public void constructor_invalidStart_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> new Event("Google Interview", "2025",
-                "15:50", null, null, null));
+                "2025-09-10 15:50", null, null, null));
     }
 
     @Test
-    public void constructor_invalidTime_throwsIllegalArgumentException() {
-        assertThrows(IllegalArgumentException.class, () -> new Event("Google Interview", "2025-09-10",
-                "15", null, null, null));
+    public void constructor_invalidEnd_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> new Event("Google Interview", "2025-09-10 15:50",
+                "2025-09-10 15", null, null, null));
+    }
+
+    @Test
+    public void constructor_startAfterEnd_throwsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> new Event("Google Interview", "2025-09-10 15:50",
+                "2025-09-10 15:00", null, null, null));
     }
 
     @Test
@@ -65,23 +71,23 @@ public class EventTest {
 
     @Test
     public void constructor_validEventWithNoOptionalFields_success() {
-        assertDoesNotThrow(() -> new Event("Google Interview", "2025-09-10", "15:50",
+        assertDoesNotThrow(() -> new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 null, null, null));
     }
 
     @Test
     public void constructor_validEventWithOneOptionalField_success() {
-        assertDoesNotThrow(() -> new Event("Google Interview", "2025-09-10", "15:50",
+        assertDoesNotThrow(() -> new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", null, null));
-        assertDoesNotThrow(() -> new Event("Google Interview", "2025-09-10", "15:50",
+        assertDoesNotThrow(() -> new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 null, "Google Headquarters", null));
-        assertDoesNotThrow(() -> new Event("Google Interview", "2025-09-10", "15:50",
+        assertDoesNotThrow(() -> new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 null, null, "Technical Interview - Practise Leetcode"));
     }
 
     @Test
     public void constructor_validEventWithAllOptionalFields_success() {
-        assertDoesNotThrow(() -> new Event("Google Interview", "2025-09-10", "15:50",
+        assertDoesNotThrow(() -> new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round"));
     }
 
@@ -96,28 +102,16 @@ public class EventTest {
     }
 
     @Test
-    public void isValidDate_invalidDate() {
-        assertFalse(Event.isValidDate(""));
-        assertFalse(Event.isValidDate("2025-10"));
-        assertFalse(Event.isValidDate("2025-13-12"));
+    public void isValidStartEnd_invalidStartEnd() {
+        assertFalse(Event.isValidStartEnd("", ""));
+        assertFalse(Event.isValidStartEnd("2025-10-20", "15:00"));
+        assertFalse(Event.isValidStartEnd("2025-13-12 15:00", "2025-13-12 2459"));
+        assertFalse(Event.isValidStartEnd("2025-10-20 15:50", "2025-10-20 15:00"));
     }
 
     @Test
-    public void isValidDate_validDate() {
-        assertTrue(Event.isValidDate("2025-09-10"));
-    }
-
-    @Test
-    public void isValidTime_invalidTime() {
-        assertFalse(Event.isValidTime(""));
-        assertFalse(Event.isValidTime("20:"));
-        assertFalse(Event.isValidTime("2000"));
-        assertFalse(Event.isValidTime("2500"));
-    }
-
-    @Test
-    public void isValidTime_validTime() {
-        assertTrue(Event.isValidTime("20:00"));
+    public void isValidDate_validStartEnd() {
+        assertTrue(Event.isValidStartEnd("2025-09-10 15:00", "2025-09-11 15:00"));
     }
 
     @Test
@@ -164,40 +158,40 @@ public class EventTest {
 
     @Test
     public void isValidEvent_invalidEventAttributes() {
-        assertFalse(Event.isValidEvent("", "2025-09-19", "15:00", null, null,
-                null));
-        assertFalse(Event.isValidEvent("Google Interview", "2025-09", "15:00", null, null,
-                null));
-        assertFalse(Event.isValidEvent("Google Interview", "2025-09-19", "15:", null, null,
-                null));
-        assertFalse(Event.isValidEvent("Google Interview", "2025-09-19", "15:00", "GMeet",
+        assertFalse(Event.isValidEvent("", "2025-09-19 15:00", "2025-09-19 15:00", null,
                 null, null));
-        assertFalse(Event.isValidEvent("Google Interview", "2025-09-19", "15:00", null, "",
-                null));
-        assertFalse(Event.isValidEvent("Google Interview", "2025-09-19", "15:00", null,
-                null, ""));
+        assertFalse(Event.isValidEvent("Google Interview", "2025-09", "2025-09-19 15:00", null,
+                null, null));
+        assertFalse(Event.isValidEvent("Google Interview", "2025-09-19 15:00", "15:", null,
+                null, null));
+        assertFalse(Event.isValidEvent("Google Interview", "2025-09-19 15:00", "2025-09-19 15:00",
+                "GMeet", null, null));
+        assertFalse(Event.isValidEvent("Google Interview", "2025-09-19 15:00", "2025-09-19 15:00",
+                null, "", null));
+        assertFalse(Event.isValidEvent("Google Interview", "2025-09-19 15:00", "2025-09-19 15:00",
+                null, null, ""));
     }
 
     @Test
     public void isValidEvent_validEventAttributes() {
-        assertTrue(Event.isValidEvent("Google Interview", "2025-09-19", "15:00", null,
-                null, null));
-        assertTrue(Event.isValidEvent("Google Interview", "2025-09-19", "15:00", "Zoom",
-                null, "Technical Interview"));
-        assertTrue(Event.isValidEvent("Google Interview", "2025-09-19", "15:00", null,
-                "Google Headquarters", null));
+        assertTrue(Event.isValidEvent("Google Interview", "2025-09-19 15:00", "2025-09-19 15:00",
+                null, null, null));
+        assertTrue(Event.isValidEvent("Google Interview", "2025-09-19 15:00", "2025-09-19 15:00",
+                "Zoom", null, "Technical Interview"));
+        assertTrue(Event.isValidEvent("Google Interview", "2025-09-19 15:00", "2025-09-19 15:00",
+                null, "Google Headquarters", null));
     }
 
     @Test
     public void equals_sameEventObject() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         assertEquals(event, event);
     }
 
     @Test
     public void equals_notEventObject() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         Email email = new Email("valid@email");
         assertNotEquals(event, email);
@@ -205,62 +199,62 @@ public class EventTest {
 
     @Test
     public void equals_sameAttributes() {
-        Event event1 = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event1 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
-        Event event2 = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event2 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         assertEquals(event1, event2);
     }
 
     @Test
-    public void equals_sameTitleDateTime() {
-        Event event1 = new Event("Google Interview", "2025-09-10", "15:50",
+    public void equals_sameTitleStartEnd() {
+        Event event1 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
-        Event event2 = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event2 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "Zoom", null, "Technical Round");
         assertEquals(event1, event2);
     }
 
     @Test
     public void equals_differentTitle() {
-        Event event1 = new Event("Amazon Interview", "2025-09-10", "15:50",
+        Event event1 = new Event("Amazon Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
-        Event event2 = new Event("Google Interview", "2025-09-10", "15:50",
-                "f2f", "Google Headquarters", "Final Round");
-        assertNotEquals(event1, event2);
-    }
-
-    @Test
-    public void equals_differentDate() {
-        Event event1 = new Event("Google Interview", "2025-10-10", "15:50",
-                "f2f", "Google Headquarters", "Final Round");
-        Event event2 = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event2 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         assertNotEquals(event1, event2);
     }
 
     @Test
-    public void equals_differentTime() {
-        Event event1 = new Event("Google Interview", "2025-10-10", "15:40",
+    public void equals_differentStart() {
+        Event event1 = new Event("Google Interview", "2025-10-10 15:00", "2025-10-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
-        Event event2 = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event2 = new Event("Google Interview", "2025-09-10 15:00", "2025-10-10 15:50",
+                "f2f", "Google Headquarters", "Final Round");
+        assertNotEquals(event1, event2);
+    }
+
+    @Test
+    public void equals_differentEnd() {
+        Event event1 = new Event("Google Interview", "2025-10-10 15:00", "2025-10-10 15:40",
+                "f2f", "Google Headquarters", "Final Round");
+        Event event2 = new Event("Google Interview", "2025-10-10 15:00", "2025-10-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         assertNotEquals(event1, event2);
     }
 
     @Test
     public void toString_eventWithAllFields() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         assertEquals("""
-                Google Interview 2025-09-10 15:50 F2F Google Headquarters
+                Google Interview 2025-09-10 15:00 to 2025-09-10 15:50 F2F Google Headquarters
                 Remarks: Final Round""", event.toString());
     }
 
     @Test
     public void toString_eventWithNoOptionalFields() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50", null, null,
-                null);
-        assertEquals("Google Interview 2025-09-10 15:50", event.toString());
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50", null,
+                null, null);
+        assertEquals("Google Interview 2025-09-10 15:00 to 2025-09-10 15:50", event.toString());
     }
 }
