@@ -14,7 +14,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 public class NoteCommandParserTest {
     private String nonEmptyRemark = "hey";
     private NoteCommandParser parser = new NoteCommandParser();
-    
+
     @Test
     public void parse_indexSpecified_success() {
         // have remark
