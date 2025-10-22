@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.EventCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.Assert.assertThrows;
@@ -20,7 +21,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -38,14 +38,14 @@ public class EventCommandTest {
 
     @Test
     public void constructor_hasEvent_success() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:50", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         assertDoesNotThrow(() -> new EventCommand(Index.fromZeroBased(1), event));
     }
 
     @Test
     public void execute_validIndexAndEvent_addedToPerson() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), event);
 
@@ -55,13 +55,13 @@ public class EventCommandTest {
         Person personWithEvent = new PersonBuilder(ALICE).build();
         personWithEvent.addEvent(event);
 
-        String expectedMessage = String.format(MESSAGE_SUCCESS, Messages.format(personWithEvent));
+        String expectedMessage = String.format(MESSAGE_SUCCESS, event);
         assertCommandSuccess(eventCommand, model, expectedMessage, model);
     }
 
     @Test
     public void execute_invalidIndex_throwsCommandException() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(2), event)
                 .execute(new ModelStubWithPerson(new PersonBuilder(ALICE).build())));
@@ -69,7 +69,7 @@ public class EventCommandTest {
 
     @Test
     public void execute_duplicateEvent_throwsCommandException() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1), event)
                 .execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
@@ -77,7 +77,7 @@ public class EventCommandTest {
 
     @Test
     public void equals_sameEventCommand() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), event);
         assertEquals(eventCommand, eventCommand);
@@ -85,7 +85,7 @@ public class EventCommandTest {
 
     @Test
     public void equals_notEventCommand() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), event);
         DeleteCommand deleteCommand = new DeleteCommand(Index.fromOneBased(1));
@@ -94,7 +94,7 @@ public class EventCommandTest {
 
     @Test
     public void equals_sameAttributes() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event);
         EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), event);
@@ -103,7 +103,7 @@ public class EventCommandTest {
 
     @Test
     public void equals_differentIndex() {
-        Event event = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event);
         EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(2), event);
@@ -112,9 +112,9 @@ public class EventCommandTest {
 
     @Test
     public void equals_differentEvent() {
-        Event event1 = new Event("Google Interview", "2025-09-10", "15:50",
+        Event event1 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", "Final Round");
-        Event event2 = new Event("Google Interview", "2025-09-10", "16:50",
+        Event event2 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 16:50",
                 "f2f", "Google Headquarters", "Final Round");
         EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event1);
         EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), event2);
@@ -204,6 +204,15 @@ public class EventCommandTest {
         public void updateSortedPersonList(Comparator<Person> comparator) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void updatePersonListSort() { }
+
+        @Override
+        public void pinPerson(Person person) { }
+
+        @Override
+        public void unpinPerson(Person person) { }
     }
 
     /**
@@ -221,6 +230,11 @@ public class EventCommandTest {
         public ObservableList<Person> getFilteredPersonList() {
             return FXCollections.observableList(List.of(person));
         }
+
+        @Override
+        public void setPerson(Person target, Person editedPerson) {
+            requireAllNonNull(target, editedPerson);
+        }
     }
 
     /**
@@ -232,7 +246,7 @@ public class EventCommandTest {
         ModelStubWithPersonAndEvent(Person person) {
             requireNonNull(person);
             this.person = person;
-            Event event = new Event("Google Interview", "2025-09-10", "15:50",
+            Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                     "f2f", "Google Headquarters", "Final Round");
             this.person.addEvent(event);
         }

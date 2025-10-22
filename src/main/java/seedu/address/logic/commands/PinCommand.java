@@ -14,35 +14,37 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Pins a person identified using its displayed index or name to the top of the address book.
  */
-public class DeleteCommand extends Command {
+public class PinCommand extends Command {
 
-    public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_WORD = "pin";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number or by their full name.\n"
-            + "Parameters: INDEX (must be a positive integer) or Name \n"
-            + "Example: " + COMMAND_WORD + " 1"
+            + ": Pins the person identified by the index number or by their full name.\n"
+            + "Pinned contacts move to the top of the list, up to a maximum of 3.\n"
+            + "Parameters: INDEX (must be a positive integer) OR NAME\n"
+            + "Example: " + COMMAND_WORD + " 1\n"
             + "Example: " + COMMAND_WORD + " Alex Yeoh";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_PIN_PERSON_SUCCESS = "Pinned Person: %1$s";
+    public static final String MESSAGE_PERSON_ALREADY_PINNED = "This person is already pinned.";
 
     private final Index targetIndex;
     private final Name targetName;
 
     /**
-     * @param targetIndex of the person in the filtered person list to delete
+     * Creates a PinCommand to pin the person at the specified {@code targetIndex}.
      */
-    public DeleteCommand(Index targetIndex) {
+    public PinCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
         this.targetName = null;
     }
 
     /**
-     * @param targetName of the person in the filtered person list to delete
+     * Creates a PinCommand to pin the person with the specified {@code targetName}.
      */
-    public DeleteCommand(Name targetName) {
+    public PinCommand(Name targetName) {
         this.targetName = targetName;
         this.targetIndex = null;
     }
@@ -51,26 +53,32 @@ public class DeleteCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
-        Person personToDelete;
+        Person personToPin;
 
-        if (targetIndex != null) { // Check using index
+        if (targetIndex != null) {
+            // Logic for finding by index
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
-            personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        } else { // Check using name
-            personToDelete = lastShownList.stream()
+            personToPin = lastShownList.get(targetIndex.getZeroBased());
+        } else {
+            // Logic for finding by name
+            personToPin = lastShownList.stream()
                     .filter(person -> person.getName().equals(targetName))
                     .findFirst()
-                    .orElse(null); // Returns null if no person has that name
+                    .orElse(null);
 
-            if (personToDelete == null) {
+            if (personToPin == null) {
                 throw new CommandException(Messages.MESSAGE_PERSON_NOT_FOUND);
             }
         }
 
-        model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+        if (personToPin.isPinned()) {
+            throw new CommandException(MESSAGE_PERSON_ALREADY_PINNED);
+        }
+
+        model.pinPerson(personToPin);
+        return new CommandResult(String.format(MESSAGE_PIN_PERSON_SUCCESS, personToPin.getName()));
     }
 
     @Override
@@ -78,15 +86,12 @@ public class DeleteCommand extends Command {
         if (other == this) {
             return true;
         }
-
-        // instanceof handles nulls
-        if (!(other instanceof DeleteCommand)) {
+        if (!(other instanceof PinCommand)) {
             return false;
         }
-
-        DeleteCommand otherDeleteCommand = (DeleteCommand) other;
-        return Objects.equals(targetIndex, otherDeleteCommand.targetIndex)
-                && Objects.equals(targetName, otherDeleteCommand.targetName);
+        PinCommand otherPinCommand = (PinCommand) other;
+        return Objects.equals(targetIndex, otherPinCommand.targetIndex)
+                && Objects.equals(targetName, otherPinCommand.targetName);
     }
 
     @Override

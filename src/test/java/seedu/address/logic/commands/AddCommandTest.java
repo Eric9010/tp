@@ -175,6 +175,15 @@ public class AddCommandTest {
         public void updateSortedPersonList(Comparator<Person> comparator) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void updatePersonListSort() { }
+
+        @Override
+        public void pinPerson(Person person) { }
+
+        @Override
+        public void unpinPerson(Person person) { }
     }
 
     /**

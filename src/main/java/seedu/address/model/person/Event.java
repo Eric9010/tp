@@ -3,8 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Objects;
@@ -20,45 +19,69 @@ public class Event {
         F2F, CALL, ZOOM;
     }
 
-    private static final String MESSAGE_CONSTRAINTS = """
-            1. Events should have a non-empty title, a non-empty date in the YYYY-MM-DD format and a \
-            non-empty time in the HH:mm format.
+    public static final String MESSAGE_CONSTRAINTS = """
+            1. Events should have a non-empty title, a non-empty start and a non-empty end, both in the yyyy-MM-dd \
+            HH:mm format.
             2. Mode is optional. Valid modes are F2F, CALL and ZOOM.
             3. Location is optional and can take any string values.
-            4. Description is optional and can take any string values with a maximum of 500 characters.
+            4. Remarks is optional and can take any string values with a maximum of 500 characters.
             5. Note: Optional fields do not accept empty strings.
             """;
 
     private final String title;
-    private final LocalDate date;
-    private final LocalTime time;
+    private final LocalDateTime start;
+    private final LocalDateTime end;
     private final Mode mode;
     private final String location;
-    private final String description;
+    private final String remarks;
 
     /**
      * Constructs an event.
      *
      * @param title User input title.
-     * @param date User input date.
-     * @param time User input time.
+     * @param start User input start date and time.
+     * @param end User input end date and time.
      * @param mode User input mode.
      * @param location User input location.
-     * @param description User input description.
+     * @param remarks User input remarks.
      */
-    public Event(String title, String date, String time, String mode, String location, String description) {
+    public Event(String title, String start, String end, String mode, String location, String remarks) {
         requireNonNull(title);
-        requireNonNull(date);
-        requireNonNull(time);
+        requireNonNull(start);
+        requireNonNull(end);
 
-        checkArgument(isValidEvent(title, date, time, mode, location, description), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidEvent(title, start, end, mode, location, remarks), MESSAGE_CONSTRAINTS);
 
         this.title = title;
-        this.date = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        this.time = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
+        this.start = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        this.end = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.mode = mode == null ? null : Mode.valueOf(mode.toUpperCase());
         this.location = location;
-        this.description = description;
+        this.remarks = remarks;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getStart() {
+        return start.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    }
+
+    public String getEnd() {
+        return end.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+    }
+
+    public String getMode() {
+        return mode == null ? "" : mode.toString();
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getRemarks() {
+        return remarks;
     }
 
     /**
@@ -72,30 +95,17 @@ public class Event {
     }
 
     /**
-     * Checks if the date is valid.
+     * Checks if the date and time is valid.
      *
-     * @param date User input date.
-     * @return true if date matches the pattern yyyy-MM-dd, false otherwise.
+     * @param startString User input start date and time.
+     * @param endString User input end date and time.
+     * @return true if start and end matches the pattern yyyy-MM-dd HH:mm and start is before end, false otherwise.
      */
-    public static boolean isValidDate(String date) {
+    public static boolean isValidStartEnd(String startString, String endString) {
         try {
-            LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            return true;
-        } catch (DateTimeParseException e) {
-            return false;
-        }
-    }
-
-    /**
-     * Checks if the time is valid.
-     *
-     * @param time User input time.
-     * @return true if time matches the pattern HH:mm, false otherwise.
-     */
-    public static boolean isValidTime(String time) {
-        try {
-            LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
-            return true;
+            LocalDateTime start = LocalDateTime.parse(startString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            LocalDateTime end = LocalDateTime.parse(endString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+            return !start.isAfter(end);
         } catch (DateTimeParseException e) {
             return false;
         }
@@ -131,30 +141,30 @@ public class Event {
     }
 
     /**
-     * Checks if description is valid.
+     * Checks if remarks is valid.
      *
-     * @param description User input description.
-     * @return false if description is an empty string or a string with over 500 characters, true otherwise.
+     * @param remarks User input remarks.
+     * @return false if remarks is an empty string or a string with over 500 characters, true otherwise.
      */
-    public static boolean isValidDescription(String description) {
-        return description == null || (!description.isEmpty() && description.length() <= 500);
+    public static boolean isValidRemark(String remarks) {
+        return remarks == null || (!remarks.isEmpty() && remarks.length() <= 500);
     }
 
     /**
      * Checks if the event is valid.
      *
      * @param title User input title.
-     * @param date User input date.
-     * @param time User input time.
+     * @param start User input start date and time.
+     * @param end User input end date and time.
      * @param mode User input mode.
      * @param location User input location.
-     * @param description User input description.
+     * @param remarks User input remarks.
      * @return true if the all fields of the event is valid, false otherwise.
      */
-    public static boolean isValidEvent(String title, String date, String time, String mode, String location,
-                                       String description) {
-        return isValidTitle(title) && isValidDate(date) && isValidTime(time) && isValidMode(mode)
-                && isValidLocation(location) && isValidDescription(description);
+    public static boolean isValidEvent(String title, String start, String end, String mode, String location,
+                                       String remarks) {
+        return isValidTitle(title) && isValidStartEnd(start, end) && isValidMode(mode) && isValidLocation(location)
+                && isValidRemark(remarks);
     }
 
     @Override
@@ -168,24 +178,23 @@ public class Event {
         }
 
         Event otherEvent = (Event) other;
-        return title.equals(otherEvent.title) && date.equals(otherEvent.date) && time.equals(otherEvent.time);
+        return title.equals(otherEvent.title) && start.equals(otherEvent.start) && end.equals(otherEvent.end);
     }
 
     @Override
     public String toString() {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         String modeString = mode == null ? "" : " " + mode;
         String locationString = location == null ? "" : " " + location;
-        String descriptionString = description == null ? "" : "\n" + description;
+        String remarksString = remarks == null ? "" : "\nRemarks: " + remarks;
 
-        return title + " " + date.format(dateFormatter) + " " + time.format(timeFormatter) + modeString
-                + locationString + descriptionString;
+        return title + " " + start.format(dateTimeFormatter) + " to " + end.format(dateTimeFormatter) + modeString
+                + locationString + remarksString;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, date, time);
+        return Objects.hash(title, start, end);
     }
 }

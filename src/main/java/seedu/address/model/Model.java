@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
 /**
@@ -94,4 +95,16 @@ public interface Model {
      * @throws NullPointerException if {@code comparator} is null.
      */
     void updateSortedPersonList(Comparator<Person> comparator);
+
+    /**
+     * Pins the given person.
+     * @throws CommandException if the pin limit (3) is reached.
+     */
+    void pinPerson(Person person) throws CommandException;
+
+    /** Unpins the given person. */
+    void unpinPerson(Person person);
+
+    /** Updates the sorting of the person list to reflect pin status. */
+    void updatePersonListSort();
 }

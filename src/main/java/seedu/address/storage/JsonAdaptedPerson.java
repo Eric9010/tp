@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Event;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -29,6 +30,8 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedEvent> events = new ArrayList<>();
+    private final Long pinTimestamp;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -36,7 +39,7 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("events") List<JsonAdaptedEvent> events) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -44,6 +47,10 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        if (events != null) {
+            this.events.addAll(events);
+        }
+        this.pinTimestamp = null;
     }
 
     /**
@@ -57,6 +64,10 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        events.addAll(source.getEvents().stream()
+                .map(JsonAdaptedEvent::new)
+                .collect(Collectors.toList()));
+        pinTimestamp = source.getPinTimestamp();
     }
 
     /**
@@ -68,6 +79,12 @@ class JsonAdaptedPerson {
         final List<Tag> personTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
+        }
+        final Set<Tag> modelTags = new HashSet<>(personTags);
+
+        final Set<Event> personEvents = new HashSet<>();
+        for (JsonAdaptedEvent event : events) {
+            personEvents.add(event.toModelType());
         }
 
         if (name == null) {
@@ -102,8 +119,13 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags);
+        Person person = new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, pinTimestamp,
+                personEvents);
+        for (Event event : personEvents) {
+            person.addEvent(event);
+        }
+
+        return person;
     }
 
 }
