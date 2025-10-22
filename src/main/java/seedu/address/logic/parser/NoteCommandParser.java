@@ -18,6 +18,7 @@ public class NoteCommandParser implements Parser<NoteCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the NoteCommand
      * and returns a NoteCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public NoteCommand parse(String args) throws ParseException {
