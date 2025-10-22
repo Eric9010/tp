@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -7,11 +9,12 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Note;
 import seedu.address.model.person.Person;
 
-import java.util.List;
-
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+/**
+ * Represents a command to add a note.
+ */
 public class NoteCommand extends Command {
     public static final String COMMAND_WORD = "note";
 
@@ -26,6 +29,9 @@ public class NoteCommand extends Command {
     private final Index index;
     private final Note note;
 
+    /**
+     * Creates a NoteCommand to attach a note to a person at the specified {@code targetIndex}.
+     */
     public NoteCommand(Index index, Note note) {
         requireAllNonNull(index, note);
 
