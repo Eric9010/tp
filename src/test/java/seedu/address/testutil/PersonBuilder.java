@@ -101,6 +101,9 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Note} of the {@code Person} that we are building.
+     */
     public PersonBuilder withNote(String note) {
         this.note = new Note(note);
         return this;
