@@ -71,6 +71,12 @@ public class TypicalPersons {
         return ab;
     }
 
+    public static AddressBook getTypicalAddressBookUnsorted() {
+        AddressBook ab = getTypicalAddressBook();
+        ab.addPerson(AMY);
+        return ab;
+    }
+
     public static List<Person> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
