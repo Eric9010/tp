@@ -17,7 +17,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_MODE = new Prefix("m/");
     public static final Prefix PREFIX_LOCATION = new Prefix("l/");
     public static final Prefix PREFIX_REMARKS = new Prefix("r/");
-    public static final Prefix PREFIX_DESCRIPTION = new Prefix("d/");
+    public static final Prefix PREFIX_DATE = new Prefix("d/");
+    public static final Prefix PREFIX_HOURS = new Prefix("h/");
+    public static final Prefix PREFIX_DESCRIPTION = new Prefix("desc/");
     public static final Prefix PREFIX_NOTE = new Prefix("no/");
 
 }
