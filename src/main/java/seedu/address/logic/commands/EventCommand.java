@@ -8,7 +8,10 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -44,6 +47,7 @@ public class EventCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New event added.\n%1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists.";
+    public static final String MESSAGE_CLASH = "This event clashes with an event under %1$s:\n%2$s";
 
     private final Index targetIndex;
     private final Event event;
@@ -75,9 +79,26 @@ public class EventCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime start = LocalDateTime.parse(event.getStart(), formatter);
+        LocalDateTime end = LocalDateTime.parse(event.getEnd(), formatter);
+
+        for (Person person: lastShownList) {
+            Set<Event> events = person.getEvents();
+            for (Event event: events) {
+                LocalDateTime eventStart = LocalDateTime.parse(event.getStart(), formatter);
+                LocalDateTime eventEnd = LocalDateTime.parse(event.getEnd(), formatter);
+                boolean beforeEvent = end.isBefore(eventStart) || end.isEqual(eventStart);
+                boolean afterEvent = start.isAfter(eventEnd) || start.isEqual(eventEnd);
+                if (!beforeEvent && !afterEvent) {
+                    throw new CommandException(String.format(MESSAGE_CLASH, person.getName(), event));
+                }
+            }
+        }
+
         personToAddEvent.addEvent(event);
         model.setPerson(lastShownList.get(targetIndex.getZeroBased()), personToAddEvent);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, event.toString()));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, event));
     }
 
     @Override

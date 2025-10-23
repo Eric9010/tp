@@ -23,6 +23,7 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final Note note;
     private final Set<Tag> tags = new HashSet<>();
     private final Set<Event> events = new HashSet<>();
     private final Long pinTimestamp;
@@ -30,12 +31,13 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Event> events) {
-        requireAllNonNull(name, phone, email, address, tags, events);
+    public Person(Name name, Phone phone, Email email, Address address, Note note, Set<Tag> tags, Set<Event> events) {
+        requireAllNonNull(name, phone, email, address, note, tags, events);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.note = note;
         this.tags.addAll(tags);
         this.pinTimestamp = null;
         this.events.addAll(events);
@@ -44,13 +46,14 @@ public class Person {
     /**
      * Second constructor for pinned contacts.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Long pinTimestamp,
+    public Person(Name name, Phone phone, Email email, Address address, Note note, Set<Tag> tags, Long pinTimestamp,
                   Set<Event> events) {
         requireAllNonNull(name, phone, email, address, tags, events);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.note = note;
         this.tags.addAll(tags);
         this.pinTimestamp = pinTimestamp;
         this.events.addAll(events);
@@ -70,6 +73,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Note getNote() {
+        return note;
     }
 
     /**
@@ -113,14 +120,14 @@ public class Person {
      * Returns a new Person object with the pin timestamp set to the current time.
      */
     public Person pin() {
-        return new Person(name, phone, email, address, tags, System.currentTimeMillis(), this.events);
+        return new Person(name, phone, email, address, note, tags, System.currentTimeMillis(), this.events);
     }
 
     /**
      * Returns a new Person object with the pin timestamp removed.
      */
     public Person unpin() {
-        return new Person(name, phone, email, address, tags, null, this.events);
+        return new Person(name, phone, email, address, note, tags, null, this.events);
     }
 
     /**
@@ -156,6 +163,7 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
+                && note.equals(otherPerson.note)
                 && tags.equals(otherPerson.tags)
                 && Objects.equals(pinTimestamp, otherPerson.pinTimestamp)
                 && events.equals(otherPerson.events);
@@ -174,6 +182,7 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("organisation", address)
+                .add("note", note)
                 .add("tags", tags)
                 .add("events", events)
                 .toString();
