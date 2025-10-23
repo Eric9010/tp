@@ -30,6 +30,11 @@ import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
 public class EventCommandTest {
+    public static final Event VALID_EVENT = new Event("Google Interview", "2025-09-10 15:00",
+            "2025-09-10 15:50", "f2f", "Google Headquarters", "Final Round");
+    public static final Event ALTERNATE_VALID_EVENT = new Event("Amazon Interview", "2025-09-10 15:40",
+            "2025-09-10 16:50", null, null, null);
+
     @Test
     public void constructor_nullEvent_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new EventCommand(Index.fromZeroBased(1),
@@ -38,86 +43,99 @@ public class EventCommandTest {
 
     @Test
     public void constructor_hasEvent_success() {
-        Event event = new Event("Google Interview", "2025-09-10 15:50", "2025-09-10 15:50",
-                "f2f", "Google Headquarters", "Final Round");
-        assertDoesNotThrow(() -> new EventCommand(Index.fromZeroBased(1), event));
+        assertDoesNotThrow(() -> new EventCommand(Index.fromZeroBased(1), VALID_EVENT));
     }
 
     @Test
     public void execute_validIndexAndEvent_addedToPerson() {
-        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
-                "f2f", "Google Headquarters", "Final Round");
-        EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), event);
+        EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
 
         Person person = new PersonBuilder(ALICE).build();
         ModelStubWithPerson model = new ModelStubWithPerson(person);
 
         Person personWithEvent = new PersonBuilder(ALICE).build();
-        personWithEvent.addEvent(event);
+        personWithEvent.addEvent(VALID_EVENT);
 
-        String expectedMessage = String.format(MESSAGE_SUCCESS, event);
+        String expectedMessage = String.format(MESSAGE_SUCCESS, VALID_EVENT);
         assertCommandSuccess(eventCommand, model, expectedMessage, model);
     }
 
     @Test
     public void execute_invalidIndex_throwsCommandException() {
-        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
-                "f2f", "Google Headquarters", "Final Round");
-        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(2), event)
+        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(2), VALID_EVENT)
                 .execute(new ModelStubWithPerson(new PersonBuilder(ALICE).build())));
     }
 
     @Test
     public void execute_duplicateEvent_throwsCommandException() {
-        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
-                "f2f", "Google Headquarters", "Final Round");
-        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1), event)
+        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1), VALID_EVENT)
                 .execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
     }
 
     @Test
+    public void execute_hasClashes_throwsCommandException() {
+        // same time
+        Event event1 = new Event("Amazon Interview", "2025-09-10 15:00", "2025-09-10 15:50", null,
+                null, null);
+        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
+                event1).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
+
+        // subset of event duration
+        Event event2 = new Event("Amazon Interview", "2025-09-10 15:30", "2025-09-10 15:40", null,
+                null, null);
+        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
+                event2).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
+
+        // superset of event duration
+        Event event3 = new Event("Amazon Interview", "2025-09-10 14:30", "2025-09-10 16:40", null,
+                null, null);
+        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
+                event3).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
+
+        // overlap with start
+        Event event4 = new Event("Amazon Interview", "2025-09-10 14:30", "2025-09-10 15:40", null,
+                null, null);
+        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
+                event4).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
+
+        // overlap with end
+        Event event5 = new Event("Amazon Interview", "2025-09-10 15:30", "2025-09-10 16:40", null,
+                null, null);
+        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
+                event5).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
+    }
+
+    @Test
     public void equals_sameEventCommand() {
-        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
-                "f2f", "Google Headquarters", "Final Round");
-        EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), event);
+        EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
         assertEquals(eventCommand, eventCommand);
     }
 
     @Test
     public void equals_notEventCommand() {
-        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
-                "f2f", "Google Headquarters", "Final Round");
-        EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), event);
+        EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
         DeleteCommand deleteCommand = new DeleteCommand(Index.fromOneBased(1));
         assertNotEquals(eventCommand, deleteCommand);
     }
 
     @Test
     public void equals_sameAttributes() {
-        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
-                "f2f", "Google Headquarters", "Final Round");
-        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event);
-        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), event);
+        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
+        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
         assertEquals(eventCommand1, eventCommand2);
     }
 
     @Test
     public void equals_differentIndex() {
-        Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
-                "f2f", "Google Headquarters", "Final Round");
-        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event);
-        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(2), event);
+        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
+        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(2), VALID_EVENT);
         assertNotEquals(eventCommand1, eventCommand2);
     }
 
     @Test
     public void equals_differentEvent() {
-        Event event1 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
-                "f2f", "Google Headquarters", "Final Round");
-        Event event2 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 16:50",
-                "f2f", "Google Headquarters", "Final Round");
-        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), event1);
-        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), event2);
+        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
+        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), ALTERNATE_VALID_EVENT);
         assertNotEquals(eventCommand1, eventCommand2);
     }
 
@@ -246,9 +264,7 @@ public class EventCommandTest {
         ModelStubWithPersonAndEvent(Person person) {
             requireNonNull(person);
             this.person = person;
-            Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
-                    "f2f", "Google Headquarters", "Final Round");
-            this.person.addEvent(event);
+            this.person.addEvent(VALID_EVENT);
         }
 
         @Override
