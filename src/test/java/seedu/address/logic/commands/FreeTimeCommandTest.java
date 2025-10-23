@@ -1,0 +1,168 @@
+package seedu.address.logic.commands;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.core.GuiSettings;
+import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.person.Event;
+import seedu.address.model.person.Person;
+
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.function.Predicate;
+
+import org.junit.jupiter.api.Test;
+import seedu.address.testutil.PersonBuilder;
+
+import static java.util.Objects.requireNonNull;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.FreeTimeCommand.MESSAGE_NOT_FOUND;
+import static seedu.address.logic.commands.FreeTimeCommand.MESSAGE_SUCCESS;
+import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+
+public class FreeTimeCommandTest {
+    private static final Event FULL_DAY = new Event("Interview", "2025-09-10 00:00", "2025-09-11 00:00",
+            null, null, null);
+    private static final Event HALF_DAY = new Event("Interview", "2025-09-10 00:00", "2025-09-11 12:00",
+            null, null, null);
+
+    @Test
+    public void constructor_nullDate_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new FreeTimeCommand(1, null));
+    }
+
+    @Test
+    public void constructor_validInputs_success() {
+        assertDoesNotThrow(() -> new FreeTimeCommand(1, LocalDate.of(2025, 10, 23)));
+    }
+
+    @Test
+    public void execute_noneFound() {
+        FreeTimeCommand freeTimeCommand = new FreeTimeCommand(1, LocalDate.of(2025, 9, 10));
+        Person person = new PersonBuilder(ALICE).build();
+        ModelStubWithPersonAndEvent model = new ModelStubWithPersonAndEvent(person, List.of(FULL_DAY));
+        assertCommandSuccess(freeTimeCommand, model, MESSAGE_NOT_FOUND, model);
+    }
+
+    @Test
+    public void execute_success() {
+        FreeTimeCommand freeTimeCommand = new FreeTimeCommand(10, LocalDate.of(2025, 9,
+                10));
+        Person person = new PersonBuilder(ALICE).build();
+        ModelStubWithPersonAndEvent model = new ModelStubWithPersonAndEvent(person, List.of(HALF_DAY));
+        String expectedMessage = String.format(MESSAGE_SUCCESS, 3, """
+                1. [2025-09-10 12:00 to 2025-09-10 22:00]
+                2. [2025-09-10 13:00 to 2025-09-10 23:00]
+                3. [2025-09-10 14:00 to 2025-09-11 00:00]""");
+        assertCommandSuccess(freeTimeCommand, model, MESSAGE_NOT_FOUND, model);
+    }
+
+    /**
+     * A default model stub that have all the methods failing.
+     */
+    private class ModelStub implements Model {
+        @Override
+        public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyUserPrefs getUserPrefs() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public GuiSettings getGuiSettings() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setGuiSettings(GuiSettings guiSettings) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Path getAddressBookFilePath() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setAddressBookFilePath(Path addressBookFilePath) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addPerson(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setAddressBook(ReadOnlyAddressBook newData) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyAddressBook getAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasPerson(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deletePerson(Person target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setPerson(Person target, Person editedPerson) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Person> getFilteredPersonList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<Person> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updatePersonListSort() { }
+
+        @Override
+        public void pinPerson(Person person) { }
+
+        @Override
+        public void unpinPerson(Person person) { }
+    }
+
+    /**
+     * A Model stub that contains a single person with one or more events.
+     */
+    private class ModelStubWithPersonAndEvent extends ModelStub {
+        private final Person person;
+
+        ModelStubWithPersonAndEvent(Person person, List<Event> events) {
+            requireNonNull(person);
+            this.person = person;
+            for (Event event: events) {
+                this.person.addEvent(event);
+            }
+        }
+
+        @Override
+        public ObservableList<Person> getFilteredPersonList() {
+            return FXCollections.observableList(List.of(person));
+        }
+    }
+}

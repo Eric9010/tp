@@ -54,6 +54,7 @@ public class FreeTimeCommand extends Command {
 
 
     public FreeTimeCommand(int hours, LocalDate date) {
+        requireNonNull(date);
         this.hours = hours;
         this.date = date;
     }
