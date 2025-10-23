@@ -118,4 +118,19 @@ public class FreeTimeCommand extends Command {
 
         return str.toString();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof FreeTimeCommand)) {
+            return false;
+        }
+
+        FreeTimeCommand otherFreeTimeCommand = (FreeTimeCommand) other;
+        return hours == otherFreeTimeCommand.hours && date.isEqual(otherFreeTimeCommand.date);
+    }
 }

@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
@@ -18,7 +19,7 @@ import org.junit.jupiter.api.Test;
 import seedu.address.testutil.PersonBuilder;
 
 import static java.util.Objects.requireNonNull;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.*;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.FreeTimeCommand.MESSAGE_NOT_FOUND;
 import static seedu.address.logic.commands.FreeTimeCommand.MESSAGE_SUCCESS;
@@ -28,8 +29,10 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 public class FreeTimeCommandTest {
     private static final Event FULL_DAY = new Event("Interview", "2025-09-10 00:00", "2025-09-11 00:00",
             null, null, null);
-    private static final Event HALF_DAY = new Event("Interview", "2025-09-10 00:00", "2025-09-11 12:00",
+    private static final Event HALF_DAY = new Event("Interview", "2025-09-10 00:00", "2025-09-10 12:00",
             null, null, null);
+    private static final FreeTimeCommand FREE_TIME_COMMAND = new FreeTimeCommand(10, LocalDate.of(2025,
+            9, 10));
 
     @Test
     public void constructor_nullDate_throwsNullPointerException() {
@@ -43,23 +46,49 @@ public class FreeTimeCommandTest {
 
     @Test
     public void execute_noneFound() {
-        FreeTimeCommand freeTimeCommand = new FreeTimeCommand(1, LocalDate.of(2025, 9, 10));
         Person person = new PersonBuilder(ALICE).build();
         ModelStubWithPersonAndEvent model = new ModelStubWithPersonAndEvent(person, List.of(FULL_DAY));
-        assertCommandSuccess(freeTimeCommand, model, MESSAGE_NOT_FOUND, model);
+        assertCommandSuccess(FREE_TIME_COMMAND, model, MESSAGE_NOT_FOUND, model);
     }
 
     @Test
     public void execute_success() {
-        FreeTimeCommand freeTimeCommand = new FreeTimeCommand(10, LocalDate.of(2025, 9,
-                10));
         Person person = new PersonBuilder(ALICE).build();
         ModelStubWithPersonAndEvent model = new ModelStubWithPersonAndEvent(person, List.of(HALF_DAY));
         String expectedMessage = String.format(MESSAGE_SUCCESS, 3, """
                 1. [2025-09-10 12:00 to 2025-09-10 22:00]
                 2. [2025-09-10 13:00 to 2025-09-10 23:00]
-                3. [2025-09-10 14:00 to 2025-09-11 00:00]""");
-        assertCommandSuccess(freeTimeCommand, model, MESSAGE_NOT_FOUND, model);
+                3. [2025-09-10 14:00 to 2025-09-11 00:00]
+                """);
+        assertCommandSuccess(FREE_TIME_COMMAND, model, expectedMessage, model);
+    }
+
+    @Test
+    public void equals_sameFreeTimeCommand() {
+        assertEquals(FREE_TIME_COMMAND, FREE_TIME_COMMAND);
+    }
+
+    @Test
+    public void equals_notFreeTimeCommand() {
+        assertNotEquals(FREE_TIME_COMMAND, new DeleteCommand(Index.fromOneBased(1)));
+    }
+
+    @Test
+    public void equals_sameAttributes() {
+        FreeTimeCommand identical = new FreeTimeCommand(10, LocalDate.of(2025, 9, 10));
+        assertEquals(FREE_TIME_COMMAND, identical);
+    }
+
+    @Test
+    public void equals_differentHours() {
+        FreeTimeCommand differentHours = new FreeTimeCommand(12, LocalDate.of(2025, 9, 10));
+        assertNotEquals(FREE_TIME_COMMAND, differentHours);
+    }
+
+    @Test
+    public void equals_differentDate() {
+        FreeTimeCommand differentDate = new FreeTimeCommand(10, LocalDate.of(2026, 9, 10));
+        assertNotEquals(FREE_TIME_COMMAND, differentDate);
     }
 
     /**
