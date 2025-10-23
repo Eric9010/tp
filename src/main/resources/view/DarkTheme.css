@@ -350,3 +350,7 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#tags .label.tag-industry {
+    -fx-background-color: #ef6c00;
+}
