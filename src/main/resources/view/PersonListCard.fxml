@@ -36,6 +36,7 @@
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <VBox fx:id="events" spacing="5" VBox.vgrow="ALWAYS" />
+      <Label fx:id="note" styleClass="cell_small_label" text="\$note" />
     </VBox>
   </GridPane>
 </HBox>
