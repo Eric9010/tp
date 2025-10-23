@@ -16,7 +16,9 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 
-
+/**
+ * Finds a duration of time when the user does not have any events.
+ */
 public class FreeTimeCommand extends Command {
     private class Duration {
         private LocalDateTime start;
@@ -48,11 +50,14 @@ public class FreeTimeCommand extends Command {
     public static final String MESSAGE_SUCCESS = "%1$s time slots are found:\n%2$s\n";
     public static final String MESSAGE_NOT_FOUND = "No such time slots can be found.\n";
 
-
     private final int hours;
     private final LocalDate date;
 
-
+    /**
+     * Creates a FreeTimeCommand
+     * @param hours User input number of hours.
+     * @param date User input date.
+     */
     public FreeTimeCommand(int hours, LocalDate date) {
         requireNonNull(date);
         this.hours = hours;
@@ -98,6 +103,12 @@ public class FreeTimeCommand extends Command {
                 formatNumberedList(availableTimes)));
     }
 
+    /**
+     * Checks if the two durations have any overlap.
+     * @param duration1 First duration.
+     * @param duration2 Second duration.
+     * @return true if there is no overlap, false otherwise.
+     */
     private boolean notOverlapping(Duration duration1, Duration duration2) {
         boolean isBefore = duration1.end.isBefore(duration2.start) || duration1.end.equals(duration2.start);
         boolean isAfter = duration1.start.isAfter(duration2.end) || duration1.start.equals(duration2.end);
