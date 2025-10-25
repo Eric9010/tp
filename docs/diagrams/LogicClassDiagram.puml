@@ -24,6 +24,17 @@ Class HiddenModel #FFFFFF
 package Storage {
 }
 
+Class FilterTagCommand {
+  - taglist : List<String>
+  + execute(model) : CommandResult
+  + parse(args) : FilterTagCommand
+}
+FilterTagCommand -up-|> Command
+note right of FilterTagCommand
+  Filters persons by tag keywords.
+  e.g., "filtertag Friend Colleague"
+end note
+
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Logic
 
