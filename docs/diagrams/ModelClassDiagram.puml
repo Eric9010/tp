@@ -13,12 +13,23 @@ Class ModelManager
 Class UserPrefs
 
 Class UniquePersonList
-Class Person
-Class Address
+Class Person {
+  - name: Name
+  - phone: Phone
+  - email: Email
+  - organisation: Organisation
+  - note: Note
+  - tags: Set<Tag>
+  - events: Set<Event>
+  - pinTimestamp: Long
+}
+Class Organisation
 Class Email
 Class Name
 Class Phone
 Class Tag
+Class Note
+Class Event
 
 Class I #FFFFFF
 }
@@ -40,15 +51,20 @@ UniquePersonList --> "~* all" Person
 Person *--> Name
 Person *--> Phone
 Person *--> Email
-Person *--> Address
+Person *--> Organisation
 Person *--> "*" Tag
+Person *--> "1" Note
+Person *--> "*" Event
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
 Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
+Phone -[hidden]right-> Organisation
+Organisation -[hidden]right-> Email
+Email -[hidden]right-> Tag
+Tag -[hidden]right-> Note
+Note -[hidden]right-> Event
 
 ModelManager --> "~* filtered" Person
 @enduml

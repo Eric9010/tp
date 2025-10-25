@@ -17,5 +17,7 @@ Person -up-> "*" Tag
 Person *--> Name
 Person *--> Phone
 Person *--> Email
-Person *--> Address
+Person *--> Organisation
+Person *--> "1" Note
+Person *--> "*" Event
 @enduml
