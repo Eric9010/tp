@@ -8,17 +8,16 @@ participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
 participant ":DeleteCommandParser" as DeleteCommandParser LOGIC_COLOR
 participant "d:DeleteCommand" as DeleteCommand LOGIC_COLOR
 participant "r:CommandResult" as CommandResult LOGIC_COLOR
-participant ":ParserUtil" as ParserUtil LOGIC_COLOR
 end box
 
 box Model MODEL_COLOR_T1
 participant "m:Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute("delete ARG")
+[-> LogicManager : execute("delete 1")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand("delete ARG")
+LogicManager -> AddressBookParser : parseCommand("delete 1")
 activate AddressBookParser
 
 create DeleteCommandParser
@@ -28,38 +27,19 @@ activate DeleteCommandParser
 DeleteCommandParser --> AddressBookParser
 deactivate DeleteCommandParser
 
-AddressBookParser -> DeleteCommandParser : parse("ARG")
+AddressBookParser -> DeleteCommandParser : parse("1")
 activate DeleteCommandParser
 
-alt Input ARG is Index (e.g., "1")
-    DeleteCommandParser -> ParserUtil : parseIndex("1")
-    activate ParserUtil
-    ParserUtil --> DeleteCommandParser : index
-    deactivate ParserUtil
-    create DeleteCommand
-    DeleteCommandParser -> DeleteCommand : new DeleteCommand(index)
-    activate DeleteCommand
-    DeleteCommand --> DeleteCommandParser : d (with index)
-    deactivate DeleteCommand
+create DeleteCommand
+DeleteCommandParser -> DeleteCommand
+activate DeleteCommand
 
-else Input ARG is Name (e.g., "Alex Yeoh")
-    DeleteCommandParser -> ParserUtil : parseIndex("Alex Yeoh")
-    activate ParserUtil
-    ParserUtil --> DeleteCommandParser : throws ParseException
-    deactivate ParserUtil
-    DeleteCommandParser -> ParserUtil : parseName("Alex Yeoh")
-    activate ParserUtil
-    ParserUtil --> DeleteCommandParser : name
-    deactivate ParserUtil
-    create DeleteCommand
-    DeleteCommandParser -> DeleteCommand : new DeleteCommand(name)
-    activate DeleteCommand
-    DeleteCommand --> DeleteCommandParser : d (with name)
-    deactivate DeleteCommand
-end
+DeleteCommand --> DeleteCommandParser :
+deactivate DeleteCommand
 
 DeleteCommandParser --> AddressBookParser : d
 deactivate DeleteCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
 DeleteCommandParser -[hidden]-> AddressBookParser
 destroy DeleteCommandParser
 
@@ -69,33 +49,11 @@ deactivate AddressBookParser
 LogicManager -> DeleteCommand : execute(m)
 activate DeleteCommand
 
-alt Command 'd' contains an index
-    DeleteCommand -> Model : getFilteredPersonList()
-    activate Model
-    Model --> DeleteCommand : lastShownList
-    deactivate Model
-    DeleteCommand -> Model : deletePerson(personAtIndex)
-    activate Model
-    Model --> DeleteCommand
-    deactivate Model
+DeleteCommand -> Model : deletePerson(1)
+activate Model
 
-else Command 'd' contains a name
-    DeleteCommand -> Model : getFilteredPersonList()
-    activate Model
-    Model --> DeleteCommand : lastShownList
-    deactivate Model
-    alt Person with name found
-        DeleteCommand -> Model : deletePerson(personWithName)
-        activate Model
-        Model --> DeleteCommand
-        deactivate Model
-    else Person with name not found
-        DeleteCommand --> LogicManager : throws CommandException
-        deactivate DeleteCommand
-        [<-- LogicManager : CommandException
-        deactivate LogicManager
-    end
-end
+Model --> DeleteCommand
+deactivate Model
 
 create CommandResult
 DeleteCommand -> CommandResult
