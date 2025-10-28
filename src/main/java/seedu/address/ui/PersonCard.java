@@ -72,7 +72,7 @@ public class PersonCard extends UiPart<Region> {
         }
         if (person.getNote().value.isEmpty()) {
             notePane.setVisible(false);
-            notePane.setManaged(false); // hides it from layout
+            notePane.setManaged(false);
         } else {
             note.setText(person.getNote().value);
         }
