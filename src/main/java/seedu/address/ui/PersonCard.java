@@ -6,6 +6,7 @@ import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -49,6 +50,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private VBox events;
     @FXML
+    private TitledPane notePane;
+    @FXML
     private Label note;
 
     /**
@@ -67,7 +70,12 @@ public class PersonCard extends UiPart<Region> {
         } else {
             pinIndicator.setVisible(false);
         }
-        note.setText(person.getNote().value);
+        if (person.getNote().value.isEmpty()) {
+            notePane.setVisible(false);
+            notePane.setManaged(false); // hides it from layout
+        } else {
+            note.setText(person.getNote().value);
+        }
         person.getTags().stream()
                 .sorted(Comparator.comparing((Tag t) -> !isIndustry(t.tagName))
                         .thenComparing(t -> t.tagName.toLowerCase()))
