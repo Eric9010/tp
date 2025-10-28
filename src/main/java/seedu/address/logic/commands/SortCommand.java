@@ -10,7 +10,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Sorts all persons in the address book by name in alphabetical order.
+ * Sorts all persons in the address book by alphabetical order or time added.
  */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
@@ -22,6 +22,9 @@ public class SortCommand extends Command {
 
     public final SortType sortType;
 
+    /**
+     * Creates an SortCommand with the specified {@code sortType}.
+     */
     public SortCommand(SortType sortType) {
         this.sortType = sortType;
     }

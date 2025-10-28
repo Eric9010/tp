@@ -4,6 +4,9 @@ import java.util.Comparator;
 
 import seedu.address.model.person.Person;
 
+/**
+ * Provides commonly used {@code Comparator}s for {@code Person} objects.
+ */
 public class Comparators {
     /**
      * Comparator for sorting pinned contacts

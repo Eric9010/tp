@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.parser.SortType;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -14,17 +15,15 @@ import seedu.address.model.person.Person;
 
 public class SortCommandTest {
     private Model model = new ModelManager(getTypicalAddressBookUnsorted(), new UserPrefs());
-    private final Comparator<Person> nameComparator =
-            Comparator.comparing(person -> person.getName().toString(), String.CASE_INSENSITIVE_ORDER);
-
+    
     @Test
-    public void execute_unsortedList_success() {
-        SortCommand sortCommand = new SortCommand();
+    public void execute_sortByName_success() {
+        SortCommand sortCommand = new SortCommand(SortType.NAME);
 
         String expectedMessage = SortCommand.MESSAGE_SUCCESS;
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.updateSortedPersonList(nameComparator);
+        expectedModel.updateSortedPersonList;
 
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
     }
