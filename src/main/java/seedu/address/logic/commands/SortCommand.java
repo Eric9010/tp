@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import static seedu.address.model.Comparators.PIN_COMPARATOR;
 import static seedu.address.model.ModelManager.PIN_COMPARATOR;
 
 import java.util.Comparator;
@@ -26,11 +27,6 @@ public class SortCommand extends Command {
     public SortCommand(SortType sortType) {
         this.sortType = sortType;
     }
-    public static final Comparator<Person> NAME_COMPARATOR =
-            Comparator.comparing(person -> person.getName().fullName.toLowerCase());
-
-    public static final Comparator<Person> TIMESTAMP_COMPARATOR =
-            Comparator.comparing(Person::getDateAdded);
 
     @Override
     public CommandResult execute(Model model) {

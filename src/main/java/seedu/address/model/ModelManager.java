@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.Comparators.PIN_COMPARATOR;
 
 import java.nio.file.Path;
 import java.util.Comparator;
@@ -23,27 +24,6 @@ public class ModelManager implements Model {
     public static final String MESSAGE_MAX_PINNED_PERSONS_REACHED = "You can only pin a maximum of 3 contacts.";
 
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
-
-    /**
-     * Comparator for sorting pinned contacts
-     * 1. Pinned status
-     * 2. Pin timestamp
-     * 3. Name (alphabetical)
-     */
-    private static final Comparator<Person> PIN_COMPARATOR = (p1, p2) -> {
-        if (p1.isPinned() && !p2.isPinned()) {
-            return -1; // p1 comes before p2
-        } else if (!p1.isPinned() && p2.isPinned()) {
-            return 1; // p2 comes before p1
-        } else if (p1.isPinned() && p2.isPinned()) {
-            // Both are pinned, sort by timestamp (earlier first)
-            return p1.getPinTimestamp().compareTo(p2.getPinTimestamp());
-        } else {
-            // Neither is pinned, sort by name (alphabetical)
-            return p1.getName().fullName.compareToIgnoreCase(p2.getName().fullName);
-        }
-    };
-
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;

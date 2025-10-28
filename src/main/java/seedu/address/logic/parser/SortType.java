@@ -1,5 +1,8 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.model.Comparators.NAME_COMPARATOR;
+import static seedu.address.model.Comparators.TIMESTAMP_COMPARATOR;
+
 import java.util.Comparator;
 
 import seedu.address.model.person.Event;
@@ -13,9 +16,9 @@ public enum SortType {
     public Comparator<Person> getComparator() {
         switch (this) {
         case NAME:
-            return Comparator.comparing(p -> p.getName().fullName.toLowerCase());
+            return NAME_COMPARATOR;
         case TIMESTAMP:
-            return Comparator.comparing(Person::getDateAdded);
+            return TIMESTAMP_COMPARATOR;
         default:
             //exception
         }
