@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.model.Comparators.NAME_COMPARATOR;
+import static seedu.address.model.Comparators.TIMESTAMP_COMPARATOR;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBookUnsorted;
 
 import java.util.Comparator;
@@ -15,15 +17,29 @@ import seedu.address.model.person.Person;
 
 public class SortCommandTest {
     private Model model = new ModelManager(getTypicalAddressBookUnsorted(), new UserPrefs());
-    
+
     @Test
     public void execute_sortByName_success() {
         SortCommand sortCommand = new SortCommand(SortType.NAME);
 
-        String expectedMessage = SortCommand.MESSAGE_SUCCESS;
+        String expectedMessage = String.format(String.format(SortCommand.MESSAGE_SUCCESS,
+                                                SortType.NAME.name().toLowerCase()));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.updateSortedPersonList;
+        expectedModel.updateSortedPersonList(NAME_COMPARATOR);
+
+        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_sortByTimeStamp_success() {
+        SortCommand sortCommand = new SortCommand(SortType.TIMESTAMP);
+
+        String expectedMessage = String.format(String.format(SortCommand.MESSAGE_SUCCESS,
+                SortType.TIMESTAMP.name().toLowerCase()));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.updateSortedPersonList(TIMESTAMP_COMPARATOR);
 
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
     }
