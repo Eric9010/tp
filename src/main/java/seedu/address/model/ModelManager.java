@@ -164,6 +164,9 @@ public class ModelManager implements Model {
         updatePersonListSort(); // Re-sort the list
     }
 
+    /**
+     * Refreshes sortedList after a pin status of {@code Person} changes.
+     */
     @Override
     public void updatePersonListSort() {
         // This forces the SortedList to re-evaluate its order
@@ -210,6 +213,10 @@ public class ModelManager implements Model {
         return sortedPersons;
     }
 
+
+    /**
+     * Updates the sorting criteria of a sortedList entirely.
+     */
     @Override
     public void updateSortedPersonList(Comparator<Person> comparator) {
         requireNonNull(comparator);
