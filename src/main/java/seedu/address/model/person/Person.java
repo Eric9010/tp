@@ -63,6 +63,23 @@ public class Person {
         this.dateAdded = LocalDateTime.now();
     }
 
+    /**
+     * Third constructor with all fields.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Note note, Set<Tag> tags, Long pinTimestamp,
+                  Set<Event> events, LocalDateTime dateAdded) {
+        requireAllNonNull(name, phone, email, address, tags, events);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.note = note;
+        this.tags.addAll(tags);
+        this.pinTimestamp = pinTimestamp;
+        this.events.addAll(events);
+        this.dateAdded = dateAdded;
+    }
+
     public Name getName() {
         return name;
     }

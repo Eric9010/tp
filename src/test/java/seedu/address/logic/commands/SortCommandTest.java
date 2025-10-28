@@ -5,15 +5,12 @@ import static seedu.address.model.Comparators.NAME_COMPARATOR;
 import static seedu.address.model.Comparators.TIMESTAMP_COMPARATOR;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBookUnsorted;
 
-import java.util.Comparator;
-
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.SortType;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
 
 public class SortCommandTest {
     private Model model = new ModelManager(getTypicalAddressBookUnsorted(), new UserPrefs());
