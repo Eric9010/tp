@@ -98,7 +98,9 @@ public class ParserUtil {
     public static SortType parseSortType(String sortType) throws ParseException {
         requireNonNull(sortType);
         String trimmedSortType = sortType.trim().toLowerCase();
-
+        if (!SortType.isValidSortType(trimmedSortType)) {
+            throw new ParseException(SortType.UNKNOWN_TYPE);
+        }
         switch (trimmedSortType) {
         case "name":
             return SortType.NAME;
