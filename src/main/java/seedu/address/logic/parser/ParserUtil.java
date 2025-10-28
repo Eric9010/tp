@@ -95,6 +95,20 @@ public class ParserUtil {
         return new Email(trimmedEmail);
     }
 
+    public static SortType parseSortType(String sortType) throws ParseException {
+        requireNonNull(sortType);
+        String trimmedSortType = sortType.trim().toLowerCase();
+
+        switch (trimmedSortType) {
+        case "name":
+            return SortType.NAME;
+        case "timestamp":
+            return SortType.TIMESTAMP;
+        default:
+            throw new ParseException(SortType.UNKNOWN_TYPE);
+        }
+    }
+
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
