@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -27,6 +28,7 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
     private final Set<Event> events = new HashSet<>();
     private final Long pinTimestamp;
+    private final LocalDateTime dateAdded;
 
     /**
      * Every field must be present and not null.
@@ -41,6 +43,7 @@ public class Person {
         this.tags.addAll(tags);
         this.pinTimestamp = null;
         this.events.addAll(events);
+        this.dateAdded = LocalDateTime.now();
     }
 
     /**
@@ -57,6 +60,7 @@ public class Person {
         this.tags.addAll(tags);
         this.pinTimestamp = pinTimestamp;
         this.events.addAll(events);
+        this.dateAdded = LocalDateTime.now();
     }
 
     public Name getName() {
@@ -77,6 +81,10 @@ public class Person {
 
     public Note getNote() {
         return note;
+    }
+
+    public LocalDateTime getDateAdded() {
+        return dateAdded;
     }
 
     /**

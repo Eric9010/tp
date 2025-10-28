@@ -14,7 +14,7 @@ import seedu.address.model.person.Person;
  */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
-    public static final String MESSAGE_SUCCESS = "Sorted all persons by name";
+    public static final String MESSAGE_SUCCESS = "Sorted person list by %s.";
     public static final String MESSAGE_USAGE =
             "sort: Sorts the person list by the given field.\n"
             + "Parameters: FIELD (name/timestamp)\n"
@@ -31,7 +31,8 @@ public class SortCommand extends Command {
         requireNonNull(model);
         Comparator<Person> combinedComparator =
                 PIN_COMPARATOR.thenComparing(sortType.getComparator());
+
         model.updateSortedPersonList(combinedComparator);
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, sortType.name().toLowerCase()));
     }
 }

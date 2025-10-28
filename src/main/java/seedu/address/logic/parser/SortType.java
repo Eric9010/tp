@@ -5,7 +5,6 @@ import static seedu.address.model.Comparators.TIMESTAMP_COMPARATOR;
 
 import java.util.Comparator;
 
-import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 
 public enum SortType {
@@ -20,7 +19,7 @@ public enum SortType {
         case TIMESTAMP:
             return TIMESTAMP_COMPARATOR;
         default:
-            //exception
+            throw new IllegalStateException("Unexpected SortType: " + this);
         }
     }
 

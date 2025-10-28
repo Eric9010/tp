@@ -9,7 +9,6 @@ public class Comparators {
      * Comparator for sorting pinned contacts
      * 1. Pinned status
      * 2. Pin timestamp
-     * 3. Name (alphabetical)
      */
     public static final Comparator<Person> PIN_COMPARATOR = (p1, p2) -> {
         if (p1.isPinned() && !p2.isPinned()) {
@@ -20,8 +19,8 @@ public class Comparators {
             // Both are pinned, sort by timestamp (earlier first)
             return p1.getPinTimestamp().compareTo(p2.getPinTimestamp());
         } else {
-            // Neither is pinned, sort by name (alphabetical)
-            return p1.getName().fullName.compareToIgnoreCase(p2.getName().fullName);
+            // Both are unpinned, do nothing
+            return 0;
         }
     };
 
