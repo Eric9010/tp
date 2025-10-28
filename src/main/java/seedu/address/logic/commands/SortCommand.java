@@ -1,9 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-
 import static seedu.address.model.Comparators.PIN_COMPARATOR;
-import static seedu.address.model.ModelManager.PIN_COMPARATOR;
 
 import java.util.Comparator;
 
@@ -17,7 +15,7 @@ import seedu.address.model.person.Person;
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
     public static final String MESSAGE_SUCCESS = "Sorted all persons by name";
-    public static final String MESSAGE_INVALID_COMMAND_FORMAT =
+    public static final String MESSAGE_USAGE =
             "sort: Sorts the person list by the given field.\n"
             + "Parameters: FIELD (name/timestamp)\n"
             + "Example: sort name";
