@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import static seedu.address.ui.TagCategories.isIndustry;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -76,7 +78,12 @@ public class PersonCard extends UiPart<Region> {
                     tagLabel.getStyleClass().add(isIndustry(tag.tagName) ? "tag-industry" : "tag-default");
                     tags.getChildren().add(tagLabel);
                 });
-        person.getEvents().stream()
-                .forEach(event -> events.getChildren().add(new Label(event.toString())));
+
+        int index = 0;
+        ArrayList<Event> eventList = new ArrayList<>(person.getEvents());
+        for (Event event: eventList) {
+            events.getChildren().add(new Label((index + 1) + ". " + event.toString()));
+            index++;
+        }
     }
 }
