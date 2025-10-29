@@ -218,4 +218,9 @@ public class ParserUtilTest {
         SortType expectedSortType = SortType.NAME;
         assertEquals(expectedSortType, ParserUtil.parseSortType(SortTypeWithWhitespace));
     }
+
+    @Test
+    public void parseSortType_invalidSortType_throwsParseException() throws Exception {
+        assertThrows(ParseException.class, () -> ParserUtil.parseSortType(INVALID_SORTTYPE));
+    }
 }
