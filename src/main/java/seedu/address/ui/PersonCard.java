@@ -80,8 +80,10 @@ public class PersonCard extends UiPart<Region> {
                 });
 
         int index = 0;
-        ArrayList<Event> eventList = new ArrayList<>(person.getEvents());
-        for (Event event: eventList) {
+        ArrayList<Event> sortedEvents = new ArrayList<>(person.getEvents());
+        sortedEvents.sort(Comparator.comparing(Event::getStart));
+
+        for (Event event: sortedEvents) {
             events.getChildren().add(new Label((index + 1) + ". " + event.toString()));
             index++;
         }
