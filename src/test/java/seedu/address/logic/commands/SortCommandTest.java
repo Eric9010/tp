@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.model.Comparators.NAME_COMPARATOR;
 import static seedu.address.model.Comparators.TIMESTAMP_COMPARATOR;
@@ -39,5 +41,27 @@ public class SortCommandTest {
         expectedModel.updateSortedPersonList(TIMESTAMP_COMPARATOR);
 
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void equals() {
+        SortCommand sortFirstCommand = new SortCommand(SortType.NAME);
+        SortCommand sortSecondCommand = new SortCommand(SortType.TIMESTAMP);
+
+        // same object -> returns true
+        assertTrue(sortFirstCommand.equals(sortFirstCommand));
+
+        // same values -> returns true
+        SortCommand sortFirstCommandCopy = new SortCommand(SortType.NAME);
+        assertTrue(sortFirstCommand.equals(sortFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(sortFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(sortFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(sortFirstCommand.equals(sortSecondCommand));
     }
 }
