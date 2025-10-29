@@ -16,7 +16,7 @@ public class DeleteEventCommand extends Command {
     public static final String COMMAND_WORD = "cancel";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + "Deletes an event identified by the recruiter index number and event index number.\n"
+            + ": Deletes an event identified by the recruiter index number and event index number.\n"
             + "Parameters: RECRUITER_INDEX (positive integer) EVENT_INDEX (positive integer)\n"
             + "Example: " + COMMAND_WORD + " 2 3";
 
@@ -49,6 +49,7 @@ public class DeleteEventCommand extends Command {
         ArrayList<Event> eventList = new ArrayList<>(personToDeleteEvent.getEvents());
         Event eventToDelete = eventList.get(eventIndex.getZeroBased());
         personToDeleteEvent.deleteEvent(eventToDelete);
+        model.setPerson(lastShownList.get(recruiterIndex.getZeroBased()), personToDeleteEvent);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToDeleteEvent.getName(), eventToDelete));
     }
