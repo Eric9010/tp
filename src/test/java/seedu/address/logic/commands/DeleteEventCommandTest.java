@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import static java.util.Objects.requireNonNull;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.*;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.DeleteEventCommand.MESSAGE_SUCCESS;
@@ -29,6 +29,8 @@ import static seedu.address.testutil.TypicalPersons.ALICE;
 public class DeleteEventCommandTest {
     public static final Event VALID_EVENT = new Event("Google Interview", "2025-09-10 15:00",
             "2025-09-10 15:50", "f2f", "Google Headquarters");
+    public static final DeleteEventCommand DELETE_EVENT_COMMAND = new DeleteEventCommand(Index.fromOneBased(1),
+            Index.fromOneBased(1));
 
     @Test
     public void constructor_hasEvent_success() {
@@ -38,14 +40,11 @@ public class DeleteEventCommandTest {
 
     @Test
     public void execute_validIndices_deleteEvent() {
-        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(Index.fromOneBased(1),
-                Index.fromOneBased(1));
-
         Person person = new PersonBuilder(ALICE).build();
         ModelStubWithPersonAndEvent model = new ModelStubWithPersonAndEvent(person);
 
         String expectedMessage = String.format(MESSAGE_SUCCESS, ALICE.getName(), VALID_EVENT);
-        assertCommandSuccess(deleteEventCommand, model, expectedMessage, model);
+        assertCommandSuccess(DELETE_EVENT_COMMAND, model, expectedMessage, model);
     }
 
     @Test
@@ -60,6 +59,38 @@ public class DeleteEventCommandTest {
         assertThrows(CommandException.class, () -> new DeleteEventCommand(Index.fromZeroBased(1),
                 Index.fromZeroBased(2)).execute(new ModelStubWithPersonAndEvent(
                 new PersonBuilder(ALICE).build())));
+    }
+
+    @Test
+    public void equals_sameDeleteEventCommand() {
+        assertEquals(DELETE_EVENT_COMMAND, DELETE_EVENT_COMMAND);
+    }
+
+    @Test
+    public void equals_notDeleteEventCommand() {
+        DeleteCommand deleteCommand = new DeleteCommand(Index.fromOneBased(1));
+        assertNotEquals(DELETE_EVENT_COMMAND, deleteCommand);
+    }
+
+    @Test
+    public void equals_sameIndices() {
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(Index.fromOneBased(1),
+                Index.fromOneBased(1));
+        assertEquals(DELETE_EVENT_COMMAND, deleteEventCommand);
+    }
+
+    @Test
+    public void equals_differentRecruiterIndex() {
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(Index.fromOneBased(2),
+                Index.fromOneBased(1));
+        assertNotEquals(DELETE_EVENT_COMMAND, deleteEventCommand);
+    }
+
+    @Test
+    public void equals_differentEventIndex() {
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(Index.fromOneBased(1),
+                Index.fromOneBased(2));
+        assertNotEquals(DELETE_EVENT_COMMAND, deleteEventCommand);
     }
 
     /**

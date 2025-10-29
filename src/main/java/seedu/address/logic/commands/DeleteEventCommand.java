@@ -53,4 +53,20 @@ public class DeleteEventCommand extends Command {
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToDeleteEvent.getName(), eventToDelete));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof DeleteEventCommand)) {
+            return false;
+        }
+
+        DeleteEventCommand otherEventCommand = (DeleteEventCommand) other;
+        return recruiterIndex.equals(otherEventCommand.recruiterIndex) &&
+                eventIndex.equals(otherEventCommand.eventIndex);
+    }
 }
