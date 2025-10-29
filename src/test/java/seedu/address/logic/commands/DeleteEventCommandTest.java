@@ -1,8 +1,24 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.DeleteEventCommand.MESSAGE_SUCCESS;
+import static seedu.address.testutil.Assert.assertThrows;
+import static seedu.address.testutil.TypicalPersons.ALICE;
+
+import java.nio.file.Path;
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.Predicate;
+
+import org.junit.jupiter.api.Test;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.junit.jupiter.api.Test;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -12,19 +28,6 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
-
-import java.nio.file.Path;
-import java.util.Comparator;
-import java.util.List;
-import java.util.function.Predicate;
-
-import static java.util.Objects.requireNonNull;
-import static org.junit.jupiter.api.Assertions.*;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.DeleteEventCommand.MESSAGE_SUCCESS;
-import static seedu.address.testutil.Assert.assertThrows;
-import static seedu.address.testutil.TypicalPersons.ALICE;
 
 public class DeleteEventCommandTest {
     public static final Event VALID_EVENT = new Event("Google Interview", "2025-09-10 15:00",
@@ -57,8 +60,8 @@ public class DeleteEventCommandTest {
     @Test
     public void execute_invalidEventIndex_throwsCommandException() {
         assertThrows(CommandException.class, () -> new DeleteEventCommand(Index.fromZeroBased(1),
-                Index.fromZeroBased(2)).execute(new ModelStubWithPersonAndEvent(
-                new PersonBuilder(ALICE).build())));
+                Index.fromZeroBased(2))
+                .execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
     }
 
     @Test

@@ -1,5 +1,10 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -7,11 +12,9 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-
+/**
+ * Deletes an event identified by the recruiter index number and event index number.
+ */
 public class DeleteEventCommand extends Command {
     public static final String COMMAND_WORD = "cancel";
 
@@ -25,6 +28,11 @@ public class DeleteEventCommand extends Command {
     private final Index recruiterIndex;
     private final Index eventIndex;
 
+    /**
+     * Creates a DeleteEventCommand.
+     * @param recruiterIndex Index of recruiter which has the event to be deleted.
+     * @param eventIndex Index of event to be deleted.
+     */
     public DeleteEventCommand(Index recruiterIndex, Index eventIndex) {
         this.recruiterIndex = recruiterIndex;
         this.eventIndex = eventIndex;
@@ -66,7 +74,7 @@ public class DeleteEventCommand extends Command {
         }
 
         DeleteEventCommand otherEventCommand = (DeleteEventCommand) other;
-        return recruiterIndex.equals(otherEventCommand.recruiterIndex) &&
-                eventIndex.equals(otherEventCommand.eventIndex);
+        return recruiterIndex.equals(otherEventCommand.recruiterIndex)
+                && eventIndex.equals(otherEventCommand.eventIndex);
     }
 }
