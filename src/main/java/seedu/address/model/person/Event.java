@@ -24,8 +24,7 @@ public class Event {
             HH:mm format.
             2. Mode is optional. Valid modes are F2F, CALL and ZOOM.
             3. Location is optional and can take any string values.
-            4. Remarks is optional and can take any string values with a maximum of 500 characters.
-            5. Note: Optional fields do not accept empty strings.
+            4. Note: Optional fields do not accept empty strings.
             """;
 
     private final String title;
@@ -33,7 +32,6 @@ public class Event {
     private final LocalDateTime end;
     private final Mode mode;
     private final String location;
-    private final String remarks;
 
     /**
      * Constructs an event.
@@ -43,21 +41,19 @@ public class Event {
      * @param end User input end date and time.
      * @param mode User input mode.
      * @param location User input location.
-     * @param remarks User input remarks.
      */
-    public Event(String title, String start, String end, String mode, String location, String remarks) {
+    public Event(String title, String start, String end, String mode, String location) {
         requireNonNull(title);
         requireNonNull(start);
         requireNonNull(end);
 
-        checkArgument(isValidEvent(title, start, end, mode, location, remarks), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidEvent(title, start, end, mode, location), MESSAGE_CONSTRAINTS);
 
         this.title = title;
         this.start = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.end = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.mode = mode == null ? null : Mode.valueOf(mode.toUpperCase());
         this.location = location;
-        this.remarks = remarks;
     }
 
     public String getTitle() {
@@ -78,10 +74,6 @@ public class Event {
 
     public String getLocation() {
         return location;
-    }
-
-    public String getRemarks() {
-        return remarks;
     }
 
     /**
@@ -141,16 +133,6 @@ public class Event {
     }
 
     /**
-     * Checks if remarks is valid.
-     *
-     * @param remarks User input remarks.
-     * @return false if remarks is an empty string or a string with over 500 characters, true otherwise.
-     */
-    public static boolean isValidRemark(String remarks) {
-        return remarks == null || (!remarks.isEmpty() && remarks.length() <= 500);
-    }
-
-    /**
      * Checks if the event is valid.
      *
      * @param title User input title.
@@ -158,13 +140,10 @@ public class Event {
      * @param end User input end date and time.
      * @param mode User input mode.
      * @param location User input location.
-     * @param remarks User input remarks.
      * @return true if the all fields of the event is valid, false otherwise.
      */
-    public static boolean isValidEvent(String title, String start, String end, String mode, String location,
-                                       String remarks) {
-        return isValidTitle(title) && isValidStartEnd(start, end) && isValidMode(mode) && isValidLocation(location)
-                && isValidRemark(remarks);
+    public static boolean isValidEvent(String title, String start, String end, String mode, String location) {
+        return isValidTitle(title) && isValidStartEnd(start, end) && isValidMode(mode) && isValidLocation(location);
     }
 
     @Override
@@ -187,10 +166,9 @@ public class Event {
 
         String modeString = mode == null ? "" : " " + mode;
         String locationString = location == null ? "" : " " + location;
-        String remarksString = remarks == null ? "" : "\nRemarks: " + remarks;
 
         return title + " " + start.format(dateTimeFormatter) + " to " + end.format(dateTimeFormatter) + modeString
-                + locationString + remarksString;
+                + locationString;
     }
 
     @Override

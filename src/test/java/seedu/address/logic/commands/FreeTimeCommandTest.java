@@ -31,9 +31,9 @@ import seedu.address.testutil.PersonBuilder;
 
 public class FreeTimeCommandTest {
     private static final Event FULL_DAY = new Event("Interview", "2025-09-10 00:00", "2025-09-11 00:00",
-            null, null, null);
+            null, null);
     private static final Event HALF_DAY = new Event("Interview", "2025-09-10 00:00", "2025-09-10 12:00",
-            null, null, null);
+            null, null);
     private static final FreeTimeCommand FREE_TIME_COMMAND = new FreeTimeCommand(10, LocalDate.of(2025,
             9, 10));
 

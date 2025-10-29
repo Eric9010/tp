@@ -4,7 +4,6 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -26,7 +25,7 @@ public class EventCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50", "f2f",
-                "Google Headquarters", "Final Round");
+                "Google Headquarters");
         assertParseSuccess(parser, "1 t/Google Interview s/2025-09-10 15:00 e/2025-09-10 15:50 m/f2f "
                 + "l/Google Headquarters r/Final Round", new EventCommand(Index.fromOneBased(1), event));
     }
@@ -35,27 +34,27 @@ public class EventCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // no optional fields
         Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50", null,
-                null, null);
+                null);
         assertParseSuccess(parser, "1 t/Google Interview s/2025-09-10 15:00 e/2025-09-10 15:50",
                 new EventCommand(Index.fromOneBased(1), event));
 
         // no mode
         event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50", null,
-                "Google Headquarters", "Final Round");
+                "Google Headquarters");
         assertParseSuccess(parser, "1 t/Google Interview s/2025-09-10 15:00 e/2025-09-10 15:50 "
                 + "l/Google Headquarters r/Final Round", new EventCommand(Index.fromOneBased(1), event));
 
         // no location
         event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50", "f2f",
-                null, "Final Round");
-        assertParseSuccess(parser, "1 t/Google Interview s/2025-09-10 15:00 e/2025-09-10 15:50 m/f2f "
-                + "r/Final Round ", new EventCommand(Index.fromOneBased(1), event));
+                null);
+        assertParseSuccess(parser, "1 t/Google Interview s/2025-09-10 15:00 e/2025-09-10 15:50 m/f2f",
+                new EventCommand(Index.fromOneBased(1), event));
 
         // no remarks
         event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50", "f2f",
-                "Google Headquarters", null);
+                "Google Headquarters");
         assertParseSuccess(parser, "1 t/Google Interview s/2025-09-10 15:00 e/2025-09-10 15:50 m/f2f "
-                + "l/Google Headquarters ", new EventCommand(Index.fromOneBased(1), event));
+                + "l/Google Headquarters", new EventCommand(Index.fromOneBased(1), event));
     }
 
     @Test
@@ -94,10 +93,6 @@ public class EventCommandParserTest {
         // duplicated location
         assertParseFailure(parser, "1 t/Google Interview s/2025-08-15 15:00 e/2025-08-15 15:00 l/Kent Ridge "
                 + "l/Jurong", Messages.getErrorMessageForDuplicatePrefixes(PREFIX_LOCATION));
-
-        // duplicated remark
-        assertParseFailure(parser, "1 t/Google Interview s/2025-08-15 15:00 e/2025-08-15 15:00 r/Remark 1 "
-                + "r/Remark 2", Messages.getErrorMessageForDuplicatePrefixes(PREFIX_REMARKS));
     }
 
     @Test
