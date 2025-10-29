@@ -26,6 +26,7 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    public static final String INVALID_SORTTYPE = "n1me";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -33,6 +34,7 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_SORTTYPE = "name";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -192,5 +194,28 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseSortType_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseSortType((String) null));
+    }
+
+    @Test
+    public void parseSortType_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseSortType(INVALID_SORTTYPE));
+    }
+
+    @Test
+    public void parseSortType_validValueWithoutWhitespace_returnsName() throws Exception {
+        SortType expectedSortType = SortType.NAME;
+        assertEquals(expectedSortType, ParserUtil.parseSortType(VALID_SORTTYPE));
+    }
+
+    @Test
+    public void parseSortType_validValueWithWhitespace_returnsTrimmedSortType() throws Exception {
+        String SortTypeWithWhitespace = WHITESPACE + VALID_SORTTYPE + WHITESPACE;
+        SortType expectedSortType = SortType.NAME;
+        assertEquals(expectedSortType, ParserUtil.parseSortType(SortTypeWithWhitespace));
     }
 }
