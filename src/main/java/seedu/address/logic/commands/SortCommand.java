@@ -38,4 +38,18 @@ public class SortCommand extends Command {
         model.updateSortedPersonList(combinedComparator);
         return new CommandResult(String.format(MESSAGE_SUCCESS, sortType.name().toLowerCase()));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof SortCommand)) {
+            return false;
+        }
+
+        SortCommand otherSortCommand = (SortCommand) other;
+        return sortType.equals(otherSortCommand.sortType);
+    }
 }
