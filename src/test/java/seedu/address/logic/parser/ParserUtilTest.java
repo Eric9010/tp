@@ -214,9 +214,9 @@ public class ParserUtilTest {
 
     @Test
     public void parseSortType_validValueWithWhitespace_returnsTrimmedSortType() throws Exception {
-        String SortTypeWithWhitespace = WHITESPACE + VALID_SORTTYPE + WHITESPACE;
+        String sortTypeWithWhitespace = WHITESPACE + VALID_SORTTYPE + WHITESPACE;
         SortType expectedSortType = SortType.NAME;
-        assertEquals(expectedSortType, ParserUtil.parseSortType(SortTypeWithWhitespace));
+        assertEquals(expectedSortType, ParserUtil.parseSortType(sortTypeWithWhitespace));
     }
 
     @Test

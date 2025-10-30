@@ -30,11 +30,17 @@ public class UnpinCommand extends Command {
     private final Index targetIndex;
     private final Name targetName;
 
+    /**
+     * Creates an UnpinCommand to unpin the person at the specified {@code targetIndex}.
+     */
     public UnpinCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
         this.targetName = null;
     }
 
+    /**
+     * Creates an UnpinCommand to unpin the person with the specified {@code targetName}.
+     */
     public UnpinCommand(Name targetName) {
         this.targetName = targetName;
         this.targetIndex = null;
