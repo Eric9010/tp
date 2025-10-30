@@ -14,19 +14,19 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Deletes a recruiter identified using it's displayed index from CareerConnect.
  */
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number or by their full name.\n"
-            + "Parameters: INDEX (must be a positive integer) or Name \n"
+            + ": Deletes the recruiter identified by the index number or by their full name.\n"
+            + "Parameters: INDEX (must be a positive integer) or NAME \n"
             + "Example: " + COMMAND_WORD + " 1\n"
             + "Example: " + COMMAND_WORD + " Alex Yeoh";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Recruiter: %1$s";
 
     private final Index targetIndex;
     private final Name targetName;
