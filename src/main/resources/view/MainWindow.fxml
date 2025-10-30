@@ -7,7 +7,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -37,7 +37,7 @@
                 <!-- CommandBox -->
                 <StackPane fx:id="commandBoxPlaceholder"
                            styleClass="pane-with-border"
-                           VBox.vgrow="NEVER"
+                           VBox.vgrow="ALWAYS"
                            minHeight="50"
                            prefHeight="60"
                            maxHeight="70">
@@ -46,14 +46,22 @@
                     </padding>
                 </StackPane>
 
-                <StackPane fx:id="summaryDashboardPlaceholder"
-                           styleClass="pane-with-border"
-                           VBox.vgrow="ALWAYS"
-                           minHeight="220">
-                    <padding>
-                        <Insets top="25" right="10" bottom="25" left="10" />
-                    </padding>
-                </StackPane>
+                <ScrollPane fx:id="summaryDashboardScrollPane"
+                            fitToWidth="true" fitToHeight="false"
+                            pannable="true"
+                            hbarPolicy="NEVER"
+                            style="-fx-background-color: transparent; -fx-background-insets: 0; -fx-padding: 0;"
+                            VBox.vgrow="SOMETIMES"
+                            minHeight="220" maxHeight="300">
+                    <content>
+                        <StackPane fx:id="summaryDashboardPlaceholder"
+                                   styleClass="pane-with-border">
+                            <padding>
+                                <Insets top="20" right="10" bottom="20" left="10" />
+                            </padding>
+                        </StackPane>
+                    </content>
+                </ScrollPane>
 
                 <VBox styleClass="pane-with-border"
                       minHeight="120" prefHeight="130" spacing="5" VBox.vgrow="NEVER">
