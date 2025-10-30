@@ -196,8 +196,7 @@ public class Person {
                 && note.equals(otherPerson.note)
                 && tags.equals(otherPerson.tags)
                 && Objects.equals(pinTimestamp, otherPerson.pinTimestamp)
-                && events.equals(otherPerson.events)
-                && dateAdded.equals(otherPerson.dateAdded);
+                && events.equals(otherPerson.events);
     }
 
     @Override
