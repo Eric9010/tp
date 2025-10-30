@@ -25,22 +25,22 @@ public class PinCommandParser implements Parser<PinCommand> {
         }
 
         try {
-            // Try to parse as an index first
+            // Parse as an index first.
             Index index = ParserUtil.parseIndex(trimmedArgs);
             return new PinCommand(index);
         } catch (ParseException peIndex) {
-            // If it failed as an index, check if it was an invalid number
+            // If parsing as an index fails, check if number was invalid.
             if (trimmedArgs.matches("-?\\d+")) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, PinCommand.MESSAGE_USAGE), peIndex);
             }
 
-            // If it wasn't a number, try to parse as a name
+            // Otherwise, parse it as a name.
             try {
                 Name name = ParserUtil.parseName(trimmedArgs);
                 return new PinCommand(name);
             } catch (ParseException peName) {
-                // If both fail, throw the invalid command format error
+                // If both fail, throw invalid command format error.
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, PinCommand.MESSAGE_USAGE), peName);
             }

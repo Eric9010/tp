@@ -21,8 +21,7 @@ public class UnpinCommandParser implements Parser<UnpinCommand> {
             Index index = ParserUtil.parseIndex(args);
             return new UnpinCommand(index);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnpinCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnpinCommand.MESSAGE_USAGE), pe);
         }
     }
 }
