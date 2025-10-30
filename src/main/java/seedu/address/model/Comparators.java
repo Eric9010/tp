@@ -22,8 +22,8 @@ public class Comparators {
             // Both are pinned, sort by timestamp (earlier first)
             return p1.getPinTimestamp().compareTo(p2.getPinTimestamp());
         } else {
-            // Both are unpinned, do nothing
-            return 0;
+            // Both unpinned, sort by alphabetical order
+            return p1.getName().fullName.compareToIgnoreCase(p2.getName().fullName);
         }
     };
 
