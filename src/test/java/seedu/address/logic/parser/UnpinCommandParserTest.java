@@ -8,6 +8,7 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.UnpinCommand;
+import seedu.address.model.person.Name;
 
 /**
  * As we are only doing parsing by index, our test cases focus only on index-related parse errors.
@@ -17,16 +18,15 @@ public class UnpinCommandParserTest {
     private UnpinCommandParser parser = new UnpinCommandParser();
 
     @Test
-    public void parse_validArgs_returnsUnpinCommand() {
+    public void parse_validIndex_returnsUnpinCommand() {
         // Tests if parser correctly creates an UnpinCommand with Index given a valid integer.
         assertParseSuccess(parser, "1", new UnpinCommand(INDEX_FIRST_PERSON));
     }
 
     @Test
-    public void parse_invalidArgsNonNumeric_throwsParseException() {
-        // Tests if parser correctly throws a ParseException when given a non-integer as input.
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                UnpinCommand.MESSAGE_USAGE));
+    public void parse_validName_throwsParseException() {
+        // Tests if parser correctly creates an UnpinCommand with Name given a valid name.
+        assertParseSuccess(parser, " Alex Yeoh", new UnpinCommand(new Name("Alex Yeoh")));
     }
 
     @Test
