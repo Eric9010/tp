@@ -86,6 +86,26 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com o/Google`
 * `add n/Betsy Crowe t/Banking e/betsycrowe@example.com o/DBS p/1234567 t/SWE`
 
+### Adding a tag to a recruiter: `addtag`
+
+Adds one or more tags to an existing recruiter contact without removing their current tags.
+
+Format: `addtag INDEX TAG [MORE_TAGS]…`  
+OR `addtag NAME TAG [MORE_TAGS]…`
+
+* Adds the specified tag(s) to the recruiter identified by their `INDEX` or full `NAME`.
+* Tags that already exist will not be duplicated.
+* The index refers to the number shown in the displayed recruiter list and must be a positive integer.
+
+Examples:
+* `addtag 2 Banking Finance` — adds the tags `Banking` and `Finance` to the 2nd recruiter in the list.
+* `addtag Alex Yeoh SWE Mentor` — adds the tags `SWE` and `Mentor` to the recruiter named Alex Yeoh.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**  
+Use `addtag` when you want to **add new tags** while keeping existing ones.  
+If you want to **replace all tags**, use the `edit` command instead.  
+</div>
+
 ### Viewing all recruiters : `viewall`
 
 Shows a list of all recruiters in CareerConnect and the total count.
@@ -129,6 +149,25 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+### Finding recruiters by organisation: `findorg`
+
+Finds recruiters whose organisation names contain the specified keyword(s).
+
+Format: `findorg KEYWORD [MORE_KEYWORDS]`
+
+* The search is case-insensitive. e.g., `google` will match `Google` or `Google Singapore`.
+* The order of the keywords does not matter.
+* Only the organisation field is searched.
+* Recruiters whose organisation name matches **any** of the provided keywords will be shown.
+
+Examples:
+* `findorg Google` — shows all recruiters from Google.
+* `findorg Meta Amazon` — shows recruiters from either Meta or Amazon.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**  
+Combine `findorg` with `pin` to quickly prioritise recruiters from a specific company.  
+</div>
+
 ### Deleting a recruiter : `delete`
 
 Deletes the specified recruiter CareerConnect.
@@ -144,6 +183,24 @@ Examples:
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Use the `find` command before `delete` to ensure you're deleting the right recruiter.
+</div>
+
+### Filtering recruiters by tag: `filtertag`
+
+Displays only the recruiters that contain the specified tag(s).
+
+Format: `filtertag TAG [MORE_TAGS]…`
+
+* Shows all recruiters who have **at least one** of the specified tags.
+* The search is case-insensitive. e.g., `filtertag swe` will match recruiters tagged with `SWE`.
+* You can provide multiple tags; the results will include any contact that matches **one or more** of them.
+
+Examples:
+* `filtertag Banking` — shows all recruiters with the tag `Banking`.
+* `filtertag SWE Product` — shows recruiters tagged with either `SWE` or `Product`.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**  
+Run `viewall` to return to the full list after filtering by tags.  
 </div>
 
 ### Pinning a recruiter: `pin`
