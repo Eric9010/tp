@@ -20,9 +20,10 @@ public class UnpinCommand extends Command {
     public static final String COMMAND_WORD = "unpin";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Unpins the person identified by the index number.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + ": Unpins the person identified by the index number or name.\n"
+            + "Parameters: INDEX (must be a positive integer) or NAME\n"
+            + "Example: " + COMMAND_WORD + " 1"
+            + "Example: " + COMMAND_WORD + " Alex Yeoh";
 
     public static final String MESSAGE_UNPIN_PERSON_SUCCESS = "Unpinned Person: %1$s";
     public static final String MESSAGE_PERSON_NOT_PINNED = "This person is not pinned.";
@@ -85,6 +86,10 @@ public class UnpinCommand extends Command {
             return false;
         }
         UnpinCommand otherUnpinCommand = (UnpinCommand) other;
+
+        if (targetIndex == null) {
+            return targetName.equals(otherUnpinCommand.targetName);
+        }
         return targetIndex.equals(otherUnpinCommand.targetIndex);
     }
 
