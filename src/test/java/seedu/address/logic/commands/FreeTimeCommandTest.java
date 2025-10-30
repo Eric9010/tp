@@ -31,9 +31,9 @@ import seedu.address.testutil.PersonBuilder;
 
 public class FreeTimeCommandTest {
     private static final Event FULL_DAY = new Event("Interview", "2025-09-10 00:00", "2025-09-11 00:00",
-            null, null, null);
+            null, null);
     private static final Event HALF_DAY = new Event("Interview", "2025-09-10 00:00", "2025-09-10 12:00",
-            null, null, null);
+            null, null);
     private static final FreeTimeCommand FREE_TIME_COMMAND = new FreeTimeCommand(10, LocalDate.of(2025,
             9, 10));
 
@@ -58,10 +58,12 @@ public class FreeTimeCommandTest {
     public void execute_success() {
         Person person = new PersonBuilder(ALICE).build();
         ModelStubWithPersonAndEvent model = new ModelStubWithPersonAndEvent(person, List.of(HALF_DAY));
-        String expectedMessage = String.format(MESSAGE_SUCCESS, 3, """
+        String expectedMessage = String.format(MESSAGE_SUCCESS, 5, """
                 1. [2025-09-10 12:00 to 2025-09-10 22:00]
-                2. [2025-09-10 13:00 to 2025-09-10 23:00]
-                3. [2025-09-10 14:00 to 2025-09-11 00:00]
+                2. [2025-09-10 12:15 to 2025-09-10 22:15]
+                3. [2025-09-10 12:30 to 2025-09-10 22:30]
+                4. [2025-09-10 12:45 to 2025-09-10 22:45]
+                5. [2025-09-10 13:00 to 2025-09-10 23:00]
                 """);
         assertCommandSuccess(FREE_TIME_COMMAND, model, expectedMessage, model);
     }

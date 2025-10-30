@@ -2,14 +2,17 @@ package seedu.address.ui;
 
 import static seedu.address.ui.TagCategories.isIndustry;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -49,6 +52,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private VBox events;
     @FXML
+    private TitledPane notePane;
+    @FXML
     private Label note;
 
     /**
@@ -67,7 +72,12 @@ public class PersonCard extends UiPart<Region> {
         } else {
             pinIndicator.setVisible(false);
         }
-        note.setText(person.getNote().value);
+        if (person.getNote().value.isEmpty()) {
+            notePane.setVisible(false);
+            notePane.setManaged(false);
+        } else {
+            note.setText(person.getNote().value);
+        }
         person.getTags().stream()
                 .sorted(Comparator.comparing((Tag t) -> !isIndustry(t.tagName))
                         .thenComparing(t -> t.tagName.toLowerCase()))
@@ -76,7 +86,14 @@ public class PersonCard extends UiPart<Region> {
                     tagLabel.getStyleClass().add(isIndustry(tag.tagName) ? "tag-industry" : "tag-default");
                     tags.getChildren().add(tagLabel);
                 });
-        person.getEvents().stream()
-                .forEach(event -> events.getChildren().add(new Label(event.toString())));
+
+        int index = 0;
+        ArrayList<Event> sortedEvents = new ArrayList<>(person.getEvents());
+        sortedEvents.sort(Comparator.comparing(Event::getStart));
+
+        for (Event event: sortedEvents) {
+            events.getChildren().add(new Label((index + 1) + ". " + event.toString()));
+            index++;
+        }
     }
 }

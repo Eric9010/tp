@@ -16,7 +16,6 @@ class JsonAdaptedEvent {
     private final String end;
     private final String mode;
     private final String location;
-    private final String remarks;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -24,13 +23,12 @@ class JsonAdaptedEvent {
     @JsonCreator
     public JsonAdaptedEvent(@JsonProperty("title") String title, @JsonProperty("start") String start,
                             @JsonProperty("end") String end, @JsonProperty("mode") String mode,
-                            @JsonProperty("location") String location, @JsonProperty("remarks") String remarks) {
+                            @JsonProperty("location") String location) {
         this.title = title;
         this.start = start;
         this.end = end;
         this.mode = mode == null ? "" : mode;
         this.location = location == null ? "" : location;
-        this.remarks = remarks == null ? "" : remarks;
     }
 
     /**
@@ -42,7 +40,6 @@ class JsonAdaptedEvent {
         end = source.getEnd();
         mode = source.getMode() == null ? "" : source.getMode();
         location = source.getLocation() == null ? "" : source.getLocation();
-        remarks = source.getRemarks() == null ? "" : source.getRemarks();
     }
 
     /**
@@ -53,12 +50,11 @@ class JsonAdaptedEvent {
     public Event toModelType() throws IllegalValueException {
         String modeUsed = mode.isEmpty() ? null : mode;
         String locationUsed = location.isEmpty() ? null : location;
-        String remarksUsed = remarks.isEmpty() ? null : remarks;
 
-        if (!Event.isValidEvent(title, start, end, modeUsed, locationUsed, remarksUsed)) {
+        if (!Event.isValidEvent(title, start, end, modeUsed, locationUsed)) {
             throw new IllegalValueException(Event.MESSAGE_CONSTRAINTS);
         }
-        return new Event(title, start, end, modeUsed, locationUsed, remarksUsed);
+        return new Event(title, start, end, modeUsed, locationUsed);
     }
 
 }

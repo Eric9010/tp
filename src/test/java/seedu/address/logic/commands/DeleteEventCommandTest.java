@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.EventCommand.MESSAGE_SUCCESS;
+import static seedu.address.logic.commands.DeleteEventCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
@@ -29,114 +29,71 @@ import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
-public class EventCommandTest {
+public class DeleteEventCommandTest {
     public static final Event VALID_EVENT = new Event("Google Interview", "2025-09-10 15:00",
             "2025-09-10 15:50", "f2f", "Google Headquarters");
-    public static final Event ALTERNATE_VALID_EVENT = new Event("Amazon Interview", "2025-09-10 15:40",
-            "2025-09-10 16:50", null, null);
-
-    @Test
-    public void constructor_nullEvent_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new EventCommand(Index.fromZeroBased(1),
-                null));
-    }
+    public static final DeleteEventCommand DELETE_EVENT_COMMAND = new DeleteEventCommand(Index.fromOneBased(1),
+            Index.fromOneBased(1));
 
     @Test
     public void constructor_hasEvent_success() {
-        assertDoesNotThrow(() -> new EventCommand(Index.fromZeroBased(1), VALID_EVENT));
+        assertDoesNotThrow(() -> new DeleteEventCommand(Index.fromZeroBased(1),
+                Index.fromZeroBased(2)));
     }
 
     @Test
-    public void execute_validIndexAndEvent_addedToPerson() {
-        EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
-
+    public void execute_validIndices_deleteEvent() {
         Person person = new PersonBuilder(ALICE).build();
-        ModelStubWithPerson model = new ModelStubWithPerson(person);
+        ModelStubWithPersonAndEvent model = new ModelStubWithPersonAndEvent(person);
 
-        Person personWithEvent = new PersonBuilder(ALICE).build();
-        personWithEvent.addEvent(VALID_EVENT);
-
-        String expectedMessage = String.format(MESSAGE_SUCCESS, VALID_EVENT);
-        assertCommandSuccess(eventCommand, model, expectedMessage, model);
+        String expectedMessage = String.format(MESSAGE_SUCCESS, ALICE.getName(), VALID_EVENT);
+        assertCommandSuccess(DELETE_EVENT_COMMAND, model, expectedMessage, model);
     }
 
     @Test
-    public void execute_invalidIndex_throwsCommandException() {
-        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(2), VALID_EVENT)
-                .execute(new ModelStubWithPerson(new PersonBuilder(ALICE).build())));
+    public void execute_invalidRecruiterIndex_throwsCommandException() {
+        assertThrows(CommandException.class, () -> new DeleteEventCommand(Index.fromZeroBased(2),
+                Index.fromZeroBased(1)).execute(new ModelStubWithPersonAndEvent(
+                        new PersonBuilder(ALICE).build())));
     }
 
     @Test
-    public void execute_duplicateEvent_throwsCommandException() {
-        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1), VALID_EVENT)
+    public void execute_invalidEventIndex_throwsCommandException() {
+        assertThrows(CommandException.class, () -> new DeleteEventCommand(Index.fromZeroBased(1),
+                Index.fromZeroBased(2))
                 .execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
     }
 
     @Test
-    public void execute_hasClashes_throwsCommandException() {
-        // same time
-        Event event1 = new Event("Amazon Interview", "2025-09-10 15:00", "2025-09-10 15:50", null,
-                null);
-        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
-                event1).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
-
-        // subset of event duration
-        Event event2 = new Event("Amazon Interview", "2025-09-10 15:30", "2025-09-10 15:40", null,
-                null);
-        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
-                event2).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
-
-        // superset of event duration
-        Event event3 = new Event("Amazon Interview", "2025-09-10 14:30", "2025-09-10 16:40", null,
-                null);
-        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
-                event3).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
-
-        // overlap with start
-        Event event4 = new Event("Amazon Interview", "2025-09-10 14:30", "2025-09-10 15:40", null,
-                null);
-        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
-                event4).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
-
-        // overlap with end
-        Event event5 = new Event("Amazon Interview", "2025-09-10 15:30", "2025-09-10 16:40", null,
-                null);
-        assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
-                event5).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
+    public void equals_sameDeleteEventCommand() {
+        assertEquals(DELETE_EVENT_COMMAND, DELETE_EVENT_COMMAND);
     }
 
     @Test
-    public void equals_sameEventCommand() {
-        EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
-        assertEquals(eventCommand, eventCommand);
-    }
-
-    @Test
-    public void equals_notEventCommand() {
-        EventCommand eventCommand = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
+    public void equals_notDeleteEventCommand() {
         DeleteCommand deleteCommand = new DeleteCommand(Index.fromOneBased(1));
-        assertNotEquals(eventCommand, deleteCommand);
+        assertNotEquals(DELETE_EVENT_COMMAND, deleteCommand);
     }
 
     @Test
-    public void equals_sameAttributes() {
-        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
-        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
-        assertEquals(eventCommand1, eventCommand2);
+    public void equals_sameIndices() {
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(Index.fromOneBased(1),
+                Index.fromOneBased(1));
+        assertEquals(DELETE_EVENT_COMMAND, deleteEventCommand);
     }
 
     @Test
-    public void equals_differentIndex() {
-        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
-        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(2), VALID_EVENT);
-        assertNotEquals(eventCommand1, eventCommand2);
+    public void equals_differentRecruiterIndex() {
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(Index.fromOneBased(2),
+                Index.fromOneBased(1));
+        assertNotEquals(DELETE_EVENT_COMMAND, deleteEventCommand);
     }
 
     @Test
-    public void equals_differentEvent() {
-        EventCommand eventCommand1 = new EventCommand(Index.fromOneBased(1), VALID_EVENT);
-        EventCommand eventCommand2 = new EventCommand(Index.fromOneBased(1), ALTERNATE_VALID_EVENT);
-        assertNotEquals(eventCommand1, eventCommand2);
+    public void equals_differentEventIndex() {
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(Index.fromOneBased(1),
+                Index.fromOneBased(2));
+        assertNotEquals(DELETE_EVENT_COMMAND, deleteEventCommand);
     }
 
     /**
@@ -270,6 +227,11 @@ public class EventCommandTest {
         @Override
         public ObservableList<Person> getFilteredPersonList() {
             return FXCollections.observableList(List.of(person));
+        }
+
+        @Override
+        public void setPerson(Person target, Person editedPerson) {
+            requireAllNonNull(target, editedPerson);
         }
     }
 }

@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.TitledPane?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -36,7 +37,14 @@
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
       <VBox fx:id="events" spacing="5" VBox.vgrow="ALWAYS" />
-      <Label fx:id="note" styleClass="cell_small_label" text="\$note" />
+      <Region prefHeight="10"/>
+      <TitledPane fx:id="notePane" text="Note" expanded="false">
+        <content>
+          <VBox>
+            <Label fx:id="note" styleClass="note_label" wrapText="true"/>
+          </VBox>
+        </content>
+      </TitledPane>
     </VBox>
   </GridPane>
 </HBox>

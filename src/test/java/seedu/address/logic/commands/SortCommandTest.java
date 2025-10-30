@@ -1,31 +1,67 @@
 package seedu.address.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.model.Comparators.NAME_COMPARATOR;
+import static seedu.address.model.Comparators.TIMESTAMP_COMPARATOR;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBookUnsorted;
-
-import java.util.Comparator;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.parser.SortType;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
 
 public class SortCommandTest {
     private Model model = new ModelManager(getTypicalAddressBookUnsorted(), new UserPrefs());
-    private final Comparator<Person> nameComparator =
-            Comparator.comparing(person -> person.getName().toString(), String.CASE_INSENSITIVE_ORDER);
 
     @Test
-    public void execute_unsortedList_success() {
-        SortCommand sortCommand = new SortCommand();
+    public void execute_sortByName_success() {
+        SortCommand sortCommand = new SortCommand(SortType.NAME);
 
-        String expectedMessage = SortCommand.MESSAGE_SUCCESS;
+        String expectedMessage = String.format(String.format(SortCommand.MESSAGE_SUCCESS,
+                                                SortType.NAME.name().toLowerCase()));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.updateSortedPersonList(nameComparator);
+        expectedModel.updateSortedPersonList(NAME_COMPARATOR);
 
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_sortByTimeStamp_success() {
+        SortCommand sortCommand = new SortCommand(SortType.TIMESTAMP);
+
+        String expectedMessage = String.format(String.format(SortCommand.MESSAGE_SUCCESS,
+                SortType.TIMESTAMP.name().toLowerCase()));
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModel.updateSortedPersonList(TIMESTAMP_COMPARATOR);
+
+        assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void equals() {
+        SortCommand sortFirstCommand = new SortCommand(SortType.NAME);
+        SortCommand sortSecondCommand = new SortCommand(SortType.TIMESTAMP);
+
+        // same object -> returns true
+        assertTrue(sortFirstCommand.equals(sortFirstCommand));
+
+        // same values -> returns true
+        SortCommand sortFirstCommandCopy = new SortCommand(SortType.NAME);
+        assertTrue(sortFirstCommand.equals(sortFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(sortFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(sortFirstCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(sortFirstCommand.equals(sortSecondCommand));
     }
 }

@@ -24,6 +24,19 @@
     -fx-opacity: 1;
 }
 
+.note_label {
+    -fx-text-fill: white;
+    -fx-padding: 5 10 5 10;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-alignment: top-left;
+    -fx-wrap-text: true;
+}
+
+.titled-pane > .content {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
 .text-field {
     -fx-font-size: 12pt;
     -fx-font-family: "Segoe UI Semibold";

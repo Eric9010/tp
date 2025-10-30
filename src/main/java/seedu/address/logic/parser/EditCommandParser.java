@@ -63,25 +63,23 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         try {
-            // Try to parse preamble as an index
+            // Try to parse preamble as an index.
             Index index = ParserUtil.parseIndex(preamble);
             return new EditCommand(index, editPersonDescriptor);
         } catch (ParseException peIndex) {
-            // If it failed as an index, check *why* before trying as a name.
-
-            // This regex checks if the preamble is a number (e.g., "0", "-5").
+            // Checks if preamble is a number.
             if (preamble.matches("-?\\d+")) {
-                // It's an invalid number. Fail immediately with the index error.
+                // If invalid number,immediately errors.
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                         EditCommand.MESSAGE_USAGE), peIndex);
             }
 
-            // If it wasn't a number (e.g., "Alex Yeoh"), *then* try to parse it as a name.
+            // Otherwise try parsing as a name.
             try {
                 Name name = ParserUtil.parseName(preamble);
                 return new EditCommand(name, editPersonDescriptor);
             } catch (ParseException peName) {
-                // If it fails as a name too, throw the invalid command format error.
+                // If it fails all the above, throw invalid command format error.
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), peName);
             }
