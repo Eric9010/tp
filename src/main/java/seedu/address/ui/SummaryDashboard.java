@@ -70,9 +70,6 @@ public class SummaryDashboard extends UiPart<Region> {
         updateUpcomingEvents(personList);
     }
 
-    /**
-     * Finds and displays upcoming events for today and tomorrow.
-     */
     private void updateUpcomingEvents(ObservableList<Person> personList) {
         upcomingEventsBox.getChildren().clear();
 
