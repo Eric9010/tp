@@ -25,21 +25,21 @@ public class SampleDataUtil {
         Person alex = new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                 new Address("Google"), EMPTY_NOTE, getTagSet("Collegue"), null, new HashSet<Event>());
         alex.addEvent(new Event("Team Lunch", "2025-10-20 12:00", "2025-10-20 13:00", "F2F",
-                "Google Office"));
+                "Google Office", "M"));
         alex.addEvent(new Event("Project Deadline", "2025-11-01 17:00", "2025-11-01 17:00", null,
-                "Workstation"));
+                "Workstation", "H"));
 
         Person bernice = new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Meta"), EMPTY_NOTE, getTagSet("Interviewer", "Recruiter"), null,
                 new HashSet<Event>());
         bernice.addEvent(new Event("Interview", "2025-10-18 14:00", "2025-10-18 15:00", "ZOOM",
-                "Online"));
+                "Online", "H"));
 
         Person charlotte = new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"),
                 new Email("charlotte@example.com"), new Address("NUS"), EMPTY_NOTE, getTagSet("Friend"), null,
                 new HashSet<Event>());
         charlotte.addEvent(new Event("Coffee Chat", "2025-10-19 11:00", "2025-10-19 12:00", null,
-                "Starbucks @ Vivo"));
+                "Starbucks @ Vivo", "L"));
 
         return new Person[] {
             alex, bernice, charlotte

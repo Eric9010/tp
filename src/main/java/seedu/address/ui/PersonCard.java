@@ -91,8 +91,41 @@ public class PersonCard extends UiPart<Region> {
         ArrayList<Event> sortedEvents = new ArrayList<>(person.getEvents());
         sortedEvents.sort(Comparator.comparing(Event::getStart));
 
+        events.getChildren().clear();
+
         for (Event event: sortedEvents) {
-            events.getChildren().add(new Label((index + 1) + ". " + event.toString()));
+            // Create circle region for priority icon.
+            Region priorityIcon = new Region();
+            priorityIcon.setMinSize(10, 10);
+            priorityIcon.setMaxSize(10, 10);
+            priorityIcon.setVisible(false);
+
+            // Set color for icons according to priority.
+            if (event.getPriority() != null) {
+                priorityIcon.setVisible(true);
+                String color = "";
+                switch (event.getPriority()) {
+                    case H: color = "red"; break;
+                    case M: color = "yellow"; break;
+                    case L: color = "limegreen"; break;
+                }
+                priorityIcon.setStyle("-fx-background-color: " + color
+                        + "; -fx-background-radius: 50%; -fx-border-radius: 50%;");
+            }
+
+            Label eventLabel = new Label((index + 1) + ". " + event.toString());
+            eventLabel.setWrapText(true);
+
+            // Create a separator.
+            Label separatorLabel = new Label(" | ");
+            separatorLabel.setStyle("-fx-font-weight: bold;");
+
+            // HBox to hold icon, separator, and label.
+            HBox eventBox = new HBox(3); // Adjust spacing if needed
+            eventBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+            eventBox.getChildren().addAll(priorityIcon, separatorLabel, eventLabel);
+
+            events.getChildren().add(eventBox);
             index++;
         }
     }

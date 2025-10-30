@@ -1,11 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MODE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.address.logic.parser.CliSyntax.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -39,7 +35,8 @@ public class EventCommand extends Command {
             + PREFIX_START + "2025-10-12 14:00 "
             + PREFIX_END + "2025-10-12 15:00 "
             + PREFIX_MODE + "F2F "
-            + PREFIX_LOCATION + "Google Headquarters ";
+            + PREFIX_LOCATION + "Google Headquarters "
+            + PREFIX_PRIORITY + "H";
 
     public static final String MESSAGE_SUCCESS = "New event added.\n%1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists.";

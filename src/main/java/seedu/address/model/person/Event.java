@@ -19,12 +19,20 @@ public class Event {
         F2F, CALL, ZOOM;
     }
 
+    /**
+     * Represents the priority of the event
+     */
+    public enum Priority {
+        H, M, L; // High, Medium, Low
+    }
+
     public static final String MESSAGE_CONSTRAINTS = """
             1. Events should have a non-empty title, a non-empty start and a non-empty end, both in the yyyy-MM-dd \
             HH:mm format.
             2. Mode is optional. Valid modes are F2F, CALL and ZOOM.
             3. Location is optional and can take any string values.
-            4. Note: Optional fields do not accept empty strings.
+            4. Priority is optional. Valid priorities are H, M, L (case-insensitive).
+            5. Note: Optional fields do not accept empty strings.
             """;
 
     private final String title;
@@ -32,6 +40,7 @@ public class Event {
     private final LocalDateTime end;
     private final Mode mode;
     private final String location;
+    private final Priority priority;
 
     /**
      * Constructs an event.
@@ -42,18 +51,28 @@ public class Event {
      * @param mode User input mode.
      * @param location User input location.
      */
-    public Event(String title, String start, String end, String mode, String location) {
+    public Event(String title, String start, String end, String mode, String location, String priority) {
         requireNonNull(title);
         requireNonNull(start);
         requireNonNull(end);
 
-        checkArgument(isValidEvent(title, start, end, mode, location), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidEvent(title, start, end, mode, location, priority), MESSAGE_CONSTRAINTS);
 
         this.title = title;
         this.start = LocalDateTime.parse(start, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.end = LocalDateTime.parse(end, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         this.mode = mode == null ? null : Mode.valueOf(mode.toUpperCase());
         this.location = location;
+
+        if (priority == null || priority.trim().isEmpty()) {
+            this.priority = null;
+        } else {
+            this.priority = Priority.valueOf(priority.toUpperCase());
+        }
+    }
+
+    public Priority getPriority() {
+        return priority;
     }
 
     public String getTitle() {
@@ -84,6 +103,25 @@ public class Event {
      */
     public static boolean isValidTitle(String title) {
         return !title.isEmpty();
+    }
+
+
+    /**
+     * Checks if the priority is valid.
+     *
+     * @param priority User input priority.
+     * @return true if priority is H, M, L (case-insensitive) or null, false otherwise.
+     */
+    public static boolean isValidPriority(String priority) {
+        if (priority == null || priority.trim().isEmpty()) {
+            return true;
+        }
+        try {
+            Priority.valueOf(priority.toUpperCase());
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     /**
@@ -142,8 +180,10 @@ public class Event {
      * @param location User input location.
      * @return true if the all fields of the event is valid, false otherwise.
      */
-    public static boolean isValidEvent(String title, String start, String end, String mode, String location) {
-        return isValidTitle(title) && isValidStartEnd(start, end) && isValidMode(mode) && isValidLocation(location);
+    public static boolean isValidEvent(String title, String start, String end, String mode, String location,
+                                       String priority) {
+        return isValidTitle(title) && isValidStartEnd(start, end) && isValidMode(mode) && isValidLocation(location)
+                && isValidPriority(priority);
     }
 
     @Override
@@ -157,7 +197,12 @@ public class Event {
         }
 
         Event otherEvent = (Event) other;
-        return title.equals(otherEvent.title) && start.equals(otherEvent.start) && end.equals(otherEvent.end);
+        return title.equals(otherEvent.title)
+                && start.equals(otherEvent.start)
+                && end.equals(otherEvent.end)
+                && Objects.equals(mode, otherEvent.mode)
+                && Objects.equals(location, otherEvent.location)
+                && Objects.equals(priority, otherEvent.priority);
     }
 
     @Override
@@ -173,6 +218,6 @@ public class Event {
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, start, end);
+        return Objects.hash(title, start, end, mode, location, priority);
     }
 }
