@@ -2,8 +2,30 @@
 layout: page
 title: Developer Guide
 ---
-* Table of Contents
-{:toc}
+## Table of Contents
+
+- [Acknowledgements](#acknowledgements)
+- [Setting up, getting started](#setting-up-getting-started)
+- [Design](#design)
+    - [Architecture](#architecture)
+    - [UI component](#ui-component)
+    - [Logic component](#logic-component)
+    - [Model component](#model-component)
+    - [Storage component](#storage-component)
+    - [Common classes](#common-classes)
+- [Implementation](#implementation)
+    - [[Proposed] Undo/redo feature](#proposed-undoredo-feature)
+    - [[Proposed] Data archiving](#proposed-data-archiving)
+- [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+- [Appendix: Requirements](#appendix-requirements)
+    - [Product scope](#product-scope)
+    - [User stories](#user-stories)
+    - [Use cases](#use-cases)
+    - [Non-functional requirements](#non-functional-requirements)
+    - [Glossary](#glossary)
+- [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+    - [Launch and shutdown](#launch-and-shutdown)
+    - [Deleting a person](#deleting-a-person)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -36,7 +58,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-T13-1/tp/blob/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-T13-1/tp/blob/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -68,13 +90,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103T-T13-1/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-T13-1/tp/blob/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-T13-1/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -85,7 +107,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103T-T13-1/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -115,7 +137,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T13-1/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -136,7 +158,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-T13-1/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -277,63 +299,55 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                | I want to …​                                                              | So that I can…​                                             |
-|----------|------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------|
-| `* * *`  | new user               | see some sample data when first opening the app                           | get an overview of how the user interface is like           |
-| `* * *`  | user                   | add a new recruiter                                                       |                                                             |
-| `* * *`  | user                   | delete a recruiter contact                                                | remove recruiter contacts which are no longer useful        |
-| `* * *`  | user                   | view all recruiter contacts                                               | see who I have added and manage them easily                 |
-| `* * *`  | user                   | tag recruiter contacts (by company, industry, role)                       | organise and filter them easily                             |
-| `* * *`  | user                   | add events associated with a recruiter                                    | keep track of meeting calls or interviews                   |
-| `* * *`  | user                   | attach notes to a recruiter contact                                       | remember important details from conversations               |
-| `* *`    | new user               | see a tutorial explaining the features of the app                         | understand how to utilise all the app's different functions |
-| `* *`    | new user               | purge all data                                                            | get rid of sample data and start adding my real data        |
-| `* *`    | user                   | edit a recruiter contact                                                  | update existing recruiter contact easily                    |
-| `* *`    | user                   | search for a recruiter                                                    | quickly find a recruiter                                    |
-| `* *`    | user                   | see upcoming events on the next day                                       | know the events I need to prepare for                       |
-| `* *`    | user                   | pin recruiter contacts to the top                                         | easily find recruiters                                      |
-| `* *`    | user                   | archive recruiter contacts                                                | reduce clutter in the user interface                        |
-| `* *`    | forgetful user         | receive reminders for upcoming events                                     | remember to attend the events                               |
-| `* *`    | forgetful user         | merge duplicate recruiter contacts                                        | avoid confusion due to identical entries                    |
-| `* *`    | user with wide network | mark a recruiter's priority level                                         | focus on important connections first                        |
-| `* *`    | busy user              | find available blocks of time                                             | plan my schedule easily                                     |
-| `* *`    | busy user              | be warned of clashes                                                      | reschedule events to a better time                          |
-| `*`      | new user               | set up career preferences (industries, roles)                             | prioritise reminders for me                                 |
-| `*`      | forgetful user         | view recruiter contacts as a timeline                                     | easily find recruiters I have contacted recently            |
-| `*`      | busy user              | snooze a reminder                                                         | reschedule it to a better time                              |
-| `*`      | user                   | see a summary dashboard e.g. number of recruiters, pending follow-ups etc | have an overview of internship or job search progress       |
-| `*`      | user                   | undo most recent command                                                  | easily backtrack to a previous state in case of mistakes    |
-| `*`      | experienced user       | set up shortcuts for certain commands                                     | save time on typing                                         |
+| Priority | As a …​                | I want to …​                                                              | So that I can…​                                       |
+|----------|------------------------|---------------------------------------------------------------------------|-------------------------------------------------------|
+| `* * *`  | new user               | see some sample data when first opening the app                           | get an overview of how the user interface is like     |
+| `* * *`  | user                   | add a new recruiter                                                       |                                                       |
+| `* * *`  | user                   | delete a recruiter contact                                                | remove recruiter contacts which are no longer useful  |
+| `* * *`  | user                   | view all recruiter contacts                                               | see who I have added and manage them easily           |
+| `* * *`  | user                   | tag recruiter contacts (by company, industry, role)                       | organise and filter them easily                       |
+| `* * *`  | user                   | add events associated with a recruiter                                    | keep track of meeting calls or interviews             |
+| `* * *`  | user                   | delete events associated with a recruiter                                 | remove past events or cancelled events                |
+| `* * *`  | user                   | attach notes to a recruiter contact                                       | remember important details from conversations         |
+| `* *`    | new user               | purge all data                                                            | get rid of sample data and start adding my real data  |
+| `* *`    | user                   | edit a recruiter contact                                                  | update existing recruiter contact easily              |
+| `* *`    | user                   | search for a recruiter                                                    | quickly find a recruiter                              |
+| `* *`    | user                   | pin recruiter contacts to the top                                         | easily find recruiters                                |
+| `* *`    | forgetful user         | receive reminders for upcoming events                                     | remember to attend the events                         |
+| `* *`    | user with wide network | mark a recruiter's priority level                                         | focus on important connections first                  |
+| `* *`    | busy user              | find available blocks of time                                             | plan my schedule easily                               |
+| `* *`    | busy user              | be warned of clashes                                                      | reschedule events to a better time                    |
+| `*`      | user                   | see a summary dashboard e.g. number of recruiters, pending follow-ups etc | have an overview of internship or job search progress |
 
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is `CareerConnect` and the **Actor** is the `user`, unless specified otherwise)
 
-**UC01: Add a new recruiter**
+**UC01: Add a new person**
 
 **MSS**
 
-1.  User requests to add a new recruiter
-2.  AddressBook adds the recruiter to the list
+1.  User requests to add a new person
+2.  CareerConnect adds the person to the list
 
     Use case ends.
 
 **Extensions**
 
 * 1a. The add request is not the specified format.
-    * 3a1. AddressBook shows an error message.
+    * 3a1. CareerConnect shows an error message.
     
       Use case ends.
 
-**UC02: Delete a recruiter contact**
+**UC02: Delete a contact**
 
 **MSS**
 
-1.  User requests to list recruiters
-2.  AddressBook shows a list of recruiters
-3.  User requests to delete a specific recruiter in the list
-4.  AddressBook deletes the recruiter contact
+1.  User requests to list contacts
+2.  CareerConnect shows a list of contacts
+3.  User requests to delete a specific contact in the list
+4.  CareerConnect deletes the contact
 
     Use case ends.
 
@@ -345,18 +359,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. CareerConnect shows an error message.
 
       Use case resumes at step 2.
 
-**UC03: Tag a recruiter contact**
+**UC03: Tag a contact**
 
 **MSS**
 
-1.  User requests to list recruiters
-2.  AddressBook shows a list of recruiters
-3.  User requests to tag a specific recruiter in the list
-4.  AddressBook adds the tag to the recruiter contact
+1.  User requests to list contacts
+2.  CareerConnect shows a list of contacts
+3.  User requests to tag a specific contact in the list
+4.  CareerConnect adds the tag to the contact
 
     Use case ends.
 
@@ -368,18 +382,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. CareerConnect shows an error message.
 
       Use case resumes at step 2.
 
-**UC04: Add an event associated with a recruiter**
+**UC04: Add an event associated with a person**
 
 **MSS**
 
-1.  User requests to list recruiters
-2.  AddressBook shows a list of recruiters
-3.  User requests to add an event under a specific recruiter in the list
-4.  AddressBook adds the event under the recruiter contact
+1.  User requests to list contacts
+2.  CareerConnect shows a list of contacts
+3.  User requests to add an event under a specific person in the list
+4.  CareerConnect adds the event under the contact
 
     Use case ends.
 
@@ -391,13 +405,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. CareerConnect shows an error message.
 
       Use case resumes at step 2.
 
 * 3b. The given event is invalid.
 
-    * 3b1. AddressBook shows an error message.
+    * 3b1. CareerConnect shows an error message.
 
       Use case resumes at step 2.
 
@@ -406,7 +420,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User requests to find a block of time of a specific duration within a specific timeframe
-2.  AddressBook shows a list of blocks of time which fit the criteria
+2.  CareerConnect shows a list of blocks of time which fit the criteria
 
     Use case ends.
 
@@ -414,18 +428,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The request is of an invalid format.
 
-    * 1a1. AddressBook shows an error message.
+    * 1a1. CareerConnect shows an error message.
   
       Use case ends.
 
 * 2a. No period of time fits the user's requirements.
 
-    * 2a1. AddressBook shows a message that it cannot find such a time block.
+    * 2a1. CareerConnect shows a message that it cannot find such a time block.
 
       Use case ends.
 
 
-### Non-Functional Requirements
+### Non-functional requirements
 
 #### Environment
 * Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
@@ -486,8 +500,6 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
-
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
@@ -503,12 +515,11 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. Deleting a person by name
+    1. Prerequisites: `Alex Yeoh` in list, `Alice Yeoh` not in list.
 
-### Saving data
+    1. Test case: `delete Alex Yeoh`<br>
+       Expected: `Alex Yeoh` is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-1. Dealing with missing/corrupted data files
-
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
+    1. Test case: `delete Alice Yeoh`<br>
+       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
