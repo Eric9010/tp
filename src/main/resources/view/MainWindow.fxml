@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
@@ -33,18 +34,49 @@
           </Menu>
         </MenuBar>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+          <StackPane fx:id="commandBoxPlaceholder"
+                     styleClass="pane-with-border"
+                     VBox.vgrow="NEVER"
+                     minHeight="50"
+                     prefHeight="60"
+                     maxHeight="70">
+              <padding>
+                  <Insets top="10" right="10" bottom="15" left="10"/>
+              </padding>
+          </StackPane>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+          <StackPane fx:id="summaryDashboardPlaceholder"
+                     styleClass="pane-with-border"
+                     VBox.vgrow="ALWAYS"
+                     minHeight="220" prefHeight="240">
+              <padding>
+                  <Insets top="25" right="10" bottom="25" left="10" />
+              </padding>
+          </StackPane>
+
+          <VBox styleClass="pane-with-border"
+                minHeight="120" prefHeight="130" spacing="5" VBox.vgrow="NEVER">
+
+              <!-- Header -->
+              <StackPane alignment="CENTER"
+                         style="-fx-background-color: #202225; -fx-background-radius: 4;">
+                  <children>
+                      <Label text="💬 Results"
+                             style="-fx-text-fill: #00aaff;
+                            -fx-font-size: 16px;
+                            -fx-font-weight: bold;
+                            -fx-padding: 8 0 8 0;" />
+                  </children>
+
+              </StackPane>
+
+              <!-- Actual Results Display -->
+              <StackPane fx:id="resultDisplayPlaceholder" VBox.vgrow="ALWAYS">
+                  <padding>
+                      <Insets top="5" right="10" bottom="5" left="10" />
+                  </padding>
+              </StackPane>
+          </VBox>
 
         <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
           <padding>
