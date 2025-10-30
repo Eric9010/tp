@@ -116,6 +116,10 @@ public class Person {
         events.add(event);
     }
 
+    public void deleteEvent(Event event) {
+        events.remove(event);
+    }
+
     /**
      * Check if the Person object already contains the event.
      * @param event Event to be compared.
