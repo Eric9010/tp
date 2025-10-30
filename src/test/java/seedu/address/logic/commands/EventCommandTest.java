@@ -31,9 +31,9 @@ import seedu.address.testutil.PersonBuilder;
 
 public class EventCommandTest {
     public static final Event VALID_EVENT = new Event("Google Interview", "2025-09-10 15:00",
-            "2025-09-10 15:50", "f2f", "Google Headquarters");
+            "2025-09-10 15:50", "f2f", "Google Headquarters", "H");
     public static final Event ALTERNATE_VALID_EVENT = new Event("Amazon Interview", "2025-09-10 15:40",
-            "2025-09-10 16:50", null, null);
+            "2025-09-10 16:50", null, null, null);
 
     @Test
     public void constructor_nullEvent_throwsNullPointerException() {
@@ -76,31 +76,31 @@ public class EventCommandTest {
     public void execute_hasClashes_throwsCommandException() {
         // same time
         Event event1 = new Event("Amazon Interview", "2025-09-10 15:00", "2025-09-10 15:50", null,
-                null);
+                null, null);
         assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
                 event1).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
 
         // subset of event duration
         Event event2 = new Event("Amazon Interview", "2025-09-10 15:30", "2025-09-10 15:40", null,
-                null);
+                null, null);
         assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
                 event2).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
 
         // superset of event duration
         Event event3 = new Event("Amazon Interview", "2025-09-10 14:30", "2025-09-10 16:40", null,
-                null);
+                null, null);
         assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
                 event3).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
 
         // overlap with start
         Event event4 = new Event("Amazon Interview", "2025-09-10 14:30", "2025-09-10 15:40", null,
-                null);
+                null, null);
         assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
                 event4).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
 
         // overlap with end
         Event event5 = new Event("Amazon Interview", "2025-09-10 15:30", "2025-09-10 16:40", null,
-                null);
+                null, null);
         assertThrows(CommandException.class, () -> new EventCommand(Index.fromOneBased(1),
                 event5).execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
     }

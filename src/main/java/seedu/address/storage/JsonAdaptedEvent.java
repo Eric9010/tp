@@ -16,6 +16,7 @@ class JsonAdaptedEvent {
     private final String end;
     private final String mode;
     private final String location;
+    private final String priority;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -23,12 +24,13 @@ class JsonAdaptedEvent {
     @JsonCreator
     public JsonAdaptedEvent(@JsonProperty("title") String title, @JsonProperty("start") String start,
                             @JsonProperty("end") String end, @JsonProperty("mode") String mode,
-                            @JsonProperty("location") String location) {
+                            @JsonProperty("location") String location, @JsonProperty("priority") String priority) {
         this.title = title;
         this.start = start;
         this.end = end;
         this.mode = mode == null ? "" : mode;
         this.location = location == null ? "" : location;
+        this.priority = priority == null ? "" : priority;
     }
 
     /**
@@ -40,6 +42,7 @@ class JsonAdaptedEvent {
         end = source.getEnd();
         mode = source.getMode() == null ? "" : source.getMode();
         location = source.getLocation() == null ? "" : source.getLocation();
+        priority = source.getPriority() == null ? "" : source.getPriority().name();
     }
 
     /**
@@ -51,10 +54,15 @@ class JsonAdaptedEvent {
         String modeUsed = mode.isEmpty() ? null : mode;
         String locationUsed = location.isEmpty() ? null : location;
 
-        if (!Event.isValidEvent(title, start, end, modeUsed, locationUsed)) {
+        if (!Event.isValidEvent(title, start, end, modeUsed, locationUsed, priority)) {
             throw new IllegalValueException(Event.MESSAGE_CONSTRAINTS);
         }
-        return new Event(title, start, end, modeUsed, locationUsed);
+
+        if (!Event.isValidPriority(priority)) {
+            throw new IllegalValueException(Event.MESSAGE_CONSTRAINTS + " Invalid priority specified.");
+        }
+
+        return new Event(title, start, end, modeUsed, locationUsed, priority);
     }
 
 }
