@@ -49,7 +49,7 @@
                 <StackPane fx:id="summaryDashboardPlaceholder"
                            styleClass="pane-with-border"
                            VBox.vgrow="ALWAYS"
-                           minHeight="220" prefHeight="240">
+                           minHeight="220">
                     <padding>
                         <Insets top="25" right="10" bottom="25" left="10" />
                     </padding>
