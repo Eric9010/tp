@@ -10,13 +10,13 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Sorts all persons in the address book by alphabetical order or time added.
+ * Sorts all recruiters in the address book by alphabetical order or time added.
  */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
-    public static final String MESSAGE_SUCCESS = "Sorted person list by %s.";
+    public static final String MESSAGE_SUCCESS = "Sorted recruiter list by %s.";
     public static final String MESSAGE_USAGE =
-            "sort: Sorts the person list by the given field.\n"
+            "sort: Sorts the recruiter list by the given field.\n"
             + "Parameters: FIELD (name/timestamp)\n"
             + "Example: sort name";
 

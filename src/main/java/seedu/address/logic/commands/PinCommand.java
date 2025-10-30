@@ -14,21 +14,21 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 
 /**
- * Pins a person identified using its displayed index or name to the top of the address book.
+ * Pins a recruiter identified using its displayed index or name to the top of the address book.
  */
 public class PinCommand extends Command {
 
     public static final String COMMAND_WORD = "pin";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Pins the person identified by the index number or by their full name.\n"
+            + ": Pins the recruiter identified by the index number or by their full name.\n"
             + "Pinned contacts move to the top of the list, up to a maximum of 3.\n"
             + "Parameters: INDEX (must be a positive integer) OR NAME\n"
             + "Example: " + COMMAND_WORD + " 1\n"
             + "Example: " + COMMAND_WORD + " Alex Yeoh";
 
-    public static final String MESSAGE_PIN_PERSON_SUCCESS = "Pinned Person: %1$s";
-    public static final String MESSAGE_PERSON_ALREADY_PINNED = "This person is already pinned.";
+    public static final String MESSAGE_PIN_PERSON_SUCCESS = "Pinned Recruiter: %1$s";
+    public static final String MESSAGE_PERSON_ALREADY_PINNED = "This recruiter is already pinned.";
 
     private final Index targetIndex;
     private final Name targetName;

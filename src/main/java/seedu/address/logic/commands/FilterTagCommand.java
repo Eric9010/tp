@@ -11,12 +11,12 @@ import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
 /**
- * Filters persons by tags.
+ * Filters recruiters by tags.
  */
 public class FilterTagCommand extends Command {
     public static final String COMMAND_WORD = "filtertag";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters all persons whose tags match any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters all recruiters whose tags match any of "
             + "the specified tags and displays them as a list with index numbers.\n"
             + "Parameters: TAG [MORE_TAGS]...\n"
             + "Example: " + COMMAND_WORD + " Friend Colleague";
