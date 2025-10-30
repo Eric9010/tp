@@ -1,6 +1,9 @@
 package seedu.address.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -86,7 +89,7 @@ public class PinCommandTest {
         assertCommandFailure(pinCommand, model, Messages.MESSAGE_PERSON_NOT_FOUND);
     }
 
-     @Test
+    @Test
     public void execute_alreadyPinnedIndex_throwsCommandException() {
         // Tests execution of PinCommand targeting a person who is already pinned.
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
