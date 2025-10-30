@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-**CareerConnect** is a desktop app designed for **job seekers and university students** who regularly communicate with recruiters. It can help you **organise recruiter contacts efficiently**, so you can focus on building meaningful professional connections. If you can type fast, CareerConnect can get your contact management tasks done faster than traditional GUI apps.
+**CareerConnect** is a desktop app designed for **university students** who regularly communicate with recruiters. It can help you **organise recruiter contacts efficiently**, so you can focus on building meaningful professional connections. If you can type fast, CareerConnect can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
   {:toc}
@@ -15,9 +15,9 @@ title: User Guide
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T13-1/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for CareerConnect.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -26,13 +26,13 @@ title: User Guide
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-    * `list` : Lists all contacts.
+    * `list` : Lists all recruiters.
 
-    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+    * `add n/John Doe p/98765432 e/johnd@example.com o/NUS` : Adds a recruiter named `John Doe` to CareerConnect.
 
-    * `delete 3` : Deletes the 3rd contact shown in the current list.
+    * `delete 3` : Deletes the 3rd recruiter shown in the current list.
 
-    * `clear` : Deletes all contacts.
+    * `clear` : Deletes all recruiters.
 
     * `exit` : Exits the app.
 
@@ -72,15 +72,14 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
-
 ### Adding a recruiter: `add`
 
-Adds a person to the address book.
+Adds a recruiter to CareerConnect.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL o/ORGANISATION [t/TAG]…`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+A recruiter can have any number of tags (including 0)
 </div>
 
 Examples:
@@ -89,14 +88,14 @@ Examples:
 
 ### Viewing all recruiters : `viewall`
 
-Shows a list of all recruiters in the address book and the total count.
+Shows a list of all recruiters in CareerConnect and the total count.
 
 Format: `viewall`
 
 
 ### Editing a recruiter : `edit`
 
-Edits an existing recruiter in the address book.
+Edits an existing recruiter in CareerConnect.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
 OR `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
@@ -109,12 +108,12 @@ OR `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
 * You can remove all the recruiter's tags by typing `t/` without specifying any tags after it.
 
 Examples:
-* `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st recruiter to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` Edits the name of the 2nd recruiter to be `Betsy Crower` and clears all existing tags.
 
-### Locating persons by name: `find`
+### Locating recruiters by name: `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds recruiters whose names contain any of the given keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
@@ -122,7 +121,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
+* Recruiters matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
@@ -132,7 +131,7 @@ Examples:
 
 ### Deleting a recruiter : `delete`
 
-Deletes the specified recruiter from the address book.
+Deletes the specified recruiter CareerConnect.
 
 Format: `delete INDEX` OR `delete NAME`
 
@@ -154,7 +153,7 @@ Pins a recruiter contact to the top of the list (up to 3).
 Format: `pin INDEX` OR `pin NAME`
 
 * Pins the recruiter at the specified `INDEX` or with the specified `NAME`.
-* Pinned contacts are identifiable by a 📌 icon. *(Note: Adjust icon if different)*
+* Pinned contacts are identifiable by a 📌 icon.
 
 Examples:
 * `pin 5`
@@ -164,32 +163,68 @@ Examples:
 
 Unpins a pinned recruiter contact.
 
-Format: `unpin INDEX`
+Format: `unpin INDEX` or `unpin NAME`
 
-* Unpins the pinned recruiter contact at the specified `INDEX`.
+* Unpins the pinned recruiter contact at the specified `INDEX` or with the specified `NAME`.
 
 Example:
 * `unpin 1`
+* `unpin Alex Yeoh`
 
 ### Adding an event: `event`
 
 Adds an event to the specified recruiter.
 
-Format: `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION] [desc/REMARKS]`
+Format: `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION]`
 
 * The event is added to the recruiter at the specified `INDEX`.
-* The index refers to the index number shown in the displayed recruiter list and must be a positive integer
+* The index refers to the index number shown in the displayed recruiter list and must be a positive integer.
 * `START` and `END` should be specified in the `yyyy-MM-dd HH:mm` format.
 * `MODE` can only be `F2F`, `ZOOM` or `CALL` (case-insensitive).
-* `REMARKS` should be 500 characters or less.
 
 Examples:
-* `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters desc/Final Round`
+* `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters`
 * `event 2 t/Coffee Chat s/2025-10-21 11:00 e/2025-10-21 12:00`
+
+### Deleting an event: `cancel`
+
+Deletes a specified event from the specified recruiter.
+
+Format: `cancel RECRUITER_INDEX EVENT_INDEX`
+
+* The event at `EVENT_INDEX` is deleted from the recruiter at `RECRUITER_INDEX`.
+* `RECRUITER_INDEX` refers to the index number shown in the displayed recruiter list.
+* `EVENT_INDEX` refers to the index number shown in the displayed event list under a recruiter.
+* Both `RECRUITER_INDEX` and `EVENT_INDEX` must be positive integers.
+
+Example:
+* `cancel 2 3` deletes the 3rd event under the 2nd recruiter.
+
+### Getting reminders: `remind`
+
+Displays a list of events happening today or tomorrow.
+
+Format: `remind`
+
+* Past events would not be shown.
+
+### Finding available time slots: `free`
+
+Displays a list of time slots not occupied by any events.
+
+Format: `free h/NO_OF_HOURS d/DATE`
+
+* `NO_OF_HOURS` should be an integer in the range [1, 16].
+* `DATE` should be specified in the `yyyy-MM-dd` format.
+* The earliest start time that can be suggested is 07:00 while the latest end time is 23:00.
+* The time slots are checked for their availability in 15-minute intervals.
+
+Example: 
+* `free h/2 d/2025-10-10`
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries in CareerConnect.
 
 Format: `clear`
 
@@ -201,15 +236,15 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+CareerConnect data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+CareerConnect data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, CareerConnect will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause CareerConnect to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 ### Archiving data files `[coming in v2.0]`
@@ -221,10 +256,10 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CareerConnect home folder.
 
 **Q**: I edited the data file and now something is wrong with the application. What do I do?<br>
-**A**: To reset the application, go the folder containing the jar file and find the data subfolder. From there, delete the file addressbook.json and re-open the application. Unfortunately, any existing data will be gone.
+**A**: To reset the application, go to the folder containing the jar file and find the data subfolder. From there, delete the file addressbook.json and re-open the application. Unfortunately, any existing data will be gone.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -245,7 +280,7 @@ Action | Format, Examples
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` OR <br> `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` <br> e.g., `edit 2 n/James Lee e/jameslee@example.com` <br> e.g., `edit James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Pin** | `pin INDEX` OR `pin NAME`<br> e.g., `pin 3` <br> e.g., `pin Jake Thomas`
-**Unpin** | `unpin INDEX`<br> e.g., `unpin 3`
+**Unpin** | `unpin INDEX` OR `unpin NAME`<br> e.g., `unpin 3` <br> e.g. `unpin Alex Yeoh`
 **Viewall** | `viewall`
-**Event** | `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION] [desc/REMARKS]` <br> e.g., `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters desc/Final Round`
-**Help** | `help`****
+**Event** | `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION]` <br> e.g., `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters`
+**Help** | `help`
