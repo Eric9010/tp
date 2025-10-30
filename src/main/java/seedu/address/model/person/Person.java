@@ -149,14 +149,15 @@ public class Person {
      * Returns a new Person object with the pin timestamp set to the current time.
      */
     public Person pin() {
-        return new Person(name, phone, email, address, note, tags, System.currentTimeMillis(), this.events);
+        return new Person(name, phone, email, address, note, tags, System.currentTimeMillis(), this.events,
+                dateAdded);
     }
 
     /**
      * Returns a new Person object with the pin timestamp removed.
      */
     public Person unpin() {
-        return new Person(name, phone, email, address, note, tags, null, this.events);
+        return new Person(name, phone, email, address, note, tags, null, this.events, dateAdded);
     }
 
     /**
