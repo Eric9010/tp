@@ -18,11 +18,7 @@ public class Comparators {
             return -1; // p1 comes before p2
         } else if (!p1.isPinned() && p2.isPinned()) {
             return 1; // p2 comes before p1
-        } else if (p1.isPinned() && p2.isPinned()) {
-            // Both are pinned, sort by timestamp (earlier first)
-            return p1.getPinTimestamp().compareTo(p2.getPinTimestamp());
         } else {
-            // Both are unpinned, do nothing
             return 0;
         }
     };

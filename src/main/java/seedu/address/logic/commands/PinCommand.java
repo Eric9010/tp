@@ -56,13 +56,13 @@ public class PinCommand extends Command {
         Person personToPin;
 
         if (targetIndex != null) {
-            // Logic for finding by index
+            // Logic for finding by index.
             if (targetIndex.getZeroBased() >= lastShownList.size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
             personToPin = lastShownList.get(targetIndex.getZeroBased());
         } else {
-            // Logic for finding by name
+            // Logic for finding by name.
             personToPin = lastShownList.stream()
                     .filter(person -> person.getName().equals(targetName))
                     .findFirst()

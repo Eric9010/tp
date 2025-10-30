@@ -4,14 +4,13 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.FreeTimeCommand.MESSAGE_NOT_FOUND;
-import static seedu.address.logic.commands.FreeTimeCommand.MESSAGE_SUCCESS;
+import static seedu.address.logic.commands.DeleteEventCommand.MESSAGE_SUCCESS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
@@ -22,6 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
@@ -29,71 +29,71 @@ import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
-public class FreeTimeCommandTest {
-    private static final Event FULL_DAY = new Event("Interview", "2025-09-10 00:00", "2025-09-11 00:00",
-            null, null);
-    private static final Event HALF_DAY = new Event("Interview", "2025-09-10 00:00", "2025-09-10 12:00",
-            null, null);
-    private static final FreeTimeCommand FREE_TIME_COMMAND = new FreeTimeCommand(10, LocalDate.of(2025,
-            9, 10));
+public class DeleteEventCommandTest {
+    public static final Event VALID_EVENT = new Event("Google Interview", "2025-09-10 15:00",
+            "2025-09-10 15:50", "f2f", "Google Headquarters");
+    public static final DeleteEventCommand DELETE_EVENT_COMMAND = new DeleteEventCommand(Index.fromOneBased(1),
+            Index.fromOneBased(1));
 
     @Test
-    public void constructor_nullDate_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new FreeTimeCommand(1, null));
+    public void constructor_hasEvent_success() {
+        assertDoesNotThrow(() -> new DeleteEventCommand(Index.fromZeroBased(1),
+                Index.fromZeroBased(2)));
     }
 
     @Test
-    public void constructor_validInputs_success() {
-        assertDoesNotThrow(() -> new FreeTimeCommand(1, LocalDate.of(2025, 10, 23)));
-    }
-
-    @Test
-    public void execute_noneFound() {
+    public void execute_validIndices_deleteEvent() {
         Person person = new PersonBuilder(ALICE).build();
-        ModelStubWithPersonAndEvent model = new ModelStubWithPersonAndEvent(person, List.of(FULL_DAY));
-        assertCommandSuccess(FREE_TIME_COMMAND, model, MESSAGE_NOT_FOUND, model);
+        ModelStubWithPersonAndEvent model = new ModelStubWithPersonAndEvent(person);
+
+        String expectedMessage = String.format(MESSAGE_SUCCESS, ALICE.getName(), VALID_EVENT);
+        assertCommandSuccess(DELETE_EVENT_COMMAND, model, expectedMessage, model);
     }
 
     @Test
-    public void execute_success() {
-        Person person = new PersonBuilder(ALICE).build();
-        ModelStubWithPersonAndEvent model = new ModelStubWithPersonAndEvent(person, List.of(HALF_DAY));
-        String expectedMessage = String.format(MESSAGE_SUCCESS, 5, """
-                1. [2025-09-10 12:00 to 2025-09-10 22:00]
-                2. [2025-09-10 12:15 to 2025-09-10 22:15]
-                3. [2025-09-10 12:30 to 2025-09-10 22:30]
-                4. [2025-09-10 12:45 to 2025-09-10 22:45]
-                5. [2025-09-10 13:00 to 2025-09-10 23:00]
-                """);
-        assertCommandSuccess(FREE_TIME_COMMAND, model, expectedMessage, model);
+    public void execute_invalidRecruiterIndex_throwsCommandException() {
+        assertThrows(CommandException.class, () -> new DeleteEventCommand(Index.fromZeroBased(2),
+                Index.fromZeroBased(1)).execute(new ModelStubWithPersonAndEvent(
+                        new PersonBuilder(ALICE).build())));
     }
 
     @Test
-    public void equals_sameFreeTimeCommand() {
-        assertEquals(FREE_TIME_COMMAND, FREE_TIME_COMMAND);
+    public void execute_invalidEventIndex_throwsCommandException() {
+        assertThrows(CommandException.class, () -> new DeleteEventCommand(Index.fromZeroBased(1),
+                Index.fromZeroBased(2))
+                .execute(new ModelStubWithPersonAndEvent(new PersonBuilder(ALICE).build())));
     }
 
     @Test
-    public void equals_notFreeTimeCommand() {
-        assertNotEquals(FREE_TIME_COMMAND, new DeleteCommand(Index.fromOneBased(1)));
+    public void equals_sameDeleteEventCommand() {
+        assertEquals(DELETE_EVENT_COMMAND, DELETE_EVENT_COMMAND);
     }
 
     @Test
-    public void equals_sameAttributes() {
-        FreeTimeCommand identical = new FreeTimeCommand(10, LocalDate.of(2025, 9, 10));
-        assertEquals(FREE_TIME_COMMAND, identical);
+    public void equals_notDeleteEventCommand() {
+        DeleteCommand deleteCommand = new DeleteCommand(Index.fromOneBased(1));
+        assertNotEquals(DELETE_EVENT_COMMAND, deleteCommand);
     }
 
     @Test
-    public void equals_differentHours() {
-        FreeTimeCommand differentHours = new FreeTimeCommand(12, LocalDate.of(2025, 9, 10));
-        assertNotEquals(FREE_TIME_COMMAND, differentHours);
+    public void equals_sameIndices() {
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(Index.fromOneBased(1),
+                Index.fromOneBased(1));
+        assertEquals(DELETE_EVENT_COMMAND, deleteEventCommand);
     }
 
     @Test
-    public void equals_differentDate() {
-        FreeTimeCommand differentDate = new FreeTimeCommand(10, LocalDate.of(2026, 9, 10));
-        assertNotEquals(FREE_TIME_COMMAND, differentDate);
+    public void equals_differentRecruiterIndex() {
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(Index.fromOneBased(2),
+                Index.fromOneBased(1));
+        assertNotEquals(DELETE_EVENT_COMMAND, deleteEventCommand);
+    }
+
+    @Test
+    public void equals_differentEventIndex() {
+        DeleteEventCommand deleteEventCommand = new DeleteEventCommand(Index.fromOneBased(1),
+                Index.fromOneBased(2));
+        assertNotEquals(DELETE_EVENT_COMMAND, deleteEventCommand);
     }
 
     /**
@@ -191,22 +191,47 @@ public class FreeTimeCommandTest {
     }
 
     /**
-     * A Model stub that contains a single person with one or more events.
+     * A Model stub that contains a single person.
      */
-    private class ModelStubWithPersonAndEvent extends ModelStub {
+    private class ModelStubWithPerson extends ModelStub {
         private final Person person;
 
-        ModelStubWithPersonAndEvent(Person person, List<Event> events) {
+        ModelStubWithPerson(Person person) {
             requireNonNull(person);
             this.person = person;
-            for (Event event: events) {
-                this.person.addEvent(event);
-            }
         }
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
             return FXCollections.observableList(List.of(person));
+        }
+
+        @Override
+        public void setPerson(Person target, Person editedPerson) {
+            requireAllNonNull(target, editedPerson);
+        }
+    }
+
+    /**
+     * A Model stub that contains a single person with a single event.
+     */
+    private class ModelStubWithPersonAndEvent extends ModelStub {
+        private final Person person;
+
+        ModelStubWithPersonAndEvent(Person person) {
+            requireNonNull(person);
+            this.person = person;
+            this.person.addEvent(VALID_EVENT);
+        }
+
+        @Override
+        public ObservableList<Person> getFilteredPersonList() {
+            return FXCollections.observableList(List.of(person));
+        }
+
+        @Override
+        public void setPerson(Person target, Person editedPerson) {
+            requireAllNonNull(target, editedPerson);
         }
     }
 }
