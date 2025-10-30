@@ -368,13 +368,21 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
+**Viewall** | `viewall`
+**Help** | `help`
 **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL o/ORGANISATION [t/TAG]…` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com o/NUS t/SWE`
 **Clear** | `clear`
 **Delete** | `delete INDEX` OR `delete NAME`<br> e.g., `delete 3` <br> e.g., `delete James Ho`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` OR <br> `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` <br> e.g., `edit 2 n/James Lee e/jameslee@example.com` <br> e.g., `edit James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**Pin** | `pin INDEX` OR `pin NAME`<br> e.g., `pin 3` <br> e.g., `pin Jake Thomas`
+**Findorg** | `findorg KEYWORD [MORE_KEYWORDS]` <br> e.g. `findorg Google`
+**Pin** | `pin INDEX` OR `pin NAME`<br> e.g., `pin 3` <br> e.g. `pin Jake Thomas`
 **Unpin** | `unpin INDEX` OR `unpin NAME`<br> e.g., `unpin 3` <br> e.g. `unpin Alex Yeoh`
-**Viewall** | `viewall`
+**Addtag** | `addtag INDEX TAG [MORE_TAGS]...` OR `addtag NAME TAG [MORE_TAGS]…` <br> e.g. `addtag 2 Banking Finance`
+**Filtertag** | `filtertag TAG [MORE_TAGS]…` <br> e.g. `filtertag Banking`
+**Sort** | `sort name` OR `sort timestamp`
 **Event** | `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION]` <br> e.g., `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters`
-**Help** | `help`
+**Cancel** | `cancel RECRUITER_INDEX EVENT_INDEX` <br> e.g. `cancel 2 3`
+**Remind** | `remind`
+**Free** | `free h/NO_OF_HOURS d/DATE` <br> e.g. `free h/2 d/2025-10-10`
+**Note** | `note RECRUITER_INDEX no/NOTE_CONTENT` <br> e.g. `note 2 no/Prefers Meetings after 5pm`
