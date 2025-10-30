@@ -23,7 +23,7 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number or by their full name.\n"
             + "Parameters: INDEX (must be a positive integer) or Name \n"
-            + "Example: " + COMMAND_WORD + " 1"
+            + "Example: " + COMMAND_WORD + " 1\n"
             + "Example: " + COMMAND_WORD + " Alex Yeoh";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
