@@ -282,7 +282,7 @@ public class EventTest {
     public void toString_eventWithAllFields() {
         Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", null);
-        assertEquals("Google Interview 2025-09-10 15:00 to 2025-09-10 15:50 F2F Google Headquarters",
+        assertEquals("Google Interview / 2025-09-10 15:00 to 2025-09-10 15:50 / F2F / Google Headquarters",
                 event.toString());
     }
 
@@ -290,6 +290,6 @@ public class EventTest {
     public void toString_eventWithNoOptionalFields() {
         Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50", null,
                 null, null);
-        assertEquals("Google Interview 2025-09-10 15:00 to 2025-09-10 15:50", event.toString());
+        assertEquals("Google Interview / 2025-09-10 15:00 to 2025-09-10 15:50", event.toString());
     }
 }

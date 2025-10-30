@@ -209,10 +209,10 @@ public class Event {
     public String toString() {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-        String modeString = mode == null ? "" : " " + mode;
-        String locationString = location == null ? "" : " " + location;
+        String modeString = mode == null ? "" : " / " + mode;
+        String locationString = location == null ? "" : " / " + location;
 
-        return title + " " + start.format(dateTimeFormatter) + " to " + end.format(dateTimeFormatter) + modeString
+        return title + " / " + start.format(dateTimeFormatter) + " to " + end.format(dateTimeFormatter) + modeString
                 + locationString;
     }
 
