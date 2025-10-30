@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.model.Comparators.NAME_COMPARATOR;
+import static seedu.address.model.Comparators.PIN_COMPARATOR;
 import static seedu.address.model.Comparators.TIMESTAMP_COMPARATOR;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBookUnsorted;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBookWithPins;
 
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +43,19 @@ public class SortCommandTest {
         expectedModel.updateSortedPersonList(TIMESTAMP_COMPARATOR);
 
         assertCommandSuccess(sortCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_sort_preservesPinnedOrder() {
+        ModelManager pinTestModel = new ModelManager(getTypicalAddressBookWithPins(), new UserPrefs());
+
+        SortCommand sortCommand = new SortCommand(SortType.NAME);
+
+        ModelManager expectedModel = new ModelManager(getTypicalAddressBookWithPins(), new UserPrefs());
+        expectedModel.updateSortedPersonList(PIN_COMPARATOR.thenComparing(NAME_COMPARATOR));
+
+        assertCommandSuccess(sortCommand, pinTestModel, String.format(SortCommand.MESSAGE_SUCCESS, "name"),
+                expectedModel);
     }
 
     @Test

@@ -50,7 +50,7 @@ public class SortCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
         assertParseFailure(parser, SortCommand.COMMAND_WORD + " time", expectedMessage);
         assertParseFailure(parser, SortCommand.COMMAND_WORD + " named", expectedMessage);
-        assertParseFailure(parser, SortCommand.COMMAND_WORD +" 123", expectedMessage);
+        assertParseFailure(parser, SortCommand.COMMAND_WORD + " 123", expectedMessage);
     }
 
     @Test
