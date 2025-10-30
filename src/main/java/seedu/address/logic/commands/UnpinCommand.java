@@ -13,20 +13,20 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 
 /**
- * Unpins a person identified using its displayed index from the address book.
+ * Unpins a recruiter identified using its displayed index from the address book.
  */
 public class UnpinCommand extends Command {
 
     public static final String COMMAND_WORD = "unpin";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Unpins the person identified by the index number or name.\n"
+            + ": Unpins the recruiter identified by the index number or name.\n"
             + "Parameters: INDEX (must be a positive integer) or NAME\n"
-            + "Example: " + COMMAND_WORD + " 1"
+            + "Example: " + COMMAND_WORD + " 1\n"
             + "Example: " + COMMAND_WORD + " Alex Yeoh";
 
-    public static final String MESSAGE_UNPIN_PERSON_SUCCESS = "Unpinned Person: %1$s";
-    public static final String MESSAGE_PERSON_NOT_PINNED = "This person is not pinned.";
+    public static final String MESSAGE_UNPIN_PERSON_SUCCESS = "Unpinned Recruiter: %1$s";
+    public static final String MESSAGE_PERSON_NOT_PINNED = "This recruiter is not pinned.";
 
     private final Index targetIndex;
     private final Name targetName;
