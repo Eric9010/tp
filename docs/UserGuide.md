@@ -3,10 +3,10 @@ layout: page
 title: User Guide
 ---
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+**CareerConnect** is a desktop app designed for **job seekers and university students** who regularly communicate with recruiters. It can help you **organise recruiter contacts efficiently**, so you can focus on building meaningful professional connections. If you can type fast, CareerConnect can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
-{:toc}
+  {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -26,15 +26,15 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+    * `clear` : Deletes all contacts.
 
-   * `exit` : Exits the app.
+    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -73,42 +73,44 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
-### Adding a person: `add`
+### Adding a recruiter: `add`
 
 Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL o/ORGANISATION [t/TAG]…`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com o/Google`
+* `add n/Betsy Crowe t/Banking e/betsycrowe@example.com o/DBS p/1234567 t/SWE`
 
-### Listing all persons : `list`
+### Viewing all recruiters : `viewall`
 
-Shows a list of all persons in the address book.
+Shows a list of all recruiters in the address book and the total count.
 
-Format: `list`
+Format: `viewall`
 
-### Editing a person : `edit`
 
-Edits an existing person in the address book.
+### Editing a recruiter : `edit`
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Edits an existing recruiter in the address book.
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
+OR `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
+
+* Edits the recruiter at the specified `INDEX` or with the specified `NAME`.
+* The index refers to the index number shown in the displayed recruiter list and must be a positive integer.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* When editing tags, the existing tags of the recruiter will be removed (i.e., adding tags is not cumulative).
+* You can remove all the recruiter's tags by typing `t/` without specifying any tags after it.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 ### Locating persons by name: `find`
 
@@ -128,19 +130,62 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Deleting a person : `delete`
+### Deleting a recruiter : `delete`
 
-Deletes the specified person from the address book.
+Deletes the specified recruiter from the address book.
 
-Format: `delete INDEX`
+Format: `delete INDEX` OR `delete NAME`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* Deletes the recruiter at the specified `INDEX` or with the specified `NAME`.
+* The index refers to the index number shown in the displayed recruiter list and must be a positive integer 1, 2, 3, …
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+* `viewall` followed by `delete 2` deletes the 2nd recruiter in the address book.
+* `delete Betsy Wong` directly deletes the contact with that name.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Use the `find` command before `delete` to ensure you're deleting the right recruiter.
+</div>
+
+### Pinning a recruiter: `pin`
+
+Pins a recruiter contact to the top of the list (up to 3).
+
+Format: `pin INDEX` OR `pin NAME`
+
+* Pins the recruiter at the specified `INDEX` or with the specified `NAME`.
+* Pinned contacts are identifiable by a 📌 icon. *(Note: Adjust icon if different)*
+
+Examples:
+* `pin 5`
+* `pin James Lee`
+
+### Unpinning a recruiter: `unpin`
+
+Unpins a pinned recruiter contact.
+
+Format: `unpin INDEX`
+
+* Unpins the pinned recruiter contact at the specified `INDEX`.
+
+Example:
+* `unpin 1`
+
+### Adding an event: `event`
+
+Adds an event to the specified recruiter.
+
+Format: `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION] [desc/REMARKS]`
+
+* The event is added to the recruiter at the specified `INDEX`.
+* The index refers to the index number shown in the displayed recruiter list and must be a positive integer
+* `START` and `END` should be specified in the `yyyy-MM-dd HH:mm` format.
+* `MODE` can only be `F2F`, `ZOOM` or `CALL` (case-insensitive).
+* `REMARKS` should be 500 characters or less.
+
+Examples:
+* `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters desc/Final Round`
+* `event 2 t/Coffee Chat s/2025-10-21 11:00 e/2025-10-21 12:00`
 
 ### Clearing all entries : `clear`
 
@@ -178,6 +223,9 @@ _Details coming soon ..._
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
 
+**Q**: I edited the data file and now something is wrong with the application. What do I do?<br>
+**A**: To reset the application, go the folder containing the jar file and find the data subfolder. From there, delete the file addressbook.json and re-open the application. Unfortunately, any existing data will be gone.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
@@ -191,10 +239,13 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL o/ORGANISATION [t/TAG]…` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com o/NUS t/SWE`
 **Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Delete** | `delete INDEX` OR `delete NAME`<br> e.g., `delete 3` <br> e.g., `delete James Ho`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` OR <br> `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` <br> e.g., `edit 2 n/James Lee e/jameslee@example.com` <br> e.g., `edit James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
-**Help** | `help`
+**Pin** | `pin INDEX` OR `pin NAME`<br> e.g., `pin 3` <br> e.g., `pin Jake Thomas`
+**Unpin** | `unpin INDEX`<br> e.g., `unpin 3`
+**Viewall** | `viewall`
+**Event** | `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION] [desc/REMARKS]` <br> e.g., `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters desc/Final Round`
+**Help** | `help`****

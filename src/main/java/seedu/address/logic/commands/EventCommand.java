@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
@@ -28,22 +27,19 @@ public class EventCommand extends Command {
     public static final String COMMAND_WORD = "event";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds an event to a recruiter identified by the index number used in the displayed\n"
-            + "person list.\n"
+            + ": Adds an event to a recruiter identified by the index number used in the displayed person list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + PREFIX_TITLE + "TITLE "
             + PREFIX_START + "START (yyyy-MM-dd HH:mm) "
             + PREFIX_END + "END (yyyy-MM-dd HH:mm) "
             + "[" + PREFIX_MODE + "MODE] "
-            + "[" + PREFIX_LOCATION + "LOCATION] "
-            + "[" + PREFIX_REMARKS + "REMARKS]\n"
+            + "[" + PREFIX_LOCATION + "LOCATION]\n"
             + "Example: " + COMMAND_WORD + " 2 "
             + PREFIX_TITLE + "Google Interview "
             + PREFIX_START + "2025-10-12 14:00 "
             + PREFIX_END + "2025-10-12 15:00 "
             + PREFIX_MODE + "F2F "
-            + PREFIX_LOCATION + "Google Headquarters "
-            + PREFIX_REMARKS + "Final Round";
+            + PREFIX_LOCATION + "Google Headquarters ";
 
     public static final String MESSAGE_SUCCESS = "New event added.\n%1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists.";
@@ -88,8 +84,10 @@ public class EventCommand extends Command {
             for (Event event: events) {
                 LocalDateTime eventStart = LocalDateTime.parse(event.getStart(), formatter);
                 LocalDateTime eventEnd = LocalDateTime.parse(event.getEnd(), formatter);
+
                 boolean beforeEvent = end.isBefore(eventStart) || end.isEqual(eventStart);
                 boolean afterEvent = start.isAfter(eventEnd) || start.isEqual(eventEnd);
+
                 if (!beforeEvent && !afterEvent) {
                     throw new CommandException(String.format(MESSAGE_CLASH, person.getName(), event));
                 }

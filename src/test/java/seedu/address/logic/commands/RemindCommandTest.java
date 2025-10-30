@@ -32,13 +32,13 @@ public class RemindCommandTest {
     private static final RemindCommand REMIND_COMMAND = new RemindCommand(LocalDateTime.of(2025, 10,
             22, 16, 0));
     private static final Event BEFORE_CURRENT_TIME = new Event("Google Interview", "2025-10-22 15:00",
-            "2025-10-22 17:00", "f2f", "Google Headquarters", "Final Round");
+            "2025-10-22 17:00", "f2f", "Google Headquarters");
     private static final Event TODAY = new Event("Google Interview", "2025-10-22 17:00",
-            "2025-10-22 18:00", "f2f", "Google Headquarters", "Final Round");
+            "2025-10-22 18:00", "f2f", "Google Headquarters");
     private static final Event TOMORROW = new Event("Google Interview", "2025-10-23 17:00",
-            "2025-10-23 18:00", "f2f", "Google Headquarters", "Final Round");
+            "2025-10-23 18:00", "f2f", "Google Headquarters");
     private static final Event AFTER_TOMORROW = new Event("Google Interview", "2025-10-24 17:00",
-            "2025-10-24 18:00", "f2f", "Google Headquarters", "Final Round");
+            "2025-10-24 18:00", "f2f", "Google Headquarters");
 
     @Test
     public void execute_todayAndTomorrow_success() {

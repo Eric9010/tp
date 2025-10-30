@@ -96,6 +96,28 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String sortType} into a {@code sortType}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code sortType} is invalid.
+     */
+    public static SortType parseSortType(String sortType) throws ParseException {
+        requireNonNull(sortType);
+        String trimmedSortType = sortType.trim().toLowerCase();
+        if (!SortType.isValidSortType(trimmedSortType)) {
+            throw new ParseException(SortType.UNKNOWN_TYPE);
+        }
+        switch (trimmedSortType) {
+        case "name":
+            return SortType.NAME;
+        case "timestamp":
+            return SortType.TIMESTAMP;
+        default:
+            throw new ParseException(SortType.UNKNOWN_TYPE);
+        }
+    }
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *

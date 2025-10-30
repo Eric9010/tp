@@ -46,8 +46,8 @@ public class EditCommand extends Command {
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com"
-            + "Example 2 (by name): "
+            + PREFIX_EMAIL + "johndoe@example.com\n"
+            + "Example: "
             + COMMAND_WORD + " Alex Yeoh "
             + PREFIX_PHONE + "98765432";
 
@@ -132,7 +132,7 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, personToEdit.getNote(), updatedTags,
-                personToEdit.getPinTimestamp(), personToEdit.getEvents());
+                personToEdit.getPinTimestamp(), personToEdit.getEvents(), personToEdit.getDateAdded());
     }
 
     @Override

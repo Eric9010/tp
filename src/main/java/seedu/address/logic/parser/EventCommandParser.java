@@ -5,7 +5,6 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MODE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
@@ -28,7 +27,7 @@ public class EventCommandParser implements Parser<EventCommand> {
     public EventCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_START, PREFIX_END,
-                PREFIX_MODE, PREFIX_LOCATION, PREFIX_REMARKS);
+                PREFIX_MODE, PREFIX_LOCATION);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_TITLE, PREFIX_START, PREFIX_END)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventCommand.MESSAGE_USAGE));
@@ -42,8 +41,7 @@ public class EventCommandParser implements Parser<EventCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TITLE, PREFIX_START, PREFIX_END, PREFIX_MODE, PREFIX_LOCATION,
-                PREFIX_REMARKS);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TITLE, PREFIX_START, PREFIX_END, PREFIX_MODE, PREFIX_LOCATION);
 
         String title = argMultimap.getValue(PREFIX_TITLE).get();
         String start = argMultimap.getValue(PREFIX_START).get();
@@ -58,13 +56,10 @@ public class EventCommandParser implements Parser<EventCommand> {
         if (argMultimap.getValue(PREFIX_LOCATION).isPresent()) {
             location = argMultimap.getValue(PREFIX_LOCATION).get();
         }
-        if (argMultimap.getValue(PREFIX_REMARKS).isPresent()) {
-            remarks = argMultimap.getValue(PREFIX_REMARKS).get();
-        }
 
         Event event;
         try {
-            event = new Event(title, start, end, mode, location, remarks);
+            event = new Event(title, start, end, mode, location);
         } catch (IllegalArgumentException e) {
             throw new ParseException(e.getMessage());
         }
