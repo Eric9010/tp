@@ -35,7 +35,7 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "New recruiter added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This recruiter already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This recruiter already exists in CareerConnect";
 
     private final Person toAdd;
 
