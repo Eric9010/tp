@@ -5,8 +5,34 @@ title: User Guide
 
 **CareerConnect** is a desktop app designed for **university students** who regularly communicate with recruiters. It can help you **organise recruiter contacts efficiently**, so you can focus on building meaningful professional connections. If you can type fast, CareerConnect can get your contact management tasks done faster than traditional GUI apps.
 
-* Table of Contents
-  {:toc}
+## Table of Contents
+- [Quick start](#quick-start)
+- [Features](#features)
+    - [Viewing help: `help`](#viewing-help--help)
+    - [Adding a recruiter: `add`](#adding-a-recruiter-add)
+    - [Adding a tag to a recruiter: `addtag`](#adding-a-tag-to-a-recruiter-addtag)
+    - [Viewing all recruiters: `viewall`](#viewing-all-recruiters--viewall)
+    - [Editing a recruiter: `edit`](#editing-a-recruiter--edit)
+    - [Locating recruiters by name: `find`](#locating-recruiters-by-name-find)
+    - [Finding recruiters by organisation: `findorg`](#finding-recruiters-by-organisation-findorg)
+    - [Sorting contact list: `sort`](#sorting-contact-list-sort)
+    - [Deleting a recruiter: `delete`](#deleting-a-recruiter--delete)
+    - [Filtering recruiters by tag: `filtertag`](#filtering-recruiters-by-tag-filtertag)
+    - [Pinning a recruiter: `pin`](#pinning-a-recruiter-pin)
+    - [Unpinning a recruiter: `unpin`](#unpinning-a-recruiter-unpin)
+    - [Adding an event: `event`](#adding-an-event-event)
+    - [Deleting an event: `cancel`](#deleting-an-event-cancel)
+    - [Getting reminders: `remind`](#getting-reminders-remind)
+    - [Finding available time slots: `free`](#finding-available-time-slots-free)
+    - [Attaching a note: `note`](#attaching-a-note-note)
+    - [Clearing all entries: `clear`](#clearing-all-entries--clear)
+    - [Exiting the program: `exit`](#exiting-the-program--exit)
+    - [Saving the data](#saving-the-data)
+    - [Editing the data file](#editing-the-data-file)
+    - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
+- [FAQ](#faq)
+- [Known issues](#known-issues)
+- [Command summary](#command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
 
