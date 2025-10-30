@@ -105,9 +105,17 @@ public class PersonCard extends UiPart<Region> {
                 priorityIcon.setVisible(true);
                 String color = "";
                 switch (event.getPriority()) {
-                    case H: color = "red"; break;
-                    case M: color = "yellow"; break;
-                    case L: color = "limegreen"; break;
+                case H:
+                    color = "red";
+                    break;
+                case M:
+                    color = "yellow";
+                    break;
+                case L:
+                    color = "limegreen";
+                    break;
+                default:
+                    break;
                 }
                 priorityIcon.setStyle("-fx-background-color: " + color
                         + "; -fx-background-radius: 50%; -fx-border-radius: 50%;");
