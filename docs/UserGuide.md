@@ -107,6 +107,9 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL o/ORGANISATION [t/TAG]…`
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A recruiter can have any number of tags (including 0)
 </div>
+<div markdown="span" class="alert alert-warning">:exclamation: **Note:**
+You are not allowed to add a recruiter with the exact same name.
+</div>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com o/Google`
@@ -169,6 +172,9 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
+<div markdown="span" class="alert alert-warning">:exclamation: **Note:**
+If there are no matches, CareerConnect will show you an empty list. Use `viewall` to show all recruiters again.
+</div>
 
 ### Finding recruiters by organisation: `findorg`
 
@@ -185,7 +191,7 @@ Examples:
 * `findorg Google` — shows all recruiters from Google.
 * `findorg Meta Amazon` — shows recruiters from either Meta or Amazon.
 
-### Sorting contact list: `sort`
+### Sorting recruiters: `sort`
 
 Sorts the displayed contact list based on the chosen criteria.
 
@@ -237,6 +243,9 @@ Format: `pin INDEX` OR `pin NAME`
 Examples:
 * `pin 5`
 * `pin James Lee`
+<div markdown="span" class="alert alert-warning">:exclamation: **Note:**
+Using `pin` will reset the list order. Apply `sort` to restore it according to your desired criteria.
+</div>
 
 ### Unpinning a recruiter: `unpin`
 
@@ -249,6 +258,9 @@ Format: `unpin INDEX` or `unpin NAME`
 Example:
 * `unpin 1`
 * `unpin Alex Yeoh`
+<div markdown="span" class="alert alert-warning">:exclamation: **Note:**
+Using `unpin` will reset the list order. Apply `sort` to restore it according to your desired criteria.
+</div>
 
 ### Adding an event: `event`
 
