@@ -74,8 +74,8 @@ public class FreeTimeCommand extends Command {
 
         while (end.isBefore(date.atStartOfDay().plusHours(23).plusSeconds(1))) {
             availableTimes.add(new Duration(start, end));
-            start = start.plusHours(1);
-            end = end.plusHours(1);
+            start = start.plusMinutes(15);
+            end = end.plusMinutes(15);
         }
 
         List<Person> lastShownList = model.getFilteredPersonList();
