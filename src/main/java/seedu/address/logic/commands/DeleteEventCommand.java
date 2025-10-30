@@ -18,9 +18,8 @@ import seedu.address.model.person.Person;
 public class DeleteEventCommand extends Command {
     public static final String COMMAND_WORD = "cancel";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes an event identified by the recruiter index number and event index number.\n"
-            + "Parameters: RECRUITER_INDEX (positive integer) EVENT_INDEX (positive integer)\n"
+    public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD
+            + " RECRUITER_INDEX EVENT_INDEX\n"
             + "Example: " + COMMAND_WORD + " 2 3";
 
     public static final String MESSAGE_SUCCESS = "The event under %1$s is deleted.\n%2$s";

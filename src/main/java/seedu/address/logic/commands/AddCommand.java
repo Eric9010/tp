@@ -19,8 +19,7 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a recruiter to CareerConnect.\n"
-            + "Parameters: "
+    public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD + " "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
@@ -30,12 +29,12 @@ public class AddCommand extends Command {
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_ADDRESS + "Google "
+            + PREFIX_TAG + "friend "
+            + PREFIX_TAG + "finance";
 
-    public static final String MESSAGE_SUCCESS = "New recruiter added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This recruiter already exists in CareerConnect";
+    public static final String MESSAGE_SUCCESS = "New contact added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This contact already exists in CareerConnect";
 
     private final Person toAdd;
 

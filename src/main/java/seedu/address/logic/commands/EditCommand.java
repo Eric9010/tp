@@ -35,25 +35,24 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the recruiter identified "
-            + "by the index number or their full name. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) or NAME "
+    public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD
+            + " INDEX or NAME "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ORGANISATION] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_NAME + "John D "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com\n"
             + "Example: "
             + COMMAND_WORD + " Alex Yeoh "
             + PREFIX_PHONE + "98765432";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Recruiter: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Successfully Edited Contact: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This recruiter already exists in CareerConnect.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This contact already exists in CareerConnect.";
 
     private final Index index;
     private final Name targetName;
@@ -115,7 +114,7 @@ public class EditCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson.getName()));
     }
 
     /**

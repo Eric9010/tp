@@ -27,21 +27,24 @@ import seedu.address.model.person.Person;
 public class EventCommand extends Command {
     public static final String COMMAND_WORD = "event";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds an event to a recruiter identified by the index number used in the displayed person list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
+    public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD
+            + " INDEX "
             + PREFIX_TITLE + "TITLE "
-            + PREFIX_START + "START (yyyy-MM-dd HH:mm) "
-            + PREFIX_END + "END (yyyy-MM-dd HH:mm) "
+            + PREFIX_START + "START "
+            + PREFIX_END + "END "
             + "[" + PREFIX_MODE + "MODE] "
-            + "[" + PREFIX_LOCATION + "LOCATION]\n"
+            + "[" + PREFIX_LOCATION + "LOCATION] "
+            + "[" + PREFIX_PRIORITY + "PRIORITY]\n"
             + "Example: " + COMMAND_WORD + " 2 "
             + PREFIX_TITLE + "Google Interview "
             + PREFIX_START + "2025-10-12 14:00 "
             + PREFIX_END + "2025-10-12 15:00 "
             + PREFIX_MODE + "F2F "
             + PREFIX_LOCATION + "Google Headquarters "
-            + PREFIX_PRIORITY + "H";
+            + PREFIX_PRIORITY + "H\n"
+            + "START & END should use (YYYY-MM-DD HH:mm)\n"
+            + "Possible MODE: F2F, CALL, ZOOM\n"
+            + "Indicate high, medium or low priority by 'H'', 'M'', 'L'";
 
     public static final String MESSAGE_SUCCESS = "New event added.\n%1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists.";

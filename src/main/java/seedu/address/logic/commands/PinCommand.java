@@ -20,15 +20,13 @@ public class PinCommand extends Command {
 
     public static final String COMMAND_WORD = "pin";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Pins the recruiter identified by the index number or by their full name.\n"
-            + "Pinned contacts move to the top of the list, up to a maximum of 3.\n"
-            + "Parameters: INDEX (must be a positive integer) OR NAME\n"
+    public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD
+            + " INDEX or NAME\n"
             + "Example: " + COMMAND_WORD + " 1\n"
             + "Example: " + COMMAND_WORD + " Alex Yeoh";
 
-    public static final String MESSAGE_PIN_PERSON_SUCCESS = "Pinned Recruiter: %1$s";
-    public static final String MESSAGE_PERSON_ALREADY_PINNED = "This recruiter is already pinned.";
+    public static final String MESSAGE_PIN_PERSON_SUCCESS = "Pinned Contact: %1$s";
+    public static final String MESSAGE_PERSON_ALREADY_PINNED = "This contact is already pinned.";
 
     private final Index targetIndex;
     private final Name targetName;
