@@ -57,7 +57,7 @@
                         <StackPane fx:id="summaryDashboardPlaceholder"
                                    styleClass="pane-with-border">
                             <padding>
-                                <Insets top="20" right="10" bottom="20" left="10" />
+                                <Insets top="5" right="10" bottom="5" left="10" />
                             </padding>
                         </StackPane>
                     </content>
