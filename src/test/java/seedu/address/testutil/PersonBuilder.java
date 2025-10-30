@@ -113,6 +113,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Pin} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withPin() {
+        this.pinTimestamp = System.currentTimeMillis();
+        return this;
+    }
+
     public Person build() {
         return new Person(name, phone, email, address, note, tags, pinTimestamp, events, dateAdded);
     }

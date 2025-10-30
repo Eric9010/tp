@@ -58,7 +58,8 @@ public class TypicalPersons {
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
-    private TypicalPersons() {} // prevents instantiation
+    private TypicalPersons() {
+    } // prevents instantiation
 
     /**
      * Returns an {@code AddressBook} with all the typical persons.
@@ -79,5 +80,30 @@ public class TypicalPersons {
 
     public static List<Person> getTypicalPersons() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    /**
+     * Returns an {@code AddressBook} with some persons pinned and in a jumbled order.
+     */
+    public static AddressBook getTypicalAddressBookWithPins() {
+        AddressBook ab = new AddressBook();
+
+        // Pinned persons
+        Person benson = new PersonBuilder(BENSON).withPin().build();
+        Person elle = new PersonBuilder(ELLE).withPin().build();
+
+        //Unpinned persons
+        Person alice = new PersonBuilder(ALICE).build();
+        Person carl = new PersonBuilder(CARL).build();
+        Person daniel = new PersonBuilder(DANIEL).build();
+
+        // Add to address book in jumbled order
+        ab.addPerson(alice);
+        ab.addPerson(benson);
+        ab.addPerson(carl);
+        ab.addPerson(elle);
+        ab.addPerson(daniel);
+
+        return ab;
     }
 }

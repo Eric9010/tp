@@ -195,14 +195,13 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && note.equals(otherPerson.note)
                 && tags.equals(otherPerson.tags)
-                && Objects.equals(pinTimestamp, otherPerson.pinTimestamp)
                 && events.equals(otherPerson.events);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, pinTimestamp, events);
+        return Objects.hash(name, phone, email, address, tags, events);
     }
 
     @Override
