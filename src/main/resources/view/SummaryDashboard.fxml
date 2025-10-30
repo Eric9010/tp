@@ -49,6 +49,7 @@
                       maxHeight="200" maxWidth="360"/>
         </VBox>
 
+        <!-- Upcoming Events Box -->
         <VBox alignment="TOP_LEFT" spacing="8"
               style="-fx-background-color: #252526;
                      -fx-padding: 12;

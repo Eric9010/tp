@@ -93,7 +93,7 @@ public class SummaryDashboard extends UiPart<Region> {
                 Event event = pair.getValue();
                 Person person = pair.getKey();
                 LocalDateTime eventStart = LocalDateTime.parse(event.getStart(), EVENT_DATE_FORMATTER);
-                LocalDateTime eventEnd = LocalDateTime.parse(event.getEnd(), EVENT_DATE_FORMATTER); // <-- MODIFIED: Get end time
+                LocalDateTime eventEnd = LocalDateTime.parse(event.getEnd(), EVENT_DATE_FORMATTER);
 
                 // Create event label.
                 String titleText = String.format("%s (%s)", event.getTitle(), person.getName().fullName);
@@ -111,7 +111,7 @@ public class SummaryDashboard extends UiPart<Region> {
                     dayStr = "Tomorrow";
                 }
 
-                // Combined label into one/.
+                // Combined label into one.
                 String timeText = String.format("%s, %s - %s", dayStr, startTimeStr, endTimeStr);
                 Label timeLabel = new Label(timeText);
                 timeLabel.setStyle("-fx-text-fill: #999999; -fx-font-style: italic; -fx-font-size: 10px;");
@@ -120,12 +120,11 @@ public class SummaryDashboard extends UiPart<Region> {
                 eventEntryBox.getChildren().addAll(titleLabel, timeLabel);
 
                 upcomingEventsBox.getChildren().add(eventEntryBox);
-
                 count++;
             }
 
             // Show "..." indicator if there are more than 3 events.
-            if (upcomingEvents.size() > 3) { // <-- CHANGED from 4 to 3
+            if (upcomingEvents.size() > 3) {
                 Label moreEventsLabel = new Label("...");
                 moreEventsLabel.setStyle("-fx-text-fill: #999999; -fx-font-weight: bold;");
                 upcomingEventsBox.getChildren().add(moreEventsLabel);
@@ -155,7 +154,6 @@ public class SummaryDashboard extends UiPart<Region> {
                 }
             }
         }
-
         // Sort so that event with the earliest start time is displayed first.
         upcoming.sort(Comparator.comparing(pair ->
                 LocalDateTime.parse(pair.getValue().getStart(), EVENT_DATE_FORMATTER)));

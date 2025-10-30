@@ -42,7 +42,7 @@ public class SampleDataUtil {
                 "Starbucks @ Vivo", "L"));
 
         return new Person[] {
-                alex, bernice, charlotte
+            alex, bernice, charlotte
         };
     }
 
