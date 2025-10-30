@@ -30,8 +30,8 @@ public class SampleDataUtil {
                 "Workstation", "H"));
 
         Person bernice = new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                new Address("Meta"), EMPTY_NOTE, getTagSet("Interviewer", "Recruiter"), null,
-                new HashSet<Event>());
+                new Address("Meta"), new Note("Sample Note "), getTagSet("Interviewer", "Recruiter"),
+                null, new HashSet<Event>());
         bernice.addEvent(new Event("Interview", "2025-10-18 14:00", "2025-10-18 15:00", "ZOOM",
                 "Online", "H"));
 
@@ -42,7 +42,7 @@ public class SampleDataUtil {
                 "Starbucks @ Vivo", "L"));
 
         return new Person[] {
-            alex, bernice, charlotte
+                alex, bernice, charlotte
         };
     }
 
