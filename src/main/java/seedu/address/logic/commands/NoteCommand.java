@@ -53,7 +53,7 @@ public class NoteCommand extends Command {
         Person editedPerson = new Person(
                 personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), note, personToEdit.getTags(), personToEdit.getPinTimestamp(),
-                personToEdit.getEvents());
+                personToEdit.getEvents(), personToEdit.getDateAdded());
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
