@@ -21,7 +21,7 @@ public class NoteCommand extends Command {
     public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD
             + " INDEX no/NOTE\n"
             + "Example: " + COMMAND_WORD + " 1 no/Example note\n"
-            + "To delete a note, leave the note field empty after the prefix.";
+            + "To delete a note, use the command with the index only";
 
     public static final String MESSAGE_ADD_NOTE_SUCCESS = "Added note to contact: %1$s";
     public static final String MESSAGE_DELETE_NOTE_SUCCESS = "Removed note from contact: %1$s";
@@ -50,7 +50,8 @@ public class NoteCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(
                 personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), note, personToEdit.getTags(), personToEdit.getEvents());
+                personToEdit.getAddress(), note, personToEdit.getTags(), personToEdit.getPinTimestamp(),
+                personToEdit.getEvents(), personToEdit.getDateAdded());
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
