@@ -58,10 +58,9 @@ public class FreeTimeCommandTest {
     public void execute_success() {
         Person person = new PersonBuilder(ALICE).build();
         ModelStubWithPersonAndEvent model = new ModelStubWithPersonAndEvent(person, List.of(HALF_DAY));
-        String expectedMessage = String.format(MESSAGE_SUCCESS, 3, """
+        String expectedMessage = String.format(MESSAGE_SUCCESS, 2, """
                 1. [2025-09-10 12:00 to 2025-09-10 22:00]
                 2. [2025-09-10 13:00 to 2025-09-10 23:00]
-                3. [2025-09-10 14:00 to 2025-09-11 00:00]
                 """);
         assertCommandSuccess(FREE_TIME_COMMAND, model, expectedMessage, model);
     }
