@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import seedu.address.model.person.Event.Priority;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -85,6 +87,34 @@ public class EventTest {
     }
 
     @Test
+    public void constructor_priorityIsSetCorrectly() {
+        // Test High priority
+        Event highPriorityEvent = new Event("Test", "2025-01-01 10:00", "2025-01-01 11:00",
+                null, null, "H");
+        assertEquals(Priority.H, highPriorityEvent.getPriority());
+
+        // Test Medium priority (case-insensitive)
+        Event medPriorityEvent = new Event("Test", "2025-01-01 10:00", "2025-01-01 11:00",
+                null, null, "m");
+        assertEquals(Priority.M, medPriorityEvent.getPriority());
+
+        // Test Low priority
+        Event lowPriorityEvent = new Event("Test", "2025-01-01 10:00", "2025-01-01 11:00",
+                null, null, "L");
+        assertEquals(Priority.L, lowPriorityEvent.getPriority());
+
+        // Test when null
+        Event noPriorityEvent = new Event("Test", "2025-01-01 10:00", "2025-01-01 11:00",
+                null, null, null);
+        assertNull(noPriorityEvent.getPriority());
+
+        // Test when empty string after pr/
+        Event emptyPriorityEvent = new Event("Test", "2025-01-01 10:00", "2025-01-01 11:00",
+                null, null, "");
+        assertNull(emptyPriorityEvent.getPriority());
+    }
+
+    @Test
     public void isValidTitle_emptyTitle() {
         assertFalse(Event.isValidTitle(""));
     }
@@ -157,6 +187,21 @@ public class EventTest {
     }
 
     @Test
+    public void isValidPriority_check() {
+        // Valid cases
+        assertTrue(Event.isValidPriority("M"));
+        assertTrue(Event.isValidPriority("m"));
+        assertTrue(Event.isValidPriority(null));
+        assertTrue(Event.isValidPriority(""));
+        assertTrue(Event.isValidPriority("   "));
+
+        // Invalid cases
+        assertFalse(Event.isValidPriority("High")); // Not "H"
+        assertFalse(Event.isValidPriority("X"));
+        assertFalse(Event.isValidPriority("1"));
+    }
+
+    @Test
     public void equals_sameEventObject() {
         Event event = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
                 "f2f", "Google Headquarters", null);
@@ -214,6 +259,22 @@ public class EventTest {
         Event event2 = new Event("Google Interview", "2025-10-10 15:00", "2025-10-10 15:50",
                 "f2f", "Google Headquarters", null);
         assertNotEquals(event1, event2);
+    }
+
+    @Test
+    public void equals_differentPriority() {
+        Event event1 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
+                "f2f", "Google Headquarters", "H");
+
+        Event event2 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
+                "f2f", "Google Headquarters", "L");
+
+        Event event3 = new Event("Google Interview", "2025-09-10 15:00", "2025-09-10 15:50",
+                "f2f", "Google Headquarters", null);
+
+        assertNotEquals(event1, event2); // High vs Low
+        assertNotEquals(event1, event3); // High vs null
+        assertNotEquals(event2, event3); // Low vs null
     }
 
     @Test

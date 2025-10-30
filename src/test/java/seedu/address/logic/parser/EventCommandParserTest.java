@@ -110,4 +110,25 @@ public class EventCommandParserTest {
         assertParseFailure(parser, "some index t/Google Interview s/2025-08-15 15:00 e/2025-08-15 15:00",
                 MESSAGE_INVALID_FORMAT);
     }
+
+    @Test
+    public void parse_allValidPriorityValues_success() {
+        Index targetIndex = Index.fromOneBased(1);
+        String baseCommand = " 1 t/Test s/2025-01-01 10:00 e/2025-01-01 11:00 ";
+
+        // Test High Priority (uppercase)
+        Event eventH = new Event("Test", "2025-01-01 10:00", "2025-01-01 11:00",
+                null, null, "H");
+        assertParseSuccess(parser, baseCommand + "pr/H", new EventCommand(targetIndex, eventH));
+
+        // Test Medium Priority (lowercase)
+        Event eventM = new Event("Test", "2025-01-01 10:00", "2025-01-01 11:00",
+                null, null, "m");
+        assertParseSuccess(parser, baseCommand + "pr/m", new EventCommand(targetIndex, eventM));
+
+        // Test Low Priority
+        Event eventL = new Event("Test", "2025-01-01 10:00", "2025-01-01 11:00",
+                null, null, "L");
+        assertParseSuccess(parser, baseCommand + "pr/L", new EventCommand(targetIndex, eventL));
+    }
 }
