@@ -159,6 +159,15 @@ Examples:
 * `findorg Google` — shows all recruiters from Google.
 * `findorg Meta Amazon` — shows recruiters from either Meta or Amazon.
 
+### Sorting contact list: `sort`
+
+Sorts the displayed contact list based on the chosen criteria.
+
+Format: `sort name` OR `sort timestamp`
+
+* `name` sorts alphabetically by name.
+* `timestamp` sorts by the time the person was added (oldest is first).
+
 ### Deleting a recruiter : `delete`
 
 Deletes the specified recruiter CareerConnect.
@@ -265,6 +274,21 @@ Format: `free h/NO_OF_HOURS d/DATE`
 
 Example: 
 * `free h/2 d/2025-10-10`
+
+### Attaching a note: `note`
+
+Attaches a note to the specified recruiter.
+
+Format: `note RECRUITER_INDEX no/NOTE_CONTENT`
+
+* The note is added to the recruiter at the specified `INDEX`.
+* The index refers to the index number shown in the displayed recruiter list and must be a positive integer.
+* `NOTE_CONTENT` takes in any string (ℹ️ empty string will remove the note).
+* To delete a note, simply type `note RECRUITER_INDEX`.
+
+Examples:
+* `note 2 no/Prefers Meetings after 5pm`
+* `note 2` (To delete)
 
 ### Clearing all entries : `clear`
 
