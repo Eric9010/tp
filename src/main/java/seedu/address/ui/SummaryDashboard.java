@@ -15,10 +15,10 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.util.Pair;
 import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
-import javafx.util.Pair;
 
 /**
  * Displays a summary dashboard showing total contacts and tag distribution.
