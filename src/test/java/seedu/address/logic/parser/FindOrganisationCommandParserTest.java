@@ -25,7 +25,8 @@ public class FindOrganisationCommandParserTest {
     public void parse_validArgs_returnsFindOrgCommand() {
         // no leading and trailing whitespaces
         FindOrganisationCommand expectedFindOrgCommand =
-                new FindOrganisationCommand(new OrganisationContainsKeywordsPredicate(Arrays.asList("Google", "Microsoft")));
+                new FindOrganisationCommand(
+                        new OrganisationContainsKeywordsPredicate(Arrays.asList("Google", "Microsoft")));
         assertParseSuccess(parser, "Google Microsoft", expectedFindOrgCommand);
 
         // multiple whitespaces between keywords
