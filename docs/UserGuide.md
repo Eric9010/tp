@@ -5,8 +5,34 @@ title: User Guide
 
 **CareerConnect** is a desktop app designed for **university students** who regularly communicate with recruiters. It can help you **organise recruiter contacts efficiently**, so you can focus on building meaningful professional connections. If you can type fast, CareerConnect can get your contact management tasks done faster than traditional GUI apps.
 
-* Table of Contents
-  {:toc}
+## Table of Contents
+- [Quick start](#quick-start)
+- [Features](#features)
+    - [Viewing help: `help`](#viewing-help--help)
+    - [Adding a recruiter: `add`](#adding-a-recruiter-add)
+    - [Adding a tag to a recruiter: `addtag`](#adding-a-tag-to-a-recruiter-addtag)
+    - [Viewing all recruiters: `viewall`](#viewing-all-recruiters--viewall)
+    - [Editing a recruiter: `edit`](#editing-a-recruiter--edit)
+    - [Locating recruiters by name: `find`](#locating-recruiters-by-name-find)
+    - [Finding recruiters by organisation: `findorg`](#finding-recruiters-by-organisation-findorg)
+    - [Sorting contact list: `sort`](#sorting-contact-list-sort)
+    - [Deleting a recruiter: `delete`](#deleting-a-recruiter--delete)
+    - [Filtering recruiters by tag: `filtertag`](#filtering-recruiters-by-tag-filtertag)
+    - [Pinning a recruiter: `pin`](#pinning-a-recruiter-pin)
+    - [Unpinning a recruiter: `unpin`](#unpinning-a-recruiter-unpin)
+    - [Adding an event: `event`](#adding-an-event-event)
+    - [Deleting an event: `cancel`](#deleting-an-event-cancel)
+    - [Getting reminders: `remind`](#getting-reminders-remind)
+    - [Finding available time slots: `free`](#finding-available-time-slots-free)
+    - [Attaching a note: `note`](#attaching-a-note-note)
+    - [Clearing all entries: `clear`](#clearing-all-entries--clear)
+    - [Exiting the program: `exit`](#exiting-the-program--exit)
+    - [Saving the data](#saving-the-data)
+    - [Editing the data file](#editing-the-data-file)
+    - [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
+- [FAQ](#faq)
+- [Known issues](#known-issues)
+- [Command summary](#command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -342,13 +368,21 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
+**Viewall** | `viewall`
+**Help** | `help`
 **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL o/ORGANISATION [t/TAG]…` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com o/NUS t/SWE`
 **Clear** | `clear`
 **Delete** | `delete INDEX` OR `delete NAME`<br> e.g., `delete 3` <br> e.g., `delete James Ho`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` OR <br> `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` <br> e.g., `edit 2 n/James Lee e/jameslee@example.com` <br> e.g., `edit James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**Pin** | `pin INDEX` OR `pin NAME`<br> e.g., `pin 3` <br> e.g., `pin Jake Thomas`
+**Findorg** | `findorg KEYWORD [MORE_KEYWORDS]` <br> e.g. `findorg Google`
+**Pin** | `pin INDEX` OR `pin NAME`<br> e.g., `pin 3` <br> e.g. `pin Jake Thomas`
 **Unpin** | `unpin INDEX` OR `unpin NAME`<br> e.g., `unpin 3` <br> e.g. `unpin Alex Yeoh`
-**Viewall** | `viewall`
+**Addtag** | `addtag INDEX TAG [MORE_TAGS]...` OR `addtag NAME TAG [MORE_TAGS]…` <br> e.g. `addtag 2 Banking Finance`
+**Filtertag** | `filtertag TAG [MORE_TAGS]…` <br> e.g. `filtertag Banking`
+**Sort** | `sort name` OR `sort timestamp`
 **Event** | `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION]` <br> e.g., `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters`
-**Help** | `help`
+**Cancel** | `cancel RECRUITER_INDEX EVENT_INDEX` <br> e.g. `cancel 2 3`
+**Remind** | `remind`
+**Free** | `free h/NO_OF_HOURS d/DATE` <br> e.g. `free h/2 d/2025-10-10`
+**Note** | `note RECRUITER_INDEX no/NOTE_CONTENT` <br> e.g. `note 2 no/Prefers Meetings after 5pm`
