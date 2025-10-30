@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +35,7 @@ class JsonAdaptedPerson {
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final List<JsonAdaptedEvent> events = new ArrayList<>();
     private final Long pinTimestamp;
+    private final LocalDateTime dateAdded;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -56,6 +58,7 @@ class JsonAdaptedPerson {
             this.events.addAll(events);
         }
         this.pinTimestamp = null;
+        this.dateAdded = LocalDateTime.now();
     }
 
     /**
@@ -74,6 +77,7 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedEvent::new)
                 .collect(Collectors.toList()));
         pinTimestamp = source.getPinTimestamp();
+        dateAdded = source.getDateAdded();
     }
 
     /**
