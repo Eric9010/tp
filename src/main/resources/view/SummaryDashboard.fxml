@@ -10,17 +10,18 @@
       xmlns:fx="http://javafx.com/fxml/1"
       alignment="CENTER"
       spacing="6"
-      style="-fx-background-color: #1e1e1e; -fx-padding: 6 10 6 10;"> <!-- reduced padding -->
+      style="-fx-background-color: #1e1e1e; -fx-padding: 6 10 6 10;">
 
-    <!-- Two Boxes: Total Contacts and Pie Chart -->
-    <HBox spacing="15" alignment="CENTER"> <!-- slightly tighter horizontal gap -->
+    <!-- Three Boxes: Total Contacts, Pie Chart, Upcoming Events -->
+    <HBox spacing="15" alignment="TOP_CENTER">
 
         <!-- Total Contacts Box -->
         <VBox alignment="CENTER" spacing="4"
               style="-fx-background-color: #252526;
                      -fx-padding: 12;
                      -fx-background-radius: 8;
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0.3, 0, 1);">
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0.3, 0, 1);"
+              minHeight="210" maxHeight="210">
 
             <Label text="Total Contacts"
                    style="-fx-text-fill: #cccccc; -fx-font-size: 12px;"/>
@@ -34,7 +35,8 @@
               style="-fx-background-color: #252526;
                      -fx-padding: 12;
                      -fx-background-radius: 8;
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0.3, 0, 1);">
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0.3, 0, 1);"
+              minHeight="210" maxHeight="210">
 
             <Label text="Tag Distribution"
                    style="-fx-text-fill: #cccccc; -fx-font-size: 12px;"/>
@@ -46,5 +48,23 @@
                       minHeight="160" minWidth="280"
                       maxHeight="200" maxWidth="360"/>
         </VBox>
+
+        <VBox alignment="TOP_LEFT" spacing="8"
+              style="-fx-background-color: #252526;
+                     -fx-padding: 12;
+                     -fx-background-radius: 8;
+                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0.3, 0, 1);"
+
+              minWidth="300" prefWidth="350"
+              minHeight="210" maxHeight="210">
+
+            <HBox alignment="CENTER" prefWidth="Infinity">
+                <Label text="Upcoming Events"
+                       style="-fx-text-fill: #cccccc; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <VBox fx:id="upcomingEventsBox" spacing="5" alignment="TOP_LEFT" />
+        </VBox>
+
     </HBox>
 </VBox>
