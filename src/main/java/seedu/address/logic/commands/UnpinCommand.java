@@ -18,7 +18,9 @@ public class UnpinCommand extends Command {
 
     public static final String COMMAND_WORD = "unpin";
 
-    public static final String MESSAGE_USAGE = "To unpin a contact, type <unpin INDEX> \n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Unpins the person identified by the index number.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_UNPIN_PERSON_SUCCESS = "Unpinned Person: %1$s";
