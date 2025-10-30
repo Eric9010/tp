@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,6 +33,7 @@ public class PersonBuilder {
     private Set<Tag> tags;
     private Set<Event> events = new HashSet<>();
     private Long pinTimestamp;
+    private LocalDateTime dateAdded;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -45,6 +47,7 @@ public class PersonBuilder {
         tags = new HashSet<>();
         events = new HashSet<>();
         pinTimestamp = null;
+        dateAdded = LocalDateTime.now();
     }
 
     /**
@@ -59,6 +62,7 @@ public class PersonBuilder {
         tags = new HashSet<>(personToCopy.getTags());
         pinTimestamp = personToCopy.getPinTimestamp();
         events = new HashSet<>(personToCopy.getEvents());
+        dateAdded = personToCopy.getDateAdded();
     }
 
     /**
@@ -110,7 +114,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, note, tags, pinTimestamp, events);
+        return new Person(name, phone, email, address, note, tags, pinTimestamp, events, dateAdded);
     }
 
 }
