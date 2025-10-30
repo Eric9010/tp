@@ -18,15 +18,13 @@ import seedu.address.model.person.Person;
 public class NoteCommand extends Command {
     public static final String COMMAND_WORD = "note";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Attaches a note to the recruiter identified by the index number used in the displayed recruiter "
-            + "list.\n"
-            + "Parameters: INDEX (must be a positive integer) no/NOTE\n"
+    public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD
+            + " INDEX no/NOTE\n"
             + "Example: " + COMMAND_WORD + " 1 no/Example note\n"
             + "To delete a note, use the command with the index only";
 
-    public static final String MESSAGE_ADD_NOTE_SUCCESS = "Added note to Recruiter: %1$s";
-    public static final String MESSAGE_DELETE_NOTE_SUCCESS = "Removed note from Recruiter: %1$s";
+    public static final String MESSAGE_ADD_NOTE_SUCCESS = "Added note to contact: %1$s";
+    public static final String MESSAGE_DELETE_NOTE_SUCCESS = "Removed note from contact: %1$s";
 
     private final Index index;
     private final Note note;
@@ -68,7 +66,7 @@ public class NoteCommand extends Command {
      */
     private String generateSuccessMessage(Person personToEdit) {
         String message = !note.toString().isEmpty() ? MESSAGE_ADD_NOTE_SUCCESS : MESSAGE_DELETE_NOTE_SUCCESS;
-        return String.format(message, Messages.format(personToEdit));
+        return String.format(message, personToEdit.getName());
     }
 
     @Override

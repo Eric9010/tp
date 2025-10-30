@@ -38,11 +38,9 @@ public class FreeTimeCommand extends Command {
 
     public static final String COMMAND_WORD = "free";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Finds a duration of time when you do not have any events.\n"
-            + "Parameters: "
-            + PREFIX_HOURS + "NO_OF_HOURS (1 - 24) "
-            + PREFIX_DATE + "DATE (yyyy-MM-dd)\n"
+    public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD
+            + " " + PREFIX_HOURS + "NO_OF_HOURS (1 - 24) "
+            + PREFIX_DATE + "DATE (YYYY-MM-DD)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_HOURS + "2 "
             + PREFIX_DATE + "2025-10-13\n";
