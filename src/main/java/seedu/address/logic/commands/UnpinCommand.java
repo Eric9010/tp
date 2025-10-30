@@ -9,6 +9,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 
 /**
@@ -27,21 +28,39 @@ public class UnpinCommand extends Command {
     public static final String MESSAGE_PERSON_NOT_PINNED = "This person is not pinned.";
 
     private final Index targetIndex;
+    private final Name targetName;
 
     public UnpinCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
+        this.targetName = null;
+    }
+
+    public UnpinCommand(Name targetName) {
+        this.targetName = targetName;
+        this.targetIndex = null;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
+        Person personToUnpin;
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (targetIndex != null) {
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            personToUnpin = lastShownList.get(targetIndex.getZeroBased());
+        } else {
+            personToUnpin = lastShownList.stream()
+                    .filter(person -> person.getName().equals(targetName))
+                    .findFirst()
+                    .orElse(null);
+
+            if (personToUnpin == null) {
+                throw new CommandException(Messages.MESSAGE_PERSON_NOT_FOUND);
+            }
         }
-
-        Person personToUnpin = lastShownList.get(targetIndex.getZeroBased());
 
         if (!personToUnpin.isPinned()) {
             throw new CommandException(MESSAGE_PERSON_NOT_PINNED);
