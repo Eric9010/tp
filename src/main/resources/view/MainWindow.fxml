@@ -34,6 +34,7 @@
           </Menu>
         </MenuBar>
 
+          <!-- CommandBox -->
           <StackPane fx:id="commandBoxPlaceholder"
                      styleClass="pane-with-border"
                      VBox.vgrow="NEVER"
