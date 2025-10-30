@@ -31,7 +31,7 @@ import seedu.address.testutil.PersonBuilder;
 
 public class DeleteEventCommandTest {
     public static final Event VALID_EVENT = new Event("Google Interview", "2025-09-10 15:00",
-            "2025-09-10 15:50", "f2f", "Google Headquarters");
+            "2025-09-10 15:50", "f2f", "Google Headquarters", null);
     public static final DeleteEventCommand DELETE_EVENT_COMMAND = new DeleteEventCommand(Index.fromOneBased(1),
             Index.fromOneBased(1));
 
