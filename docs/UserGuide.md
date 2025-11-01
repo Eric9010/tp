@@ -231,6 +231,7 @@ Format: `findorg KEYWORD [MORE_KEYWORDS]`
 * The search is case-insensitive. e.g., `google` will match `Google` or `Google Singapore`.
 * The order of the keywords does not matter.
 * Only the organisation field is searched.
+* Only full words will be matched e.g. `Google` will not match `Goo`
 * Recruiters whose organisation name matches **any** of the provided keywords will be shown.
 
 Examples:
@@ -363,11 +364,11 @@ Example:
 
 Attaches a note to the specified recruiter.
 
-Format: `note RECRUITER_INDEX no/NOTE_CONTENT`
+Format: `note INDEX no/NOTE_CONTENT`
 
 * The note is added to the recruiter at the specified `INDEX`.
 * `NOTE_CONTENT` takes in any string (ℹ️ empty string will remove the note).
-* To delete a note, simply type `note RECRUITER_INDEX`.
+* To delete a note, simply type `note INDEX`.
 
 Examples:
 * `note 2 no/Prefers Meetings after 5pm`
@@ -412,6 +413,8 @@ _Details coming soon ..._
 **Q**: I edited the data file and now something is wrong with the application. What do I do?<br>
 **A**: To reset the application, go to the folder containing the jar file and find the data subfolder. From there, delete the file addressbook.json and re-open the application. Unfortunately, any existing data will be gone.
 
+**Q**: Can I use non-English names or tags?
+**A**: No, currently only English letters, numbers, and certain special characters are supported. Non-English characters (e.g., Chinese, Arabic, accented letters) are not allowed.
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
