@@ -159,6 +159,7 @@ You are not allowed to add a recruiter with the exact same name.
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com o/Google`
 * `add n/Betsy Crowe t/Banking e/betsycrowe@example.com o/DBS p/1234567 t/SWE`
+![addBetsyCrowe.png](images/addBetsyCrowe.png)
 
 ### Adding a tag to a recruiter: `addtag`
 
@@ -174,6 +175,7 @@ OR `addtag NAME TAG [MORE_TAGS]…`
 
 Examples:
 * `addtag 2 Banking Finance` — adds the tags `Banking` and `Finance` to the 2nd recruiter in the list.
+![addTagIndex2.png](images/addTagIndex2.png)
 * `addtag Alex Yeoh SWE Mentor` — adds the tags `SWE` and `Mentor` to the recruiter named Alex Yeoh.
 
 ### Viewing all recruiters : `viewall`
@@ -197,7 +199,8 @@ OR `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
 * You can remove all the recruiter's tags by typing `t/` without specifying any tags after it.
 
 Examples:
-* `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st recruiter to be `91234567` and `johndoe@example.com` respectively.
+* `edit 1 p/91234567 e/alexyeoh@example.com` Edits the phone number and email address of the 1st recruiter to be `91234567` and `alexyeoh@example.com` respectively.</br>
+![editIndex1.png](images/editIndex1.png)
 * `edit 2 n/Betsy Crower t/` Edits the name of the 2nd recruiter to be `Betsy Crower` and clears all existing tags.
 
 ### Locating recruiters by name: `find`
@@ -215,8 +218,8 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 * `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find alex charlotte` returns `Alex Yeoh`, `Charlotte Oliveiro`</br>
+![findAlexCharlotte.png](images/findAlexCharlotte.png)
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Note:**
 If there are no matches, CareerConnect will show you an empty list. Use `viewall` to show all recruiters again.
@@ -235,7 +238,8 @@ Format: `findorg KEYWORD [MORE_KEYWORDS]`
 * Recruiters whose organisation name matches **any** of the provided keywords will be shown.
 
 Examples:
-* `findorg Google` — shows all recruiters from Google.
+* `findorg Google` — shows all recruiters from Google.</br>
+![findorgGoogle.png](images/findorgGoogle.png)
 * `findorg Meta Amazon` — shows recruiters from either Meta or Amazon.
 
 ### Sorting recruiters: `sort`
@@ -274,7 +278,8 @@ Format: `filtertag TAG [MORE_TAGS]…`
 * You can provide multiple tags; the results will include any contact that matches **one or more** of them.
 
 Examples:
-* `filtertag Banking` — shows all recruiters with the tag `Banking`.
+* `filtertag Banking` — shows all recruiters with the tag `Banking`.<br>
+![filtertagBanking.png](images/filtertagBanking.png)
 * `filtertag SWE Product` — shows recruiters tagged with either `SWE` or `Product`.
 
 ### Pinning a recruiter: `pin`
@@ -287,7 +292,8 @@ Format: `pin INDEX` OR `pin NAME`
 * Pinned contacts are identifiable by a 📌 icon.
 
 Examples:
-* `pin 5`
+* `pin 4`<br>
+![pinIndex4.png](images/pinIndex4.png)
 * `pin James Lee`
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Note:**
@@ -321,7 +327,8 @@ Format: `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION]`
 * `MODE` can only be `F2F`, `ZOOM` or `CALL` (case-insensitive).
 
 Examples:
-* `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters`
+* `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters`<br>
+![event2GoogleInterview.png](images/event2GoogleInterview.png)
 * `event 2 t/Coffee Chat s/2025-10-21 11:00 e/2025-10-21 12:00`
 
 ### Deleting an event: `cancel`
@@ -371,7 +378,8 @@ Format: `note INDEX no/NOTE_CONTENT`
 * To delete a note, simply type `note INDEX`.
 
 Examples:
-* `note 2 no/Prefers Meetings after 5pm`
+* `note 2 no/Prefers Meetings after 5pm`<br>
+![noteIndex2.png](images/noteIndex2.png)
 * `note 2` (To delete)
 
 ### Clearing all entries : `clear`
