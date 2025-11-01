@@ -97,7 +97,7 @@ title: User Guide
 * **NAME**  
     - Can only contain letters, numbers and these symbols: - _ . , ' ( )
     - Must not be blank.
-    - Is **case sensitive** (e.g. Alex Yeoh and alex yeoh are unique names)
+    - Is **case sensitive** (e.g. Alex Yeoh and alex yeoh are unique names)<br>
       💡 Remember to capitalise your names to avoid confusion!
     - Example: `Alex Yeoh`, `Bernice Yu`
 
@@ -116,10 +116,9 @@ title: User Guide
     - Local-part: Letters and numbers only, with optional special symbols: + _ . -
              Must not start or end with a special character.
     - Domain: Made of labels separated by .
-         Each label:
-          - starts and ends with an alphanumeric character
-          - may contain hyphens inside
-          - the last label must be at least 2 characters long.
+      - Each label starts and ends with an alphanumeric character
+      - may contain hyphens inside
+      - the last label must be at least 2 characters long.
     - Example: `alexyeoh@example.com`
 
 * **ORGANISATION**  
@@ -128,7 +127,7 @@ title: User Guide
 
 * **TAG**  
     - Tag names are alphanumeric and cannot contain spaces.
-    - Tags are **case insensitive** (e.g. friend and Friend are unique tags)
+    - Tags are **case sensitive** (e.g. friend and Friend are unique tags)<br>
       💡 Remember to capitalise your tags to avoid confusion! 
     - Tags are optional for most commands.  
     - Example: `t/Interviewer`, `t/Recruiter`
