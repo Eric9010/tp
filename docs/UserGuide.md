@@ -1,4 +1,4 @@
----
+i---
 layout: page
 title: User Guide
 ---
@@ -45,14 +45,14 @@ title: User Guide
 
 1. Copy the file to the folder you want to use as the _home folder_ for CareerConnect.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CareerConnect.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-    * `list` : Lists all recruiters.
+    * `viewall` : Lists all recruiters.
 
     * `add n/John Doe p/98765432 e/johnd@example.com o/NUS` : Adds a recruiter named `John Doe` to CareerConnect.
 
@@ -84,10 +84,54 @@ title: User Guide
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `viewall`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+</div>
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Notes about the common parameters:**<br>
+
+* **NAME**  
+    - Can only contain letters, numbers and these symbols: - _ . , ' ( )
+    - Must not be blank.
+    - Is **case sensitive** (e.g. Alex Yeoh and alex yeoh are unique names)
+      💡 Remember to capitalise your names to avoid confusion!
+    - Example: `Alex Yeoh`, `Bernice Yu`
+
+* **INDEX**  
+    - Refers to the index number shown in the displayed list.  
+    - Must be a positive integer (e.g. `1`, `2`, `3`, …).  
+    - Example: `delete 2` deletes the 2nd person in the displayed list.
+
+* **PHONE_NUMBER**  
+    - Must contain only digits and must be at least 3 digits long.  
+    - Must not contain spaces or other symbols.  
+    - Example: `91234567`
+
+* **EMAIL**
+    - Consists of local-part@domain.
+    - Local-part: Letters and numbers only, with optional special symbols: + _ . -
+             Must not start or end with a special character.
+    - Domain: Made of labels separated by .
+         Each label:
+          - starts and ends with an alphanumeric character
+          - may contain hyphens inside
+          - the last label must be at least 2 characters long.
+    - Example: `alexyeoh@example.com`
+
+* **ORGANISATION**  
+    - Must not be blank.  
+    - Can take on any values.
+
+* **TAG**  
+    - Tag names are alphanumeric and cannot contain spaces.
+    - Tags are **case insensitive** (e.g. friend and Friend are unique tags)
+      💡 Remember to capitalise your tags to avoid confusion! 
+    - Tags are optional for most commands.  
+    - Example: `t/Interviewer`, `t/Recruiter`
 </div>
 
 ### Viewing help : `help`
@@ -124,6 +168,7 @@ Format: `addtag INDEX TAG [MORE_TAGS]…`
 OR `addtag NAME TAG [MORE_TAGS]…`
 
 * Adds the specified tag(s) to the recruiter identified by their `INDEX` or full `NAME`.
+* Tags are **case sensitive**
 * Tags that already exist will not be duplicated.
 * The index refers to the number shown in the displayed recruiter list and must be a positive integer.
 
@@ -146,7 +191,6 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
 OR `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
 
 * Edits the recruiter at the specified `INDEX` or with the specified `NAME`.
-* The index refers to the index number shown in the displayed recruiter list and must be a positive integer.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the recruiter will be removed (i.e., adding tags is not cumulative).
@@ -204,12 +248,11 @@ Format: `sort name` OR `sort timestamp`
 
 ### Deleting a recruiter : `delete`
 
-Deletes the specified recruiter CareerConnect.
+Deletes the specified recruiter from CareerConnect.
 
 Format: `delete INDEX` OR `delete NAME`
 
 * Deletes the recruiter at the specified `INDEX` or with the specified `NAME`.
-* The index refers to the index number shown in the displayed recruiter list and must be a positive integer 1, 2, 3, …
 
 Examples:
 * `viewall` followed by `delete 2` deletes the 2nd recruiter in the address book.
@@ -273,7 +316,6 @@ Adds an event to the specified recruiter.
 Format: `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION]`
 
 * The event is added to the recruiter at the specified `INDEX`.
-* The index refers to the index number shown in the displayed recruiter list and must be a positive integer.
 * `START` and `END` should be specified in the `yyyy-MM-dd HH:mm` format.
 * `MODE` can only be `F2F`, `ZOOM` or `CALL` (case-insensitive).
 
@@ -324,7 +366,6 @@ Attaches a note to the specified recruiter.
 Format: `note RECRUITER_INDEX no/NOTE_CONTENT`
 
 * The note is added to the recruiter at the specified `INDEX`.
-* The index refers to the index number shown in the displayed recruiter list and must be a positive integer.
 * `NOTE_CONTENT` takes in any string (ℹ️ empty string will remove the note).
 * To delete a note, simply type `note RECRUITER_INDEX`.
 
