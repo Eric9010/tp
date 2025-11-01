@@ -413,8 +413,9 @@ _Details coming soon ..._
 **Q**: I edited the data file and now something is wrong with the application. What do I do?<br>
 **A**: To reset the application, go to the folder containing the jar file and find the data subfolder. From there, delete the file addressbook.json and re-open the application. Unfortunately, any existing data will be gone.
 
-**Q**: Can I use non-English names or tags?
+**Q**: Can I use non-English names or tags?<br>
 **A**: No, currently only English letters, numbers, and certain special characters are supported. Non-English characters (e.g., Chinese, Arabic, accented letters) are not allowed.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
