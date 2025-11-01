@@ -199,7 +199,7 @@ OR `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
 * You can remove all the recruiter's tags by typing `t/` without specifying any tags after it.
 
 Examples:
-* `edit 1 p/91234567 e/alexyeoh@example.com` Edits the phone number and email address of the 1st recruiter to be `91234567` and `alexyeoh@example.com` respectively.</br>
+* `edit 1 p/91234567 e/alexyeoh@example.com` Edits the phone number and email address of the 1st recruiter to be `91234567` and `alexyeoh@example.com` respectively.<br>
 ![editIndex1.png](images/editIndex1.png)
 * `edit 2 n/Betsy Crower t/` Edits the name of the 2nd recruiter to be `Betsy Crower` and clears all existing tags.
 
@@ -218,7 +218,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 Examples:
 * `find John` returns `john` and `John Doe`
-* `find alex charlotte` returns `Alex Yeoh`, `Charlotte Oliveiro`</br>
+* `find alex charlotte` returns `Alex Yeoh`, `Charlotte Oliveiro`<br>
 ![findAlexCharlotte.png](images/findAlexCharlotte.png)
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Note:**
@@ -238,7 +238,7 @@ Format: `findorg KEYWORD [MORE_KEYWORDS]`
 * Recruiters whose organisation name matches **any** of the provided keywords will be shown.
 
 Examples:
-* `findorg Google` — shows all recruiters from Google.</br>
+* `findorg Google` — shows all recruiters from Google.<br>
 ![findorgGoogle.png](images/findorgGoogle.png)
 * `findorg Meta Amazon` — shows recruiters from either Meta or Amazon.
 
