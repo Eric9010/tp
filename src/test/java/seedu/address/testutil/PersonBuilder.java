@@ -66,6 +66,22 @@ public class PersonBuilder {
     }
 
     /**
+     * Initializes the PersonBuilder with specified {@code dateAdded}.
+     */
+    public PersonBuilder(LocalDateTime dateAdded) {
+        name = new Name(DEFAULT_NAME);
+        phone = new Phone(DEFAULT_PHONE);
+        email = new Email(DEFAULT_EMAIL);
+        address = new Address(DEFAULT_ADDRESS);
+        note = new Note(DEFAULT_NOTE);
+        tags = new HashSet<>();
+        events = new HashSet<>();
+        pinTimestamp = null;
+        this.dateAdded = dateAdded;
+    }
+
+
+    /**
      * Sets the {@code Name} of the {@code Person} that we are building.
      */
     public PersonBuilder withName(String name) {
