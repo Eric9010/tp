@@ -30,10 +30,10 @@ public class Event {
             1. Events should have a non-empty title, a non-empty start and a non-empty end, both in the yyyy-MM-dd \
             HH:mm format.
             2. Start should be earlier than or equal to end.
-            2. Mode is optional. Valid modes are F2F, CALL and ZOOM.
-            3. Location is optional and can take any string values.
-            4. Priority is optional. Valid priorities are H, M, L (case-insensitive).
-            5. Note: Optional fields do not accept empty strings.
+            3. Mode is optional. Valid modes are F2F, CALL and ZOOM.
+            4. Location is optional and can take any string values.
+            5. Priority is optional. Valid priorities are H, M, L (case-insensitive).
+            6. Note: Optional fields do not accept empty strings.
             """;
 
     private final String title;
