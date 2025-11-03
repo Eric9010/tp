@@ -29,6 +29,7 @@ public class Event {
     public static final String MESSAGE_CONSTRAINTS = """
             1. Events should have a non-empty title, a non-empty start and a non-empty end, both in the yyyy-MM-dd \
             HH:mm format.
+            2. Start should be earlier than or equal to end.
             2. Mode is optional. Valid modes are F2F, CALL and ZOOM.
             3. Location is optional and can take any string values.
             4. Priority is optional. Valid priorities are H, M, L (case-insensitive).
