@@ -14,7 +14,7 @@ Class UserPrefs
 
 Class UniquePersonList
 Class Person
-Class Address
+Class Organisation
 Class Email
 Class Name
 Class Phone
@@ -42,7 +42,7 @@ UniquePersonList --> "~* all" Person
 Person *--> "1" Name
 Person *--> "1" Phone
 Person *--> "1" Email
-Person *--> "1" Address
+Person *--> "1" Organisation
 Person *--> "1" Note
 Person *--> "*" Tag
 Person *--> "*" Event
@@ -51,8 +51,7 @@ Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
 Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
+Phone -[hidden]right-> Email
 
 ModelManager --> "~* filtered" Person
 @enduml
