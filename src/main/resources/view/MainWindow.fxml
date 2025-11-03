@@ -64,7 +64,7 @@
                 </ScrollPane>
 
                 <VBox styleClass="pane-with-border"
-                      minHeight="120" prefHeight="130" spacing="5" VBox.vgrow="NEVER">
+                      minHeight="150" prefHeight="160" spacing="5" VBox.vgrow="NEVER">
 
                     <!-- Header -->
                     <StackPane alignment="CENTER"
