@@ -3,8 +3,11 @@ package seedu.address.model.person;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,7 +29,7 @@ public class Person {
     private final Address address;
     private final Note note;
     private final Set<Tag> tags = new HashSet<>();
-    private final Set<Event> events = new HashSet<>();
+    private final Set<Event> events = new LinkedHashSet<>();
     private final Long pinTimestamp;
     private final LocalDateTime dateAdded;
 
@@ -134,7 +137,9 @@ public class Person {
      * if modification is attempted.
      */
     public Set<Event> getEvents() {
-        return Collections.unmodifiableSet(events);
+        ArrayList<Event> eventArrayList = new ArrayList<>(events);
+        eventArrayList.sort(Comparator.comparing(Event::getStart));
+        return Collections.unmodifiableSet(new LinkedHashSet<>(eventArrayList));
     }
 
     public Long getPinTimestamp() {

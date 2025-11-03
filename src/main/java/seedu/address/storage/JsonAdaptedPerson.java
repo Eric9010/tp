@@ -3,6 +3,7 @@ package seedu.address.storage;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -92,10 +93,11 @@ class JsonAdaptedPerson {
         }
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        final Set<Event> personEvents = new HashSet<>();
+        final List<Event> personEvents = new ArrayList<>();
         for (JsonAdaptedEvent event : events) {
             personEvents.add(event.toModelType());
         }
+        final LinkedHashSet<Event> modelEvents = new LinkedHashSet<>(personEvents);
 
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -134,10 +136,7 @@ class JsonAdaptedPerson {
         }
         final Note modelNote = new Note(note);
         Person person = new Person(modelName, modelPhone, modelEmail, modelAddress, modelNote, modelTags, pinTimestamp,
-                personEvents);
-        for (Event event : personEvents) {
-            person.addEvent(event);
-        }
+                modelEvents);
 
         return person;
     }
