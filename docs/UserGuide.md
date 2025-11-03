@@ -156,18 +156,25 @@ Examples:
 
 Adds one or more tags to an existing recruiter contact without removing their current tags.
 
-Format: `addtag INDEX TAG [MORE_TAGS]…`  
-OR `addtag NAME TAG [MORE_TAGS]…`
+Format: `addtag INDEX TAG [MORE_TAGS]…`
 
-* Adds the specified tag(s) to the recruiter identified by their `INDEX` or full `NAME`.
+* Adds the specified tag(s) to the recruiter identified by their `INDEX`.
+
+**About the Tags** 
 * Tags are **case sensitive**
 * Tags that already exist will not be duplicated.
-* The index refers to the number shown in the displayed recruiter list and must be a positive integer.
+* if any of the provided tags contain non-alpha numeric characters, the command will return an error
+
+**About the Index**
+* The index refers to the number shown in the displayed recruiter list.
+* The index must be a **positive integer (1, 2, 3, …)**.
+* Entering `0` or a negative number (e.g., `-1`) will cause the command to be rejected.
+* If the given index exceeds the number of contacts, it will display an **Invalid recruiter index**
+
 
 Examples:
 * `addtag 2 Banking Finance` — adds the tags `Banking` and `Finance` to the 2nd recruiter in the list.
 ![addTagIndex2.png](images/addTagIndex2.png)
-* `addtag Alex Yeoh SWE Mentor` — adds the tags `SWE` and `Mentor` to the recruiter named Alex Yeoh.
 
 ### Viewing all recruiters : `viewall`
 
@@ -269,6 +276,7 @@ Format: `filtertag TAG [MORE_TAGS]…`
 * Shows all recruiters who have **at least one** of the specified tags.
 * The search is case-insensitive. e.g., `filtertag swe` will match recruiters tagged with `SWE`.
 * You can provide multiple tags; the results will include any contact that matches **one or more** of them.
+* if any of the provided tags contain non-alpha numeric characters, the command will return an error
 
 Examples:
 * `filtertag Banking` — shows all recruiters with the tag `Banking`.<br>
@@ -426,13 +434,17 @@ _Details coming soon ..._
 **Q**: Why does sorting names sometimes seem unpredictable when they contain numbers or special characters?<br>
 **A**: The sort name order is based on the ASCII values of characters. As a result, names with numbers or special characters may not appear in strict alphabetical order.
 
+**Q**: Why did `addtag` or `filtertag` reject my input with "Invalid tag detected"?  
+**A**: CareerConnect only accepts **alphanumeric tags** — tags can contain letters and digits, but no special symbols such as `@`, `#`, `_`, or spaces. For example, `t/SoftwareEngineer` is valid, but `t/software_engineer` or `t/@swe` is not.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
-
+3. **Tag limitations:** Tags must be strictly **alphanumeric**. Characters such as `_`, `@`, or `-` are not accepted.  
+   **Workaround:** Replace them with simple letters or numbers (e.g., `softwareengineer`).
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
@@ -445,11 +457,11 @@ Action | Format, Examples
 **Clear** | `clear`
 **Delete** | `delete INDEX` OR `delete NAME`<br> e.g., `delete 3` <br> e.g., `delete James Ho`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` OR <br> `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` <br> e.g., `edit 2 n/James Lee e/jameslee@example.com` <br> e.g., `edit James Lee e/jameslee@example.com`
+**Addtag** | `addtag INDEX TAG [MORE_TAGS]...` <br> e.g. `addtag 2 Banking Finance`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Findorg** | `findorg KEYWORD [MORE_KEYWORDS]` <br> e.g. `findorg Google`
 **Pin** | `pin INDEX` OR `pin NAME`<br> e.g., `pin 3` <br> e.g. `pin Jake Thomas`
 **Unpin** | `unpin INDEX` OR `unpin NAME`<br> e.g., `unpin 3` <br> e.g. `unpin Alex Yeoh`
-**Addtag** | `addtag INDEX TAG [MORE_TAGS]...` OR `addtag NAME TAG [MORE_TAGS]…` <br> e.g. `addtag 2 Banking Finance`
 **Filtertag** | `filtertag TAG [MORE_TAGS]…` <br> e.g. `filtertag Banking`
 **Sort** | `sort name` OR `sort timestamp`
 **Event** | `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION]` <br> e.g., `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters`
