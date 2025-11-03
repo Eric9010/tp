@@ -29,8 +29,10 @@ public class AddTagsCommandParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagsCommand.MESSAGE_USAGE));
         }
 
-        for (int i = 1; i < parts.length; i++){
-             if (!parts[i].matches("[A-Za-z0-9]+")) throw new ParseException("Invalid tag detected. Tags must be alphanumeric.");
+        for (int i = 1; i < parts.length; i++) {
+            if (!parts[i].matches("[A-Za-z0-9]+")) {
+                throw new ParseException("Invalid tag detected. Tags must be alphanumeric.");
+            }
         }
 
         // Try to parse the first argument as an index
