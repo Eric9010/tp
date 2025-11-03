@@ -94,7 +94,6 @@ else Command 'd' contains a name
         deactivate DeleteCommand
         [<-- LogicManager : CommandException
         deactivate LogicManager
-        ' REMOVED 'return' line here
     end
 end
 
