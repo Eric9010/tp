@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.logic.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -27,8 +28,12 @@ public class FilterTagCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model) {
+    public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        if (taglist.stream().anyMatch(t -> !t.matches("[A-Za-z0-9]+"))) {
+            throw new CommandException("Invalid tag detected. Tags must be alphanumeric.");
+        }
 
         model.updateFilteredPersonList(person -> hasMatchingTag(person, taglist));
 

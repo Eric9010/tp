@@ -193,6 +193,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
 OR `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
 
 * Edits the recruiter at the specified `INDEX` or with the specified `NAME`.
+* The index refers to the index number shown in the displayed recruiter list and must be a positive integer.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the recruiter will be removed (i.e., adding tags is not cumulative).
@@ -258,6 +259,7 @@ Deletes the specified recruiter from CareerConnect.
 Format: `delete INDEX` OR `delete NAME`
 
 * Deletes the recruiter at the specified `INDEX` or with the specified `NAME`.
+* The index refers to the index number shown in the displayed recruiter list and must be a positive integer 1, 2, 3, …
 
 Examples:
 * `viewall` followed by `delete 2` deletes the 2nd recruiter in the address book.
@@ -323,6 +325,7 @@ Adds an event to the specified recruiter.
 Format: `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION]`
 
 * The event is added to the recruiter at the specified `INDEX`.
+* The index refers to the index number shown in the displayed recruiter list and must be a positive integer.
 * `START` and `END` should be specified in the `yyyy-MM-dd HH:mm` format.
 * `MODE` can only be `F2F`, `ZOOM` or `CALL` (case-insensitive).
 
