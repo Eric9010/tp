@@ -39,13 +39,13 @@ public class FreeTimeCommand extends Command {
     public static final String COMMAND_WORD = "free";
 
     public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD
-            + " " + PREFIX_HOURS + "NO_OF_HOURS (1 - 24) "
+            + " " + PREFIX_HOURS + "NO_OF_HOURS (1 - 16) "
             + PREFIX_DATE + "DATE (YYYY-MM-DD)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_HOURS + "2 "
             + PREFIX_DATE + "2025-10-13\n";
 
-    public static final String MESSAGE_SUCCESS = "%1$s time slots are found:\n%2$s\n";
+    public static final String MESSAGE_SUCCESS = "%1$s %2$s can fit a %3$s-hour event:\n%4$s\n";
     public static final String MESSAGE_NOT_FOUND = "No such time slots can be found.\n";
 
     private final int hours;
@@ -97,8 +97,25 @@ public class FreeTimeCommand extends Command {
             return new CommandResult(MESSAGE_NOT_FOUND);
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, availableTimes.size(),
-                formatNumberedList(availableTimes)));
+        List<Duration> combinedTimes = new ArrayList<>();
+        LocalDateTime intervalStart = availableTimes.get(0).start;
+        LocalDateTime intervalEnd = availableTimes.get(0).end;
+        for (int i = 0; i < availableTimes.size() - 1; i++) {
+            if (intervalEnd.plusMinutes(15).isEqual(availableTimes.get(i + 1).end)) {
+                intervalEnd = intervalEnd.plusMinutes(15);
+            } else {
+                combinedTimes.add(new Duration(intervalStart, intervalEnd));
+                intervalStart = availableTimes.get(i + 1).start;
+                intervalEnd = availableTimes.get(i + 1).end;
+            }
+        }
+
+        if (intervalEnd.isBefore(date.atStartOfDay().plusHours(23).plusSeconds(1))) {
+            combinedTimes.add(new Duration(intervalStart, intervalEnd));
+        }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, combinedTimes.size(),
+                combinedTimes.size() == 1 ? "time slot" : "time slots", hours, formatNumberedList(combinedTimes)));
     }
 
     /**

@@ -43,7 +43,7 @@ public class FreeTimeCommandParser implements Parser<FreeTimeCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FreeTimeCommand.MESSAGE_USAGE));
         }
 
-        if (hours <= 0 || hours > 24) {
+        if (hours <= 0 || hours > 16) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FreeTimeCommand.MESSAGE_USAGE));
         }
 
