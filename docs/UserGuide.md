@@ -113,8 +113,9 @@ title: User Guide
 
 * **EMAIL**
     - Consists of local-part@domain.
-    - Local-part: Letters and numbers only, with optional special symbols: + _ . -
-             Must not start or end with a special character.
+    - Local-part: 
+      - Letters and numbers only, with optional special symbols: + _ . -
+      - Must not start or end with a special character.
     - Domain: Made of labels separated by .
       - Each label starts and ends with an alphanumeric character
       - may contain hyphens inside
