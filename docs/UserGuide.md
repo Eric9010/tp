@@ -3,7 +3,11 @@ layout: page
 title: User Guide
 ---
 
-**CareerConnect** is a desktop app designed for **university students** who regularly communicate with recruiters. It can help you **organise recruiter contacts efficiently**, so you can focus on building meaningful professional connections. If you can type fast, CareerConnect can get your contact management tasks done faster than traditional GUI apps.
+Welcome to **CareerConnect** — your all-in-one tool for managing recruiter relationships and job search progress. 
+Designed specifically for university students who frequently communicate with recruiters, CareerConnect helps you keep every contact, conversation, and follow-up neatly organised in one place. No more scattered spreadsheets, messy notes, or forgotten messages, so that
+you can focus on what truly matters — building meaningful professional connections.
+
+This user guide will walk you through the app’s core features, helpful commands, and best practices so you can get started smoothly and work efficiently from day one.
 
 ## Table of Contents
 
