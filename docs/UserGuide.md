@@ -157,7 +157,7 @@ You are not allowed to add a recruiter with the exact same name.
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com o/Google`
-* `add n/Betsy Crowe t/Banking e/betsycrowe@example.com o/DBS p/1234567 t/SWE`
+* `add n/Betsy Crowe t/Banking e/betsycrowe@example.com o/DBS p/1234567 t/SWE`<br>
 ![addBetsyCrowe.png](images/addBetsyCrowe.png)
 
 ### Adding a tag to a recruiter: `addtag`
@@ -377,9 +377,9 @@ Format: `note INDEX no/NOTE_CONTENT`
 * To delete a note, simply type `note INDEX`.
 
 Examples:
-* `note 2 no/Prefers Meetings after 5pm`<br>
-![noteIndex2.png](images/noteIndex2.png)
-* `note 2` (To delete)
+* `note 1 no/Prefers Meetings after 5pm`<br>
+![noteIndex1.png](images/noteIndex1.png)
+* `note 1` (To delete)
 
 ### Clearing all entries : `clear`
 
