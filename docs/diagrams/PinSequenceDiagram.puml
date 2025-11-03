@@ -1,0 +1,85 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":PinCommandParser" as PinCommandParser LOGIC_COLOR
+participant "p:PinCommand" as PinCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("pin ARG")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("pin ARG")
+activate AddressBookParser
+
+create PinCommandParser
+AddressBookParser -> PinCommandParser
+activate PinCommandParser
+
+PinCommandParser --> AddressBookParser
+deactivate PinCommandParser
+
+AddressBookParser -> PinCommandParser : parse("ARG")
+activate PinCommandParser
+
+note right of PinCommandParser
+  Tries to parse "ARG" as Index.
+  If it fails, tries to parse as Name.
+end note
+
+create PinCommand
+PinCommandParser -> PinCommand : new PinCommand(index or name)
+activate PinCommand
+
+PinCommand --> PinCommandParser : p
+deactivate PinCommand
+
+PinCommandParser --> AddressBookParser : p
+deactivate PinCommandParser
+PinCommandParser -[hidden]-> AddressBookParser
+destroy PinCommandParser
+
+AddressBookParser --> LogicManager : p
+deactivate AddressBookParser
+
+LogicManager -> PinCommand : execute(m)
+activate PinCommand
+
+' Simplified execution logic
+PinCommand -> Model : getFilteredPersonList()
+activate Model
+Model --> PinCommand : lastShownList
+deactivate Model
+
+PinCommand -> PinCommand : Finds person in list (by index or name)
+note right of PinCommand
+  Throws CommandException if person not found,
+  already pinned, or pin limit (3) is reached.
+end note
+
+PinCommand -> Model : pinPerson(personToPin)
+activate Model
+Model --> PinCommand
+deactivate Model
+
+create CommandResult
+PinCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> PinCommand
+deactivate CommandResult
+
+PinCommand --> LogicManager : r
+deactivate PinCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
