@@ -89,7 +89,6 @@ public class PersonCard extends UiPart<Region> {
 
         int index = 0;
         ArrayList<Event> sortedEvents = new ArrayList<>(person.getEvents());
-        sortedEvents.sort(Comparator.comparing(Event::getStart));
 
         events.getChildren().clear();
 

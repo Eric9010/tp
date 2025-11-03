@@ -20,13 +20,12 @@ public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the recruiter identified by the index number or by their full name.\n"
-            + "Parameters: INDEX (must be a positive integer) or NAME \n"
+    public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD
+            + " INDEX or NAME \n"
             + "Example: " + COMMAND_WORD + " 1\n"
             + "Example: " + COMMAND_WORD + " Alex Yeoh";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Recruiter: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Contact: %1$s";
 
     private final Index targetIndex;
     private final Name targetName;
@@ -70,7 +69,7 @@ public class DeleteCommand extends Command {
         }
 
         model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete.getName()));
     }
 
     @Override

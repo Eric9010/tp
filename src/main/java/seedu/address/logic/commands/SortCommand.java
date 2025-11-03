@@ -14,11 +14,10 @@ import seedu.address.model.person.Person;
  */
 public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
-    public static final String MESSAGE_SUCCESS = "Sorted recruiter list by %s.";
-    public static final String MESSAGE_USAGE =
-            "sort: Sorts the recruiter list by the given field.\n"
-            + "Parameters: FIELD (name/timestamp)\n"
-            + "Example: sort name";
+    public static final String MESSAGE_SUCCESS = "Sorted contact list by %s.";
+    public static final String MESSAGE_USAGE = "Try:\n" + COMMAND_WORD
+            + " name (sort by name in alphabetical order)\n"
+            + COMMAND_WORD + " timestamp (sort in order added)";
 
     public final SortType sortType;
 

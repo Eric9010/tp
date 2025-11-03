@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import java.util.Comparator;
 
+import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 
 /**
@@ -18,7 +19,11 @@ public class Comparators {
             return -1; // p1 comes before p2
         } else if (!p1.isPinned() && p2.isPinned()) {
             return 1; // p2 comes before p1
+        } else if (p1.isPinned() && p2.isPinned()) {
+            // Both pinned, compare timestamp
+            return p1.getPinTimestamp().compareTo(p2.getPinTimestamp());
         } else {
+            // Both unpinned, leave ordering to secondary comparator
             return 0;
         }
     };
@@ -28,4 +33,6 @@ public class Comparators {
 
     public static final Comparator<Person> TIMESTAMP_COMPARATOR =
             Comparator.comparing(Person::getDateAdded);
+
+    public static final Comparator<Event> EVENT_COMPARATOR = Comparator.comparing(Event::getStart);
 }

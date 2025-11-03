@@ -31,7 +31,9 @@ import seedu.address.testutil.PersonBuilder;
 public class RemindCommandTest {
     private static final RemindCommand REMIND_COMMAND = new RemindCommand(LocalDateTime.of(2025, 10,
             22, 16, 0));
-    private static final Event BEFORE_CURRENT_TIME = new Event("Google Interview", "2025-10-22 15:00",
+    private static final Event BEFORE = new Event("Google Interview", "2025-10-22 15:00",
+            "2025-10-22 15:30", "f2f", "Google Headquarters", "H");
+    private static final Event IN_PROGRESS = new Event("Google Interview", "2025-10-22 15:00",
             "2025-10-22 17:00", "f2f", "Google Headquarters", "H");
     private static final Event TODAY = new Event("Google Interview", "2025-10-22 17:00",
             "2025-10-22 18:00", "f2f", "Google Headquarters", "H");
@@ -39,30 +41,33 @@ public class RemindCommandTest {
             "2025-10-23 18:00", "f2f", "Google Headquarters", "H");
     private static final Event AFTER_TOMORROW = new Event("Google Interview", "2025-10-24 17:00",
             "2025-10-24 18:00", "f2f", "Google Headquarters", "H");
+    private static final Event MULTI_DAYS = new Event("Google Interview", "2025-10-21 15:00",
+            "2025-10-24 15:30", "f2f", "Google Headquarters", "H");
 
     @Test
     public void execute_todayAndTomorrow_success() {
         Person person = new PersonBuilder(ALICE).build();
-        List<Event> events = List.of(BEFORE_CURRENT_TIME, TODAY, TOMORROW, AFTER_TOMORROW);
+        List<Event> events = List.of(BEFORE, IN_PROGRESS, TODAY, TOMORROW, AFTER_TOMORROW, MULTI_DAYS);
         ModelStubWithPersonAndEvents model = new ModelStubWithPersonAndEvents(person, events);
-        String expectedMessage = String.format(MESSAGE_SUCCESS, formatNumberedList(List.of(TODAY)),
-                formatNumberedList(List.of(TOMORROW)));
+        String expectedMessage = String.format(MESSAGE_SUCCESS,
+                formatNumberedList(List.of(MULTI_DAYS, IN_PROGRESS, TODAY)), formatNumberedList(List.of(TOMORROW)));
         assertCommandSuccess(REMIND_COMMAND, model, expectedMessage, model);
     }
 
     @Test
     public void execute_onlyToday_success() {
         Person person = new PersonBuilder(ALICE).build();
-        List<Event> events = List.of(BEFORE_CURRENT_TIME, TODAY, AFTER_TOMORROW);
+        List<Event> events = List.of(BEFORE, IN_PROGRESS, TODAY, AFTER_TOMORROW, MULTI_DAYS);
         ModelStubWithPersonAndEvents model = new ModelStubWithPersonAndEvents(person, events);
-        String expectedMessage = String.format(MESSAGE_TODAY, formatNumberedList(List.of(TODAY)));
+        String expectedMessage = String.format(MESSAGE_TODAY, formatNumberedList(List.of(MULTI_DAYS, IN_PROGRESS,
+                TODAY)));
         assertCommandSuccess(REMIND_COMMAND, model, expectedMessage, model);
     }
 
     @Test
     public void execute_onlyTomorrow_success() {
         Person person = new PersonBuilder(ALICE).build();
-        List<Event> events = List.of(BEFORE_CURRENT_TIME, TOMORROW, AFTER_TOMORROW);
+        List<Event> events = List.of(BEFORE, TOMORROW, AFTER_TOMORROW);
         ModelStubWithPersonAndEvents model = new ModelStubWithPersonAndEvents(person, events);
         String expectedMessage = String.format(MESSAGE_TOMORROW, formatNumberedList(List.of(TOMORROW)));
         assertCommandSuccess(REMIND_COMMAND, model, expectedMessage, model);
@@ -77,7 +82,7 @@ public class RemindCommandTest {
 
         // events are before current time
         person = new PersonBuilder(ALICE).build();
-        List<Event> events = List.of(BEFORE_CURRENT_TIME);
+        List<Event> events = List.of(BEFORE);
         ModelStubWithPersonAndEvents otherModel = new ModelStubWithPersonAndEvents(person, events);
         assertCommandSuccess(REMIND_COMMAND, otherModel, MESSAGE_NONE_FOUND, otherModel);
 

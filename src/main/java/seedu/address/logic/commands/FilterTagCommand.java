@@ -16,9 +16,8 @@ import seedu.address.model.tag.Tag;
 public class FilterTagCommand extends Command {
     public static final String COMMAND_WORD = "filtertag";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters all recruiters whose tags match any of "
-            + "the specified tags and displays them as a list with index numbers.\n"
-            + "Parameters: TAG [MORE_TAGS]...\n"
+    public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD
+            + " TAG [MORE TAGS]...\n"
             + "Example: " + COMMAND_WORD + " Friend Colleague";
 
     private final List<String> taglist;

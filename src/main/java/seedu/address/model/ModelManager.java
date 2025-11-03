@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.model.Comparators.PIN_COMPARATOR;
+import static seedu.address.model.Comparators.TIMESTAMP_COMPARATOR;
 
 import java.nio.file.Path;
 import java.util.Comparator;
@@ -43,7 +44,7 @@ public class ModelManager implements Model {
         sortedPersons = new SortedList<>(this.addressBook.getPersonList());
 
         // Set the comparator on the SortedList
-        sortedPersons.setComparator(PIN_COMPARATOR);
+        sortedPersons.setComparator(PIN_COMPARATOR.thenComparing(TIMESTAMP_COMPARATOR));
 
         filteredPersons = new FilteredList<>(sortedPersons);
     }
@@ -114,6 +115,7 @@ public class ModelManager implements Model {
     public void addPerson(Person person) {
         addressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateSortedPersonList(PIN_COMPARATOR.thenComparing(TIMESTAMP_COMPARATOR));
     }
 
     @Override
@@ -193,7 +195,6 @@ public class ModelManager implements Model {
         return sortedPersons;
     }
 
-
     /**
      * Updates the sorting criteria of a sortedList entirely.
      */
@@ -203,5 +204,4 @@ public class ModelManager implements Model {
         sortedPersons.setComparator(null);
         sortedPersons.setComparator(comparator);
     }
-
 }

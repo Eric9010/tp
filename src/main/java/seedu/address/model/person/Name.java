@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names can only contain letters, numbers, spaces, and the symbols - _ . , ' ( ).";
+            "Names must contain at least one letter alongside numbers, spaces, and the symbols - _ . , ' ( )";
 
     /*
      * The first character of the address must not be a whitespace,
