@@ -415,7 +415,7 @@ _Details coming soon ..._
 **Q**: Can I use non-English names or tags?<br>
 **A**: No, currently only English letters, numbers, and certain special characters are supported. Non-English characters (e.g., Chinese, Arabic, accented letters) are not allowed.
 
-**Q**: Why does sorting names sometimes seem unpredictable when they contain numbers or special characters?
+**Q**: Why does sorting names sometimes seem unpredictable when they contain numbers or special characters?<br>
 **A**: The sort name order is based on the ASCII values of characters. As a result, names with numbers or special characters may not appear in strict alphabetical order.
 
 --------------------------------------------------------------------------------------------------------------------
