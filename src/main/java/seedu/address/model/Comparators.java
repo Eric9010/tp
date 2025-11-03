@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import java.util.Comparator;
 
+import seedu.address.model.person.Event;
 import seedu.address.model.person.Person;
 
 /**
@@ -32,4 +33,6 @@ public class Comparators {
 
     public static final Comparator<Person> TIMESTAMP_COMPARATOR =
             Comparator.comparing(Person::getDateAdded);
+
+    public static final Comparator<Event> EVENT_COMPARATOR = Comparator.comparing(Event::getStart);
 }

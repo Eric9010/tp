@@ -1,12 +1,14 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Comparators.EVENT_COMPARATOR;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -64,17 +66,26 @@ public class RemindCommand extends Command {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         for (Person person: lastShownList) {
-            Set<Event> events = person.getEvents();
+            LinkedHashSet<Event> events = new LinkedHashSet<>(person.getEvents());
             eventsToday.addAll(events.stream()
-                    .filter(event -> LocalDateTime.parse(event.getStart(), formatter).toLocalDate()
-                            .isEqual(currentDateTime.toLocalDate()))
-                    .filter(event -> LocalDateTime.parse(event.getStart(), formatter).isAfter(currentDateTime))
+                    .filter(event -> {
+                        LocalDate start = LocalDateTime.parse(event.getStart(), formatter).toLocalDate();
+                        LocalDate end = LocalDateTime.parse(event.getEnd(), formatter).toLocalDate();
+                        LocalDate today = currentDateTime.toLocalDate();
+                        boolean isToday = start.isEqual(today) || end.isEqual(today);
+                        boolean hasToday = start.isBefore(today) && end.isAfter(today);
+                        return isToday || hasToday;
+                    })
+                    .filter(event -> LocalDateTime.parse(event.getEnd(), formatter).isAfter(currentDateTime))
                     .toList());
             eventsTomorrow.addAll(events.stream()
                     .filter(event -> LocalDateTime.parse(event.getStart(), formatter).toLocalDate()
                             .isEqual(currentDateTime.toLocalDate().plusDays(1)))
                     .toList());
         }
+
+        eventsToday.sort(EVENT_COMPARATOR);
+        eventsTomorrow.sort(EVENT_COMPARATOR);
 
         if (eventsToday.isEmpty() && eventsTomorrow.isEmpty()) {
             return new CommandResult(MESSAGE_NONE_FOUND);
