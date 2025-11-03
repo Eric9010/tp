@@ -221,7 +221,7 @@ Follows a similar logic to previous commands.
     2.  **`eventsTomorrow`:** This list includes any event that *starts* tomorrow.
 * **Display:** The command sorts both lists by event start time (`EVENT_COMPARATOR`) and formats them into a single `CommandResult` with separate "Today" and "Tomorrow" headings, which is then shown in the result display.
 
-The diagram for `remind` is omitted, as it is very much the same as previous diagrams for `delete` and `pin` already in this guide, with the addition of using a comparator. 
+The diagram for `remind` is omitted, as it is very much the same as previous diagrams for `delete` and `pin` already in this guide, with the addition of using a comparator.
 
 ---
 #### Design considerations: How should upcoming event data be queried?
@@ -400,7 +400,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The add request is not the specified format.
     * 1a1. CareerConnect shows an error message.
-    
+
       Use case ends.
 
 **UC02: Delete a contact**
@@ -492,7 +492,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The request is of an invalid format.
 
     * 1a1. CareerConnect shows an error message.
-  
+
       Use case ends.
 
 * 2a. No period of time fits the user's requirements.
