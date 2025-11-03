@@ -313,15 +313,16 @@ Using `unpin` will reset the list order. Apply `sort` to restore it according to
 
 Adds an event to the specified recruiter.
 
-Format: `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION]`
+Format: `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION] [pr/PRIORITY]`
 
 * The event is added to the recruiter at the specified `INDEX`.
 * The index refers to the index number shown in the displayed recruiter list and must be a positive integer.
 * `START` and `END` should be specified in the `yyyy-MM-dd HH:mm` format.
 * `MODE` can only be `F2F`, `ZOOM` or `CALL` (case-insensitive).
+* `PRIORITY` can only be `H`, `M`, `L` (case-insensitive).
 
 Examples:
-* `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters`<br>
+* `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters pr/H`<br>
 ![event2GoogleInterview.png](images/event2GoogleInterview.png)
 * `event 2 t/Coffee Chat s/2025-10-21 11:00 e/2025-10-21 12:00`
 
@@ -338,10 +339,13 @@ Format: `cancel RECRUITER_INDEX EVENT_INDEX`
 
 Example:
 * `cancel 2 3` deletes the 3rd event under the 2nd recruiter.
+![deleteEvent.png](images/deleteEvent.png)
 
 ### Getting reminders: `remind`
 
 Displays a list of events happening today or tomorrow.
+![remind.png](images/remind.png)
+_Image taken at 2025-11-04 10:30_
 
 Format: `remind`
 
@@ -360,6 +364,7 @@ Format: `free h/NO_OF_HOURS d/DATE`
 
 Example: 
 * `free h/2 d/2025-10-10`
+![findFreeTime.png](images/findFreeTime.png)
 
 ### Attaching a note: `note`
 
