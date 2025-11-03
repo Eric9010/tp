@@ -39,7 +39,7 @@ public class FreeTimeCommand extends Command {
     public static final String COMMAND_WORD = "free";
 
     public static final String MESSAGE_USAGE = "Format: " + COMMAND_WORD
-            + " " + PREFIX_HOURS + "NO_OF_HOURS (1 - 24) "
+            + " " + PREFIX_HOURS + "NO_OF_HOURS (1 - 16) "
             + PREFIX_DATE + "DATE (YYYY-MM-DD)\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_HOURS + "2 "
