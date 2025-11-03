@@ -95,7 +95,7 @@ title: User Guide
 **:information_source: Notes about the common parameters:**<br>
 
 * **NAME**  
-    - Can only contain letters, numbers and these symbols: - _ . , ' ( )
+    - Can only contain letters **along with** numbers and these symbols: - _ . , ' ( )<br>(numbers and symbols alone are not allowed)
     - Must not be blank.
     - Is **case sensitive** (e.g. Alex Yeoh and alex yeoh are unique names)<br>
       💡 Remember to capitalise your names to avoid confusion!
