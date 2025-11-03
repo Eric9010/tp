@@ -6,7 +6,7 @@
 ![Ui](docs/images/Ui.png)
 
 ## Overview
-CareerConnect is a desktop application for managing recruiter contacts and job search interactions.  
+CareerConnect is a desktop application for managing recruiter contacts and job search interactions.
 It is designed specifically for **undergraduate students** navigating the internship and job search process.
 
 Students seeking internships or jobs often interact with many recruiters across various platforms. Missing a single meeting or deadline could mean losing a big opportunity. CareerConnect helps students:
