@@ -1,11 +1,11 @@
 package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.Comparators.EVENT_COMPARATOR;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -138,7 +138,7 @@ public class Person {
      */
     public Set<Event> getEvents() {
         ArrayList<Event> eventArrayList = new ArrayList<>(events);
-        eventArrayList.sort(Comparator.comparing(Event::getStart));
+        eventArrayList.sort(EVENT_COMPARATOR);
         return Collections.unmodifiableSet(new LinkedHashSet<>(eventArrayList));
     }
 
