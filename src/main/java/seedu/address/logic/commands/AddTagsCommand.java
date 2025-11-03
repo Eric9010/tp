@@ -12,7 +12,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -24,17 +23,15 @@ public class AddTagsCommand extends Command {
     public static final String COMMAND_WORD = "addtag";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds one or more tags to the person identified by the index number or full name.\n"
-            + "Parameters: INDEX (must be a positive integer) or NAME TAG [TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 friends colleague\n"
-            + "Example: " + COMMAND_WORD + " Alex Yeoh teammate";
+            + ": Adds one or more tags to the person identified by the index number.\n"
+            + "Parameters: INDEX (must be a positive integer) TAG [TAG]...\n"
+            + "Example: " + COMMAND_WORD + " 1 friends colleague\n";
 
     public static final String MESSAGE_ADD_TAG_SUCCESS = "Added tag(s) to %1$s: %2$s";
     public static final String MESSAGE_DUPLICATE_TAG = "Some tags already exist for this contact.";
     public static final String MESSAGE_PERSON_NOT_FOUND = Messages.MESSAGE_PERSON_NOT_FOUND;
 
     private final Index targetIndex;
-    private final Name targetName;
     private final Set<Tag> tagsToAdd;
 
     /**
@@ -44,18 +41,6 @@ public class AddTagsCommand extends Command {
         requireNonNull(targetIndex);
         requireNonNull(tagsToAdd);
         this.targetIndex = targetIndex;
-        this.targetName = null;
-        this.tagsToAdd = tagsToAdd;
-    }
-
-    /**
-     * Creates an AddTagCommand using a name.
-     */
-    public AddTagsCommand(Name targetName, Set<Tag> tagsToAdd) {
-        requireNonNull(targetName);
-        requireNonNull(tagsToAdd);
-        this.targetName = targetName;
-        this.targetIndex = null;
         this.tagsToAdd = tagsToAdd;
     }
 
@@ -66,17 +51,10 @@ public class AddTagsCommand extends Command {
         Person personToEdit;
 
         // Find target person
-        if (targetIndex != null) {
-            if (targetIndex.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-            personToEdit = lastShownList.get(targetIndex.getZeroBased());
-        } else {
-            personToEdit = lastShownList.stream()
-                    .filter(person -> person.getName().equals(targetName))
-                    .findFirst()
-                    .orElseThrow(() -> new CommandException(MESSAGE_PERSON_NOT_FOUND));
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+        personToEdit = lastShownList.get(targetIndex.getZeroBased());
 
         // Merge tags
         Set<Tag> updatedTags = new HashSet<>(personToEdit.getTags());
@@ -112,7 +90,6 @@ public class AddTagsCommand extends Command {
         return other == this
                 || (other instanceof AddTagsCommand
                 && Objects.equals(targetIndex, ((AddTagsCommand) other).targetIndex)
-                && Objects.equals(targetName, ((AddTagsCommand) other).targetName)
                 && tagsToAdd.equals(((AddTagsCommand) other).tagsToAdd));
     }
 

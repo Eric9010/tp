@@ -89,53 +89,6 @@ public class AddTagCommandTest {
         assertEquals(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, ex.getMessage());
     }
 
-    @Test
-    public void execute_addTagByName_success() throws Exception {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-
-        Set<Tag> tagsToAdd = new HashSet<>();
-        tagsToAdd.add(new Tag("mentor"));
-
-        AddTagsCommand command = new AddTagsCommand(personToEdit.getName(), tagsToAdd);
-
-        Person editedPerson = new Person(
-                personToEdit.getName(),
-                personToEdit.getPhone(),
-                personToEdit.getEmail(),
-                personToEdit.getAddress(),
-                personToEdit.getNote(),
-                mergeTags(personToEdit, tagsToAdd),
-                personToEdit.getPinTimestamp(),
-                personToEdit.getEvents(),
-                personToEdit.getDateAdded()
-        );
-
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.setPerson(personToEdit, editedPerson);
-
-        String expectedMessage = String.format(AddTagsCommand.MESSAGE_ADD_TAG_SUCCESS,
-                editedPerson.getName(), tagsToAdd);
-
-        assertCommandSuccess(command, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_nameNotFound_throwsCommandException() {
-        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-        Set<Tag> tagsToAdd = new HashSet<>();
-        tagsToAdd.add(new Tag("team"));
-
-        seedu.address.model.person.Name invalidName =
-                new seedu.address.model.person.Name("Nonexistent Person");
-
-        AddTagsCommand command = new AddTagsCommand(invalidName, tagsToAdd);
-
-        CommandException ex = assertThrows(CommandException.class, () -> command.execute(model));
-        assertEquals(Messages.MESSAGE_PERSON_NOT_FOUND, ex.getMessage());
-    }
-
     private Set<Tag> mergeTags(Person p, Set<Tag> tagsToAdd) {
         Set<Tag> merged = new HashSet<>(p.getTags());
         merged.addAll(tagsToAdd);

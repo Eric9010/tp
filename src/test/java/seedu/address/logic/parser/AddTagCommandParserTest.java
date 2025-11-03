@@ -20,15 +20,8 @@ public class AddTagCommandParserTest {
     }
 
     @Test
-    public void parse_nameAndTags_success() throws Exception {
-        AddTagsCommand command = parser.parse("Alex teammate");
-        assertTrue(command instanceof AddTagsCommand);
-    }
-
-    @Test
     public void parse_noTags_failure() {
         assertParseFailure("1", String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagsCommand.MESSAGE_USAGE));
-        assertParseFailure("Alex", String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagsCommand.MESSAGE_USAGE));
     }
 
     @Test

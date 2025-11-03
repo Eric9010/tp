@@ -8,7 +8,6 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddTagsCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Name;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -30,17 +29,14 @@ public class AddTagsCommandParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTagsCommand.MESSAGE_USAGE));
         }
 
-        // Try to parse the first argument as an index
-        try {
-            Index index = ParserUtil.parseIndex(parts[0]);
-            Set<Tag> tags = parseTags(parts, 1);
-            return new AddTagsCommand(index, tags);
-        } catch (ParseException e) {
-            // Fallback: treat it as a name
-            Name name = new Name(parts[0]);
-            Set<Tag> tags = parseTags(parts, 1);
-            return new AddTagsCommand(name, tags);
+        for (int i = 1; i < parts.length; i++){
+             if (!parts[i].matches("[A-Za-z0-9]+")) throw new ParseException("Invalid tag detected. Tags must be alphanumeric.");
         }
+
+        // Try to parse the first argument as an index
+        Index index = ParserUtil.parseIndex(parts[0]);
+        Set<Tag> tags = parseTags(parts, 1);
+        return new AddTagsCommand(index, tags);
     }
 
     /**
