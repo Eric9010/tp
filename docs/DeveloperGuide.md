@@ -501,6 +501,136 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
+**UC06: Cancel an event associated with a person**
+
+**MSS**
+
+1.  User requests to list contacts
+2.  CareerConnect shows a list of contacts
+3.  User requests to cancel an event under a specific person in the list
+4.  CareerConnect deletes the event under the contact
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given recruiter index is invalid.
+
+    * 3a1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
+
+* 3b. The given event index is invalid.
+
+    * 3b1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
+
+**UC07: Get reminders on upcoming events**
+
+**MSS**
+
+1.  User requests to see upcoming events
+2.  CareerConnect shows a list of events happening today or tomorrow
+
+    Use case ends.
+
+**UC08: Filter contact list by tags**
+
+**MSS**
+
+1.  User requests to list contacts
+2.  CareerConnect shows a list of contacts
+3.  User requests to filter contacts by a specific tag
+4.  CareerConnect displays all contacts with the specified tag
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given tag is invalid.
+
+    * 3a1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
+
+**UC09: Find a person by name**
+
+**MSS**
+
+1.  User requests to search for a person's name with a specified keyword 
+2.  CareerConnect shows a list of contacts with name that contains the given keyword
+
+    Use case ends.
+
+**UC10: Find a person by organisation**
+
+**MSS**
+
+1.  User requests to search for an organisation with a specified keyword
+2.  CareerConnect shows a list of contacts with organisation that contains the given keyword
+
+    Use case ends.
+
+**UC11: Pin a contact**
+
+**MSS**
+
+1.  User requests to list contacts
+2.  CareerConnect shows a list of contacts
+3.  User requests to pin a contact by a specified index
+4.  CareerConnect pins the contact at the given index
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
+  
+* 3b. There are already 3 contacts pinned.
+
+    * 3b1. CareerConnect shows an error message.
+
+      Use case ends.
+
+**UC11: Unpin a contact**
+
+**MSS**
+
+1. User requests to unpin a contact by a specified index
+2. CareerConnect unpins the contact at the given index
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given index is invalid.
+
+    * 1a1. CareerConnect shows an error message.
+
+      Use case resumes at step 1.
+
+* 1b. The contact at the given index is not pinned.
+
+    * 1b1. CareerConnect shows an error message.
+
+      Use case ends.
 
 ### Non-functional requirements
 
@@ -533,6 +663,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Command**: A text-based instruction entered by the user to perform an action in the system (e,g, `add`).
 * **Index**: A positive integer automatically assigned to each contact in the list, starting from 1.
+* **Person**: A recruiter
 * **Contact**: A recruiter's information (name, phone number, email, etc.) that is stored in the system.
 * **Event**: A scheduled meeting, interview, or call associated with a specific contact with certain details (title, date, time etc.).
 * **Note**: A short piece of user-defined text attached to a contact  for recording personal remarks or reminders.
