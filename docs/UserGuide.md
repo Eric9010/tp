@@ -209,7 +209,7 @@ Format: `addtag INDEX TAG [MORE_TAGS]…`
 
 Examples:
 * `addtag 2 Banking Finance` — adds the tags `Banking` and `Finance` to the 2nd recruiter in the list.<br>
-  ![addTagIndex2.png](images/addTagIndex2.png)
+  ![addtagIndex2.png](images/addtagIndex2.png)
 
 ### Editing a recruiter : `edit`
 
