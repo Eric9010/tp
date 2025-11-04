@@ -42,6 +42,9 @@ This user guide will walk you through the app’s core features, helpful command
         * [Editing the data file](#editing-the-data-file)
         * [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
 
+- [FAQ](#faq)
+- [Known issues](#known-issues)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Quick start
