@@ -449,6 +449,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
+* 3b. The given tag is invalid.
+
+    * 3b1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
+
 **UC04: Add an event associated with a person**
 
 **MSS**
@@ -475,6 +481,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 3b. The given event is invalid.
 
     * 3b1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
+
+* 3c. The add event request is not in the specified format.
+
+    * 3c1. CareerConnect shows an error message.
 
       Use case resumes at step 2.
 
@@ -575,7 +587,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to search for an organisation with a specified keyword
+1.  User requests to search for a person's organisation with a specified keyword
 2.  CareerConnect shows a list of contacts with organisation that contains the given keyword
 
     Use case ends.
@@ -586,8 +598,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1.  User requests to list contacts
 2.  CareerConnect shows a list of contacts
-3.  User requests to pin a contact by a specified index
-4.  CareerConnect pins the contact at the given index
+3.  User requests to pin a contact
+4.  CareerConnect pins the given contact
 
     Use case ends.
 
@@ -608,29 +620,87 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 3b1. CareerConnect shows an error message.
 
       Use case ends.
+  
+* 3c. The contact is already pinned.
 
-**UC11: Unpin a contact**
+    * 3c1. CareerConnect shows an error message.
+
+      Use case ends.
+
+**UC12: Unpin a contact**
 
 **MSS**
 
-1. User requests to unpin a contact by a specified index
-2. CareerConnect unpins the contact at the given index
+1. User requests to list contacts
+2. CareerConnect shows a list of contacts
+3. User requests to unpin a contact
+4. CareerConnect unpins the given contact
 
     Use case ends.
 
 **Extensions**
 
-* 1a. The given index is invalid.
+* 2a. The list is empty.
 
-    * 1a1. CareerConnect shows an error message.
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. CareerConnect shows an error message.
 
       Use case resumes at step 1.
 
-* 1b. The contact at the given index is not pinned.
+* 3b. The contact at the given index is not pinned.
 
-    * 1b1. CareerConnect shows an error message.
+    * 3b1. CareerConnect shows an error message.
 
       Use case ends.
+
+**UC13: Attach a note to a contact**
+
+**MSS**
+
+1. User requests to list contacts
+2. CareerConnect shows a list of contacts
+3. User requests to attach a note to a contact
+4. CareerConnect adds the note to the given contact
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
+
+**UC14: Sort the contact list by name**
+
+**MSS**
+
+1. User requests to list contacts
+2. CareerConnect shows a list of contacts
+3. User requests to sort the contact list by a specified sort type
+4. CareerConnect sorts the contact list by the given sort type
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given sort type is invalid.
+
+    * 3a1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
 
 ### Non-functional requirements
 

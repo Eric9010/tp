@@ -11,7 +11,6 @@ This user guide will walk you through the app’s core features, helpful command
 
 ## Table of Contents
 
-- [Quick start](#quick-start)
 * [Features](#features)
   * **Help & Navigation**
     * [Viewing help: `help`](#viewing-help--help)
@@ -46,7 +45,6 @@ This user guide will walk you through the app’s core features, helpful command
 
 - [FAQ](#faq)
 - [Known issues](#known-issues)
-- [Command summary](#command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -148,7 +146,7 @@ This user guide will walk you through the app’s core features, helpful command
 
 * **TAG**
     - Tag names are alphanumeric and cannot contain spaces.
-    - Tags are **case sensitive** (e.g. friend and Friend are unique tags)<br>
+    - Tags are **case-sensitive** (e.g. friend and Friend are unique tags)<br>
       💡 Remember to capitalise your tags to avoid confusion!
     - Tags are optional for most commands.
     - Example: `t/Interviewer`, `t/recruiter`
@@ -196,7 +194,7 @@ Format: `addtag INDEX TAG [MORE_TAGS]…`
 * Adds the specified tag(s) to the recruiter identified by their `INDEX`.
 
 **About the Tags**
-* Tags are **case sensitive**
+* Tags are **case-sensitive**
 * Tags that already exist will not be duplicated.
 * If any of the provided tags contain non-alpha numeric characters, the command will return an error
 * Specific tags have been designated as **_industry tags_** and will show up in a different colour. The list is as follows:
@@ -210,7 +208,7 @@ Format: `addtag INDEX TAG [MORE_TAGS]…`
 
 
 Examples:
-* `addtag 2 Banking Finance` — adds the tags `Banking` and `Finance` to the 2nd recruiter in the list.
+* `addtag 2 Banking Finance` — adds the tags `Banking` and `Finance` to the 2nd recruiter in the list.<br>
   ![addTagIndex2.png](images/addTagIndex2.png)
 
 ### Editing a recruiter : `edit`
