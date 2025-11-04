@@ -740,6 +740,34 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 --------------------------------------------------------------------------------------------------------------------
 
+## **Appendix: Planned enhancements**
+This section outlines planned improvements for future version of CareerConnect based on feedback and identified limitations
+
+1. ### More specific error messages
+   Currently, error messages are generic (e.g, "Invalid command format"). Future versions will:
+   - include more specific troubleshooting details to help users identify exactly which input field caused the issue 
+   - Provide inline examples of valid input formats within the error message
+   - Refine these messages further to **highlight the specific field that caused the error**
+   
+2. ### Confirmation prompt for `clear` Command
+   The current `clear` command immediately deletes all data without warning. To reduce accidental data loss, future versions will: 
+   - Add a confirmation prompt (e.g., "Are you sure you want to clear all data? (y/n)").
+   - Include a user preference setting to toggle confirmation prompts.
+   - Optionally, implement a temporary undo window/command to overwrite the deletion.
+   
+3. ### Edit event command 
+   Currently, users must delete and re-add events to make any changes. An upcoming `editevent` command will make event management more convenient by:
+   - Allowing direct edits to an event's **title, start/end time, mode, location or priority**.
+   - Providing confirmation messages summarising the old and new details for clarity.
+   - Log edits internally for potential future undo/redo support. 
+4. ### Improved Note Management
+   The existing `note` command overwrites the entire note each time it is used. To enhance usability and flexibility, future updates will:
+   - introduce new commands like `appendnote`and `editnote` to **add or modify parts of an existing note.**
+   - Log changes internally for potential future undo/redo support. 
+   - Add timestamps for note edits to track when recruiter interactions were updated.
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually. Each test case is assumed to be tested in isolation unless otherwise stated.
@@ -757,13 +785,13 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file <br> Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   2. Double-click the jar file <br> Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-1. Saving window preferences
+2. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 ### Viewing all contacts
