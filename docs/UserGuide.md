@@ -12,18 +12,36 @@ This user guide will walk you through the app’s core features, helpful command
 ## Table of Contents
 
 - [Quick start](#quick-start)
-- [Features](#features)
-  **Help & Navigation:** [Viewing help: `help`](#viewing-help--help)
-
-  **Recruiter Basics:** [Adding a recruiter: `add`](#adding-a-recruiter-add), [Editing a recruiter: `edit`](#editing-a-recruiter--edit), [Deleting a recruiter: `delete`](#deleting-a-recruiter--delete), [Viewing all recruiters: `viewall`](#viewing-all-recruiters--viewall)
-
-  **Searching & Sorting:** [Locating recruiters by name: `find`](#locating-recruiters-by-name-find), [Finding recruiters by organisation: `findorg`](#finding-recruiters-by-organisation-findorg), [Sorting contact list: `sort`](#sorting-recruiters-sort), [Filtering recruiters by tag: `filtertag`](#filtering-recruiters-by-tag-filtertag)
-
-  **Pinning & Notes:** [Pinning a recruiter: `pin`](#pinning-a-recruiter-pin), [Unpinning a recruiter: `unpin`](#unpinning-a-recruiter-unpin), [Attaching a note: `note`](#attaching-a-note-note)
-
-  **Event Management:** [Adding an event: `event`](#adding-an-event-event), [Deleting an event: `cancel`](#deleting-an-event-cancel), [Getting reminders: `remind`](#getting-reminders-remind), [Finding available time slots: `free`](#finding-available-time-slots-free)
-
-  **Data Management:** [Saving the data](#saving-the-data), [Editing the data file](#editing-the-data-file), [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
+* [Features](#features)
+  * **Help & Navigation**
+    * [Viewing help: `help`](#viewing-help--help)
+  * **Recruiter Basics**
+    * [Adding a recruiter: `add`](#adding-a-recruiter-add)
+    * [Adding a recruiter tag: `addtag`](#adding-a-tag-to-a-recruiter-addtag)
+    * [Editing a recruiter: `edit`](#editing-a-recruiter--edit)
+    * [Deleting a recruiter: `delete`](#deleting-a-recruiter--delete)
+    * [Clear all recruiters: `clear`](#clearing-all-entries--clear)
+    * [Viewing all recruiters: `viewall`](#viewing-all-recruiters--viewall)
+  * **Searching & Sorting**
+    * [Locating recruiters by name: `find`](#locating-recruiters-by-name-find)
+    * [Finding recruiters by organisation: `findorg`](#finding-recruiters-by-organisation-findorg)
+    * [Sorting contact list: `sort`](#sorting-recruiters-sort)
+    * [Filtering recruiters by tag: `filtertag`](#filtering-recruiters-by-tag-filtertag)
+  * **Pinning & Notes**
+    * [Pinning a recruiter: `pin`](#pinning-a-recruiter-pin)
+    * [Unpinning a recruiter: `unpin`](#unpinning-a-recruiter-unpin)
+    * [Attaching a note: `note`](#attaching-a-note-note)
+  * **Event Management**
+    * [Adding an event: `event`](#adding-an-event-event)
+    * [Deleting an event: `cancel`](#deleting-an-event-cancel)
+    * [Getting reminders: `remind`](#getting-reminders-remind)
+    * [Finding available time slots: `free`](#finding-available-time-slots-free)
+  * **UI Elements**
+    * [Summary Dashboard](#summary-dashboard)
+  * **Data Management**
+    * [Saving the data](#saving-the-data)
+    * [Editing the data file](#editing-the-data-file)
+    * [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
 
 - [FAQ](#faq)
 - [Known issues](#known-issues)
@@ -40,7 +58,9 @@ This user guide will walk you through the app’s core features, helpful command
 
 1. Copy the file to the folder you want to use as the _home folder_ for CareerConnect.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CareerConnect.jar` command to run the application.<br>
+1. Open a command terminal, type `cd [filepath]` into the folder you put the jar file in. You can find the correct filepath by right-clicking on the folder and selecting _Copy as path_.
+
+1. Type in `java -jar CareerConnect.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -82,6 +102,9 @@ This user guide will walk you through the app’s core features, helpful command
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `viewall`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
+* If you receive an **_Invalid command format!_** message, please check your input format against the given example in the output window.
+  * Can always type `help` to refer back  to this guide.
+
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
@@ -98,6 +121,7 @@ This user guide will walk you through the app’s core features, helpful command
 
 * **INDEX**
     - Refers to the index number shown in the displayed list.
+      - If not visible in the list, i.e. having just used `find`, the index will be treated as invalid.
     - Must be a positive integer (e.g. `1`, `2`, `3`, …).
     - Example: `delete 2` deletes the 2nd person in the displayed list.
 
@@ -126,7 +150,7 @@ This user guide will walk you through the app’s core features, helpful command
     - Tags are **case sensitive** (e.g. friend and Friend are unique tags)<br>
       💡 Remember to capitalise your tags to avoid confusion!
     - Tags are optional for most commands.
-    - Example: `t/Interviewer`, `t/Recruiter`
+    - Example: `t/Interviewer`, `t/recruiter`
 </div>
 
 ### Viewing help : `help`
@@ -167,7 +191,9 @@ Format: `addtag INDEX TAG [MORE_TAGS]…`
 **About the Tags**
 * Tags are **case sensitive**
 * Tags that already exist will not be duplicated.
-* if any of the provided tags contain non-alpha numeric characters, the command will return an error
+* If any of the provided tags contain non-alpha numeric characters, the command will return an error
+* Specific tags have been designated as **_industry tags_** and will show up in a different colour. The list is as follows:
+  * `tech, finance, fintech, accounting, consulting, healthcare, biotech, pharma, education, government, public sector, energy, utilities, manufacturing, media, advertising, marketing, real estate, property, retail, ecommerce, logistics, supplychain, travel, hospitality, airlines, nonprofit`
 
 **About the Index**
 * The index refers to the number shown in the displayed recruiter list.
@@ -178,14 +204,7 @@ Format: `addtag INDEX TAG [MORE_TAGS]…`
 
 Examples:
 * `addtag 2 Banking Finance` — adds the tags `Banking` and `Finance` to the 2nd recruiter in the list.
-![addTagIndex2.png](images/addTagIndex2.png)
-
-### Viewing all recruiters : `viewall`
-
-Shows a list of all recruiters in CareerConnect and the total count.
-
-Format: `viewall`
-
+  ![addTagIndex2.png](images/addTagIndex2.png)
 
 ### Editing a recruiter : `edit`
 
@@ -203,8 +222,48 @@ OR `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…`
 
 Examples:
 * `edit 1 p/91234567 e/alexyeoh@example.com` Edits the phone number and email address of the 1st recruiter to be `91234567` and `alexyeoh@example.com` respectively.<br>
-![editIndex1.png](images/editIndex1.png)
+  ![editIndex1.png](images/editIndex1.png)
+  * The same effect can be achieved using `edit Alex Yeoh p/91234567 e/alexyeoh@example.com` <br>
 * `edit 2 n/Betsy Crower t/` Edits the name of the 2nd recruiter to be `Betsy Crower` and clears all existing tags.
+
+### Deleting a recruiter : `delete`
+
+Deletes the specified recruiter from CareerConnect.
+
+Format: `delete INDEX` OR `delete NAME`
+
+* Deletes the recruiter at the specified `INDEX` or with the specified `NAME`.
+* The index refers to the index number shown in the displayed recruiter list and must be a positive integer 1, 2, 3, …
+
+Examples:
+* `viewall` followed by `delete 2` deletes the 2nd recruiter in the address book.
+* `delete Betsy Wong` directly deletes the contact with that name.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Use the `find` command before `delete` to ensure you're deleting the right recruiter.
+</div>
+
+### Clearing all entries : `clear`
+
+Clears all entries in CareerConnect.
+
+Format: `clear`
+
+<div markdown="block" class="alert alert-warning">
+:exclamation: **Caution:** 
+Use carefully, as this will delete all your saved data
+</div>
+
+### Viewing all recruiters : `viewall`
+
+Shows a list of all recruiters in CareerConnect and the total count.
+
+Format: `viewall`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Use this command to return back to the main list after using `find ` or `filter` commands.
+</div>
+
 
 ### Locating recruiters by name: `find`
 
@@ -253,23 +312,6 @@ Format: `sort name` OR `sort timestamp`
 
 * `name` sorts alphabetically by name.
 * `timestamp` sorts by the time the person was added (oldest is first).
-
-### Deleting a recruiter : `delete`
-
-Deletes the specified recruiter from CareerConnect.
-
-Format: `delete INDEX` OR `delete NAME`
-
-* Deletes the recruiter at the specified `INDEX` or with the specified `NAME`.
-* The index refers to the index number shown in the displayed recruiter list and must be a positive integer 1, 2, 3, …
-
-Examples:
-* `viewall` followed by `delete 2` deletes the 2nd recruiter in the address book.
-* `delete Betsy Wong` directly deletes the contact with that name.
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-Use the `find` command before `delete` to ensure you're deleting the right recruiter.
-</div>
 
 ### Filtering recruiters by tag: `filtertag`
 
@@ -321,6 +363,21 @@ Example:
 Using `unpin` will reset the list order. Apply `sort` to restore it according to your desired criteria.
 </div>
 
+### Attaching a note: `note`
+
+Attaches a note to the specified recruiter.
+
+Format: `note INDEX no/NOTE_CONTENT`
+
+* The note is added to the recruiter at the specified `INDEX`.
+* `NOTE_CONTENT` takes in any string (ℹ️ empty string will remove the note).
+* To delete a note, simply type `note INDEX`.
+
+Examples:
+* `note 1 no/Prefers Meetings after 5pm`<br>
+  ![noteIndex1.png](images/noteIndex1.png)
+* `note 1` or `note 1 no/` to delete the current note.
+
 ### Adding an event: `event`
 
 Adds an event to the specified recruiter.
@@ -331,7 +388,7 @@ Format: `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION] [pr/PRIORITY]`
 * The index refers to the index number shown in the displayed recruiter list and must be a positive integer.
 * `START` and `END` should be specified in the `yyyy-MM-dd HH:mm` format.
 * `MODE` can only be `F2F`, `ZOOM` or `CALL` (case-insensitive).
-* `PRIORITY` can only be `H`, `M`, `L` (case-insensitive).
+* `PRIORITY` can only be `H`, `M`, `L` (case-insensitive), and corresponds to a red, yellow and green icon respectively.
 
 Examples:
 * `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters pr/H`<br>
@@ -378,26 +435,14 @@ Example:
 * `free h/2 d/2025-10-10`
 ![findFreeTime.png](images/findFreeTime.png)
 
-### Attaching a note: `note`
+### Summary Dashboard
 
-Attaches a note to the specified recruiter.
+An automatically updating dashboard is visible at all times. First window contains the total number of contacts, second window shows the distribution of tags, and third window depicts upcoming events.
 
-Format: `note INDEX no/NOTE_CONTENT`
+* The upcoming events tab shows up to 3 events occurring on the current or the next day in order of start time.
+* If such events total more than 3, a '**_..._**' icon is displayed. Users can then use the `remind` command to view the full list.
 
-* The note is added to the recruiter at the specified `INDEX`.
-* `NOTE_CONTENT` takes in any string (ℹ️ empty string will remove the note).
-* To delete a note, simply type `note INDEX`.
-
-Examples:
-* `note 1 no/Prefers Meetings after 5pm`<br>
-![noteIndex1.png](images/noteIndex1.png)
-* `note 1` (To delete)
-
-### Clearing all entries : `clear`
-
-Clears all entries in CareerConnect.
-
-Format: `clear`
+![Dashboard.png](images/Dashboard.png)
 
 ### Exiting the program : `exit`
 
@@ -418,7 +463,7 @@ If your changes to the data file makes its format invalid, CareerConnect will di
 Furthermore, certain edits can cause CareerConnect to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
-### Archiving data files `[coming in v2.0]`
+### Archiving data files and contacts `[coming in v2.0]`
 
 _Details coming soon ..._
 
@@ -438,8 +483,12 @@ _Details coming soon ..._
 **Q**: Why does sorting names sometimes seem unpredictable when they contain numbers or special characters?<br>
 **A**: The sort name order is based on the ASCII values of characters. As a result, names with numbers or special characters may not appear in strict alphabetical order.
 
-**Q**: Why did `addtag` or `filtertag` reject my input with "Invalid tag detected"?
-**A**: CareerConnect only accepts **alphanumeric tags** — tags can contain letters and digits, but no special symbols such as `@`, `#`, `_`, or spaces. For example, `t/SoftwareEngineer` is valid, but `t/software_engineer` or `t/@swe` is not.
+**Q**: Why did `addtag` or `filtertag` reject my input with "Invalid tag detected"? <br>
+**A**: CareerConnect only accepts **alphanumeric tags**. Tags can contain letters and digits, but no special symbols such as `@`, `#`, `_`, or spaces. For example, `t/SoftwareEngineer` is valid, but `t/software_engineer` or `t/@swe` is not.
+
+**Q**: Why are some commands case-sensitive and others case-insensitive? <br>
+**A**: CareerConnect is designed to be as flexible as possible for its users. While exact duplicates are not allowed to avoid confusion, visibly different names or tags (case-sensitive) are therefore permitted. Hence, any command that uses these values (`pin`, `edit`, `delete` etc.) are also case-sensitive.
+On the other hand, any `find` and `filter` commands are case-insensitive so that users don't have to remember the exact capitalisation of a contact to find it, greatly improving ease of use.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -447,8 +496,9 @@ _Details coming soon ..._
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
-3. **Tag limitations:** Tags must be strictly **alphanumeric**. Characters such as `_`, `@`, or `-` are not accepted.
+3. **Tag limitations:** Tags must be strictly **alphanumeric**. Characters such as `_`, `@`, or `-` are not accepted. <br>
    **Workaround:** Replace them with simple letters or numbers (e.g., `softwareengineer`).
+4. The tag distribution dashboard window plays a refresh animation even if no new tag has been added. Note that this is a purely cosmetic issue and has no impact on functionality.
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
@@ -468,7 +518,7 @@ Action | Format, Examples
 **Unpin** | `unpin INDEX` OR `unpin NAME`<br> e.g., `unpin 3` <br> e.g. `unpin Alex Yeoh`
 **Filtertag** | `filtertag TAG [MORE_TAGS]…` <br> e.g. `filtertag Banking`
 **Sort** | `sort name` OR `sort timestamp`
-**Event** | `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION]` <br> e.g., `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google Headquarters`
+**Event** | `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION] [pr/PRIORITY]` <br> e.g., `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google HQ pr/H`
 **Cancel** | `cancel RECRUITER_INDEX EVENT_INDEX` <br> e.g. `cancel 2 3`
 **Remind** | `remind`
 **Free** | `free h/NO_OF_HOURS d/DATE` <br> e.g. `free h/2 d/2025-10-10`
