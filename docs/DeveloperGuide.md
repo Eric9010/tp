@@ -75,6 +75,8 @@ The bulk of the app's work is done by the following four components:
 
 The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
 
+Note that a similar style is used for all commands that modifies the address book using an index.
+
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
 Each of the four main components (also shown in the diagram above),
@@ -113,17 +115,15 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <img src="images/LogicClassDiagram.png" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("pin ARG")` API call as an example.
+This is a common format used by commands that modify the stored contacts using an INDEX or a NAME.
 
-![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
-</div>
+![Interactions Inside the Logic Component for the `pin ARG` Command](images/PinSequenceDiagram.png)
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
+1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `PinCommandParser`) and uses it to parse the command.
+1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `PinCommand`) which is executed by the `LogicManager`.
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
@@ -139,8 +139,11 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-T13-1/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/ModelClassDiagram1.png" width="450" />
+<img src="images/ModelClassDiagram.png" width="450" />
 
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The address field shown here is still in the program,
+though from the user standpoint, it has been repurposed to store the contact organisation in accordance with our problem domain. <br>
+</div>
 
 The `Model` component,
 
@@ -176,6 +179,68 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+### Upcoming Events and Reminders feature
+
+The "upcoming events" feature is implemented in two distinct ways to serve different user needs,
+acting as a reminder for events happening on the current or next day:
+
+1.  **An auto-updating dashboard panel** ("Upcoming Events" box in `SummaryDashboard`) which provides information on the next 3 upcoming events at a glance.
+2.  **An `remind` command** which provides a comprehensive, detailed list of *all* events for today and tomorrow in the result display.
+
+#### Implementation: Summary Dashboard Panel
+
+The dashboard panel is designed to be a "live" UI component that automatically reflects the current state of the address book.
+
+* **Mechanism:** The `SummaryDashboard` class is instantiated by `MainWindow` and receives the `ObservableList<Person>` from `Model`.
+* **Update Trigger:** A `ListChangeListener` is attached to this list. Any command that modifies the `Person` list (e.g., `add`, `edit`, `delete`, `pin`, or `event`) triggers this listener.
+  * This update is not only for this feature, but also supports the other dashboard displays.
+* **Logic:** The listener calls `updateDashboard()`, which in turn calls `updateUpcomingEvents()`.
+* **Filtering:** The `findUpcomingEvents()` helper method iterates through all persons and their events, specifically filtering for events that **start today or tomorrow** (`eventDate.isEqual(today) || eventDate.isEqual(tomorrow)`).
+* **Sorting:** Compiles the list of `Pair<Person, Event>` and sorts by the event's start time (earliest first) using `Comparator.comparing()`
+* **Display:** The `updateUpcomingEvents()` method then takes this sorted list, and adds up to **3 events** to be displayed (limited due to space constraints).
+  * The method further checks if upcomingEvents.size() > 3. If true, a **"`...`"** label is added to the panel to indicate that more events are scheduled but not shown.
+
+The following sequence diagram shows how adding a new event triggers the dashboard update:
+
+![Dashboard Update for Events](images/DashboardSequenceDiagram.png)
+
+---
+#### Implementation: Remind Command
+
+The `remind` command is an active, user-triggered query for a complete event log for today and tomorrow.
+Follows a similar logic to previous commands.
+
+* **Mechanism:** The user types `remind`. The `AddressBookParser` creates a `RemindCommandParser`, which in turn creates a `RemindCommand` object.
+* **Execution:** The `LogicManager` executes the `RemindCommand`.
+* **Filtering Logic:** The `execute()` method performs a more comprehensive search than the dashboard. It creates two separate lists:
+    1.  **`eventsToday`:** This list includes any event that:
+        * Starts or ends today (`isToday`).
+        * Spans today (started before today and ends after today) (`hasToday`).
+        * Has not already ended (`isAfter(currentDateTime)`).
+    2.  **`eventsTomorrow`:** This list includes any event that *starts* tomorrow.
+* **Display:** The command sorts both lists by event start time (`EVENT_COMPARATOR`) and formats them into a single `CommandResult` with separate "Today" and "Tomorrow" headings, which is then shown in the result display.
+
+The diagram for `remind` is omitted, as it is very much the same as previous diagrams for `delete` and `pin` already in this guide, with the addition of using a comparator.
+
+---
+#### Design considerations: How should upcoming event data be queried?
+
+* **Alternative 1 (Current Choice): Two separate implementations.**
+    * **Description:** The application has two different methods for finding "upcoming events" one in `SummaryDashboard.findUpcomingEvents()` and a more complex one in `RemindCommand.execute()`.
+    * **Pros:** Each feature is self-contained and tailored to its specific purpose.
+    * **Cons:** This results in **code duplication** (both methods iterate all persons and events).
+
+* **Alternative 2 (Future Refactor): Move Logic to Model.**
+    * **Description:** A new method (e.g., `getUpcomingEvents(LocalDate date)`) could be added to the `Model` interface, which could then house the filtering logic from `RemindCommand`.
+    * **Pros:** Both `RemindCommand` and `SummaryDashboard` would call this method, leading to guaranteed consistent results.
+    * **Cons:** Makes the `Model` interface slightly larger and more complex.
+
+* **Alternative 3: Share a Utility Method.**
+    * **Description:** A static helper method could be created in a `EventUtil` class that both `RemindCommand` and `SummaryDashboard` can call.
+    * **Pros:** Reduces code duplication without modifying the `Model` interface.
+    * **Cons:** The logic is still decoupled from the `Model` (the data's owner).
+
 
 ### \[Proposed\] Undo/redo feature
 
@@ -234,7 +299,7 @@ The `redo` command does the opposite — it calls `Model#redoAddressBook()`,
 
 </div>
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `viewall`. Commands that do not modify the address book, such as `viewall`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
 
 ![UndoRedoState4](images/UndoRedoState4.png)
 
@@ -258,8 +323,6 @@ The following activity diagram summarizes what happens when a user executes a ne
   itself.
   * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
   * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
 
 ### \[Proposed\] Data archiving
 
@@ -337,7 +400,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1a. The add request is not in the specified format.
     * 1a1. CareerConnect shows an error message.
-    
+
       Use case ends.
 
 **UC02: Delete a contact**
@@ -429,7 +492,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 1a. The request is of an invalid format.
 
     * 1a1. CareerConnect shows an error message.
-  
+
       Use case ends.
 
 * 2a. No period of time fits the user's requirements.
@@ -438,6 +501,136 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
+**UC06: Cancel an event associated with a person**
+
+**MSS**
+
+1.  User requests to list contacts
+2.  CareerConnect shows a list of contacts
+3.  User requests to cancel an event under a specific person in the list
+4.  CareerConnect deletes the event under the contact
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given recruiter index is invalid.
+
+    * 3a1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
+
+* 3b. The given event index is invalid.
+
+    * 3b1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
+
+**UC07: Get reminders on upcoming events**
+
+**MSS**
+
+1.  User requests to see upcoming events
+2.  CareerConnect shows a list of events happening today or tomorrow
+
+    Use case ends.
+
+**UC08: Filter contact list by tags**
+
+**MSS**
+
+1.  User requests to list contacts
+2.  CareerConnect shows a list of contacts
+3.  User requests to filter contacts by a specific tag
+4.  CareerConnect displays all contacts with the specified tag
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given tag is invalid.
+
+    * 3a1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
+
+**UC09: Find a person by name**
+
+**MSS**
+
+1.  User requests to search for a person's name with a specified keyword 
+2.  CareerConnect shows a list of contacts with name that contains the given keyword
+
+    Use case ends.
+
+**UC10: Find a person by organisation**
+
+**MSS**
+
+1.  User requests to search for an organisation with a specified keyword
+2.  CareerConnect shows a list of contacts with organisation that contains the given keyword
+
+    Use case ends.
+
+**UC11: Pin a contact**
+
+**MSS**
+
+1.  User requests to list contacts
+2.  CareerConnect shows a list of contacts
+3.  User requests to pin a contact by a specified index
+4.  CareerConnect pins the contact at the given index
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+  Use case ends.
+
+* 3a. The given index is invalid.
+
+    * 3a1. CareerConnect shows an error message.
+
+      Use case resumes at step 2.
+  
+* 3b. There are already 3 contacts pinned.
+
+    * 3b1. CareerConnect shows an error message.
+
+      Use case ends.
+
+**UC11: Unpin a contact**
+
+**MSS**
+
+1. User requests to unpin a contact by a specified index
+2. CareerConnect unpins the contact at the given index
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The given index is invalid.
+
+    * 1a1. CareerConnect shows an error message.
+
+      Use case resumes at step 1.
+
+* 1b. The contact at the given index is not pinned.
+
+    * 1b1. CareerConnect shows an error message.
+
+      Use case ends.
 
 ### Non-functional requirements
 
@@ -470,6 +663,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Command**: A text-based instruction entered by the user to perform an action in the system (e,g, `add`).
 * **Index**: A positive integer automatically assigned to each contact in the list, starting from 1.
+* **Person**: A recruiter
 * **Contact**: A recruiter's information (name, phone number, email, etc.) that is stored in the system.
 * **Event**: A scheduled meeting, interview, or call associated with a specific contact with certain details (title, date, time etc.).
 * **Note**: A short piece of user-defined text attached to a contact  for recording personal remarks or reminders.
@@ -480,7 +674,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 Given below are instructions to test the app manually. Each test case is assumed to be tested in isolation unless otherwise stated.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
+<div markdown="block" class="alert alert-info">
+
+:information_source: **Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
 
 </div>

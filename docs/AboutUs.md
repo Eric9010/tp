@@ -15,7 +15,7 @@ We are a team based in the [School of Computing, National University of Singapor
 [[github](https://github.com/greyhat262)]
 
 * Role:
-* Responsibilities: 
+* Responsibilities:
 
 ### Charlize Tee
 

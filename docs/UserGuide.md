@@ -3,12 +3,16 @@ layout: page
 title: User Guide
 ---
 
-**CareerConnect** is a desktop app designed for **university students** who regularly communicate with recruiters. It can help you **organise recruiter contacts efficiently**, so you can focus on building meaningful professional connections. If you can type fast, CareerConnect can get your contact management tasks done faster than traditional GUI apps.
+Welcome to **CareerConnect** — your all-in-one tool for managing recruiter relationships and job search progress. 
+Designed specifically for university students who frequently communicate with recruiters, CareerConnect helps you keep every contact, conversation, and follow-up neatly organised in one place. No more scattered spreadsheets, messy notes, or forgotten messages, so that
+you can focus on what truly matters — building meaningful professional connections.
+
+This user guide will walk you through the app’s core features, helpful commands, and best practices so you can get started smoothly and work efficiently from day one.
 
 ## Table of Contents
 
 - [Quick start](#quick-start)
-- [Features](#features)  
+- [Features](#features)
   **Help & Navigation:** [Viewing help: `help`](#viewing-help--help)
 
   **Recruiter Basics:** [Adding a recruiter: `add`](#adding-a-recruiter-add), [Editing a recruiter: `edit`](#editing-a-recruiter--edit), [Deleting a recruiter: `delete`](#deleting-a-recruiter--delete), [Viewing all recruiters: `viewall`](#viewing-all-recruiters--viewall)
@@ -85,26 +89,26 @@ title: User Guide
 
 **:information_source: Notes about the common parameters:**<br>
 
-* **NAME**  
+* **NAME**
     - Can only contain letters **along with** numbers and these symbols: - _ . , ' ( )<br>(numbers and symbols alone are not allowed)
     - Must not be blank.
     - Is **case sensitive** (e.g. Alex Yeoh and alex yeoh are unique names)<br>
       💡 Remember to capitalise your names to avoid confusion!
     - Example: `Alex Yeoh`, `Bernice Yu`
 
-* **INDEX**  
-    - Refers to the index number shown in the displayed list.  
-    - Must be a positive integer (e.g. `1`, `2`, `3`, …).  
+* **INDEX**
+    - Refers to the index number shown in the displayed list.
+    - Must be a positive integer (e.g. `1`, `2`, `3`, …).
     - Example: `delete 2` deletes the 2nd person in the displayed list.
 
-* **PHONE_NUMBER**  
-    - Must contain only digits and must be at least 3 digits long.  
-    - Must not contain spaces or other symbols.  
+* **PHONE_NUMBER**
+    - Must contain only digits and must be at least 3 digits long.
+    - Must not contain spaces or other symbols.
     - Example: `91234567`
 
 * **EMAIL**
     - Consists of local-part@domain.
-    - Local-part: 
+    - Local-part:
       - Letters and numbers only, with optional special symbols: + _ . -
       - Must not start or end with a special character.
     - Domain: Made of labels separated by .
@@ -113,15 +117,15 @@ title: User Guide
       - the last label must be at least 2 characters long.
     - Example: `alexyeoh@example.com`
 
-* **ORGANISATION**  
-    - Must not be blank.  
+* **ORGANISATION**
+    - Must not be blank.
     - Can take on any values.
 
-* **TAG**  
+* **TAG**
     - Tag names are alphanumeric and cannot contain spaces.
     - Tags are **case sensitive** (e.g. friend and Friend are unique tags)<br>
-      💡 Remember to capitalise your tags to avoid confusion! 
-    - Tags are optional for most commands.  
+      💡 Remember to capitalise your tags to avoid confusion!
+    - Tags are optional for most commands.
     - Example: `t/Interviewer`, `t/Recruiter`
 </div>
 
@@ -160,7 +164,7 @@ Format: `addtag INDEX TAG [MORE_TAGS]…`
 
 * Adds the specified tag(s) to the recruiter identified by their `INDEX`.
 
-**About the Tags** 
+**About the Tags**
 * Tags are **case sensitive**
 * Tags that already exist will not be duplicated.
 * if any of the provided tags contain non-alpha numeric characters, the command will return an error
@@ -370,7 +374,7 @@ Format: `free h/NO_OF_HOURS d/DATE`
 * The earliest start time that can be suggested is 07:00 while the latest end time is 23:00.
 * The time slots are checked for their availability in 15-minute intervals.
 
-Example: 
+Example:
 * `free h/2 d/2025-10-10`
 ![findFreeTime.png](images/findFreeTime.png)
 
@@ -434,7 +438,7 @@ _Details coming soon ..._
 **Q**: Why does sorting names sometimes seem unpredictable when they contain numbers or special characters?<br>
 **A**: The sort name order is based on the ASCII values of characters. As a result, names with numbers or special characters may not appear in strict alphabetical order.
 
-**Q**: Why did `addtag` or `filtertag` reject my input with "Invalid tag detected"?  
+**Q**: Why did `addtag` or `filtertag` reject my input with "Invalid tag detected"?
 **A**: CareerConnect only accepts **alphanumeric tags** — tags can contain letters and digits, but no special symbols such as `@`, `#`, `_`, or spaces. For example, `t/SoftwareEngineer` is valid, but `t/software_engineer` or `t/@swe` is not.
 
 --------------------------------------------------------------------------------------------------------------------
@@ -443,7 +447,7 @@ _Details coming soon ..._
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
-3. **Tag limitations:** Tags must be strictly **alphanumeric**. Characters such as `_`, `@`, or `-` are not accepted.  
+3. **Tag limitations:** Tags must be strictly **alphanumeric**. Characters such as `_`, `@`, or `-` are not accepted.
    **Workaround:** Replace them with simple letters or numbers (e.g., `softwareengineer`).
 --------------------------------------------------------------------------------------------------------------------
 
