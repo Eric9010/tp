@@ -13,11 +13,12 @@ This user guide will walk you through the app’s core features, helpful command
 
 - [Quick start](#quick-start)
 - [Features](#features)
+
   **Help & Navigation:** [Viewing help: `help`](#viewing-help--help)
 
-  **Recruiter Basics:** [Adding a recruiter: `add`](#adding-a-recruiter-add), [Editing a recruiter: `edit`](#editing-a-recruiter--edit), [Deleting a recruiter: `delete`](#deleting-a-recruiter--delete), [Viewing all recruiters: `viewall`](#viewing-all-recruiters--viewall)
+  **Recruiter Basics:** [Adding a recruiter: `add`](#adding-a-recruiter-add), [Editing a recruiter: `edit`](#editing-a-recruiter--edit), [Deleting a recruiter: `delete`](#deleting-a-recruiter--delete), [Adding a tag: `addtag`](#adding-a-tag-to-a-recruiter-addtag), [Viewing all recruiters: `viewall`](#viewing-all-recruiters--viewall)
 
-  **Searching & Sorting:** [Locating recruiters by name: `find`](#locating-recruiters-by-name-find), [Finding recruiters by organisation: `findorg`](#finding-recruiters-by-organisation-findorg), [Sorting contact list: `sort`](#sorting-recruiters-sort), [Filtering recruiters by tag: `filtertag`](#filtering-recruiters-by-tag-filtertag)
+  **Searching & Sorting:** [Finding recruiters by name: `find`](#locating-recruiters-by-name-find), [Finding recruiters by organisation: `findorg`](#finding-recruiters-by-organisation-findorg), [Sorting contact list: `sort`](#sorting-recruiters-sort), [Filtering recruiters by tag: `filtertag`](#filtering-recruiters-by-tag-filtertag)
 
   **Pinning & Notes:** [Pinning a recruiter: `pin`](#pinning-a-recruiter-pin), [Unpinning a recruiter: `unpin`](#unpinning-a-recruiter-unpin), [Attaching a note: `note`](#attaching-a-note-note)
 

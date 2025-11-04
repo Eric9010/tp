@@ -587,7 +587,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to search for an organisation with a specified keyword
+1.  User requests to search for a person's organisation with a specified keyword
 2.  CareerConnect shows a list of contacts with organisation that contains the given keyword
 
     Use case ends.
