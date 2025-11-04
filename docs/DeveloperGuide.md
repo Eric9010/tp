@@ -335,8 +335,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. The add request is not the specified format.
-    * 3a1. CareerConnect shows an error message.
+* 1a. The add request is not in the specified format.
+    * 1a1. CareerConnect shows an error message.
     
       Use case ends.
 
@@ -478,7 +478,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ## **Appendix: Instructions for manual testing**
 
-Given below are instructions to test the app manually.
+Given below are instructions to test the app manually. Each test case is assumed to be tested in isolation unless otherwise stated.
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
@@ -491,7 +491,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Double-click the jar file <br> Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
 
@@ -500,14 +500,45 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
+### Viewing all contacts
+1. Displaying a list of all contacts and the total number of contacts
+    1. Test case: `viewall` <br>
+       Expected: Shows a list of all contacts. The total number of contacts is shown in the status message.
+    2. Other correct viewall commands to try: `viewall 1`, `viewall contacts` <br>
+       Expected: Same as test case i.
+
+### Adding a person
+
+1. Adding a person
+    1. Test case: `add n/John Doe p/98765432 e/johnd@example.com o/Google t/friend t/finance` <br>
+       Expected: A new person is added to the bottom of the list with the specified details. Details of the added contact are shown in the status message.
+    2. Test case: `add n/--- p/98765432 e/johnd@example.com o/Google t/friend t/finance` <br>
+       Expected: No person is added as name is invalid. Error message containing the correct name format is shown.
+    3. Test case: `add n/John Doe p/98765432 e/johnd@example.com t/friend t/finance` <br>
+       Expected: No person is added as the phone number field is not provided. Error message containing the correct command format for `add` is shown. <br>
+    4. Other incorrect add commands to try: 
+        1. Omitting one or more compulsory fields e.g. `NAME`, `EMAIL`, `ORGANISATION`. <br>
+           Expected: Same as test case iii.
+        2. Invalid phone numbers containing non-digit characters or are less than 3 digits long. <br>
+           Expected: Error message containing the correct phone number format is shown.
+        3. Invalid emails, such as an email starting with a special character e.g. `-john@example.com`. <br>
+           Expected: Error message containing the correct email format is shown.
+        4. Blank organisation value. <br>
+           Expected: Error message containing the correct organisation format is shown.
+        5. Non-alphanumeric tags e.g. `Quant Dev`. <br>
+           Expected: Error message containing the correct tag format is shown.
+    5. Other correct add commands to try:
+        1. Input the fields in a different order e.g. `add o/Google n/John e/John@email.com p/90326847` <br>
+           Expected: Same as test case i.
+
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all persons using the `viewall` command. Multiple persons in the list.
 
    1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+      Expected: First contact is deleted from the list. Name of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
    1. Test case: `delete 0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
@@ -519,7 +550,196 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: `Alex Yeoh` in list, `Alice Yeoh` not in list.
 
     1. Test case: `delete Alex Yeoh`<br>
-       Expected: `Alex Yeoh` is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+       Expected: `Alex Yeoh` is deleted from the list. Name of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
     1. Test case: `delete Alice Yeoh`<br>
        Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+
+### Editing a person
+1. Editing a person by index
+    1. Prerequisites: List all persons using the `viewall` command. Multiple persons in the list.
+    2. Test case: `edit 1 n/John D p/91234567 e/johndoe@example.com` <br>
+       Expected: First person is edited to the specified details. New name of the edited contact shown in the status message.
+    3. Test case: `edit 1` <br>
+       Expected: No person is edited as no fields are provided. Error message states that at least 1 optional field should be present.
+    4. Other incorrect edit commands to try: Similar to adding a person test case iv (b - e).
+    5. Other correct edit commands to try: Similar to adding a person test case v
+2. Editing a person by name
+    1. Prerequisites: `John D` in the list, `James D` not in list.
+    2. Test case: `edit John D p/98765432`
+       Expected: `John D` is edited with the specified phone number. Name of the edited contact shown in the status message.
+    3. Test case: `edit John D` <br>
+       Expected: `John D` is not edited as no fields are provided. Error message states that at least 1 optional field should be present.
+    4. Test case: `edit James D` <br>
+       Expected: No contact edited as `James D` is not present. Error message states that the person cannot be found.
+
+### Finding a person by name
+1. Finding a person by name
+    1. Prerequisite: `Alex Yeoh` in list.
+    2. Test case: `find Alex Yeoh` <br>
+       Expected: Shows a list containing 1 contact. The number of contacts found is shown in the status message.
+    3. Test case: `find Al` <br>
+       Expected: Shows an empty list. The number of contacts found is shown in the status message.
+    4. Test case: `find Alex Y` <br>
+       Expected: Same as test case i.
+    5. Test case: `find alex yeoh` <br>
+       Expected: Same as test case ii.
+
+### Finding a person by organisation
+Same as finding a person by name except `findorg` is used instead of `find`.
+
+### Adding a tag
+1. Adding a tag to a contact
+    1. Prerequisite: 2 persons in the list.
+    2. Test case: `addtag 1 Recruiter SWE` <br>
+       Expected: The provided tags are added to the first person in the list. The tags added are shown in the status message.  
+    3. Test case: `addtag 1 Recruiter` (immediately after test case ii) <br>
+       Expected: The tag does not appear as a duplicate tag. The tag is shown with a note that the tag already exists in the status message.
+    4. Test case: `addtag -1 Interviewer` <br>
+       Expected: No tags are added as the index is not a positive integer. Error message on accepted indices is shown.
+    5. Test case: `addtag 7 Interviewer` <br>
+       Expected: No tags are added as the index is greater than the number of contacts. Error message stating that the index is invalid is shown in the status message.
+    6. Test case: `addtag 1` <br>
+       Expected: No tags are added as no tags are provided. Error message shows the correct command format for `addtag`.
+    7. Test case `addtag 1 ---` <br>
+       Expected: No tags are added as the tag is invalid. Error message shows the correct tag format.
+
+### Sorting contact list
+1. Sorting contact list
+    1. Prerequisite: Multiple persons in the list.
+    2. Test case: `sort name` <br>
+       Expected: List of contacts sorted alphabetically by name. Success message shown.
+    3. Test case: `sort timestamp` <br>
+       Expected: List of contacts sorted by the time the contact was added, in chronological order. Success message shown.
+    4. Test case: `sort` or `sort na` or any variant <br>
+       Expected: List of contacts remain in original order. Error message shows the correct command format.
+
+### Filtering by tags
+1. Filtering by tags
+    1. Prerequisite: Multiple persons in the list. At least one person has `Recruiter` tag. No one has `SWE` tag. 
+    2. Test case: `filtertag Recruiter` <br>
+       Expected: List of contacts with `Recruiter` tag is shown. Number of contacts found shown in status message.
+    3. Test case: `filtertag recruiter swe` <br>
+       Expected: Same as test case ii, since it is a case-insensitive OR search.
+    4. Test case: `filtertag ---` <br>
+       Expected: List of contacts shown remain unchanged. Error message shows correct tag format.
+
+### Pinning a person
+1. Pinning a person by index
+    1. Prerequisite: Multiple persons (less than 7) in the list. No pinned contacts.
+    2. Test case: `pin 2` <br>
+       Expected: Second person moves to the top of the list. Name of pinned contact is shown in status message.
+    3. Test case: `pin 1` (already pinned) <br>
+       Expected: Error message states that contact is already pinned.
+    4. Test case: `pin 7` <br>
+       Expected: Error message states that index is invalid.
+    5. Test case: `pin -1` <br>
+       Expected: Error message shows correct command format for `pin`.
+2. Pinning a person by name
+    1. Prerequisite: `Alex Yeoh` in list. No pinned contacts. 
+    2. Test case: `pin Alex Yeoh` <br>
+       Expected: `Alex Yeoh` moves to the top of the list. Name of pinned contact is shown in status message.
+    3. Test case: `pin Alex Yeoh` (already pinned) <br>
+       Expected: Error message states that contact is already pinned.
+    4. Test case: `pin Alex` <br>
+       Expected: Error message states that contact cannot be found.
+    5. Test case: `pin ---` <br>
+       Expected: Error message show correct command format for `pin`.
+
+### Unpinning a person
+1. Pinning a person by index
+    1. Prerequisite: Multiple persons (less than 7) in the list. 2 pinned contacts.
+    2. Test case: `unpin 1` <br>
+       Expected: First person moves below the pinned person to its original position before pinning. Name of pinned contact is shown in status message.
+    3. Test case: `unpin 2` (not pinned) <br>
+       Expected: Error message states that contact is not pinned.
+    4. Test case: `unpin 7` <br>
+       Expected: Error message states that index is invalid.
+    5. Test case: `unpin -1` <br>
+       Expected: Error message shows correct command format for `unpin`.
+2. Pinning a person by name
+    1. Prerequisite: `Alex Yeoh` and `Alice Yeoh` in list. Both are pinned.
+    2. Test case: `unpin Alex Yeoh` <br>
+       Expected: `Alex Yeoh` moves below `Alice Yeoh`. Name of pinned contact is shown in status message.
+    3. Test case: `unpin Alex Yeoh` (not pinned) <br>
+       Expected: Error message states that contact is not pinned.
+    4. Test case: `unpin Alex` <br>
+       Expected: Error message states that contact cannot be found.
+    5. Test case: `unpin ---` <br>
+       Expected: Error message shows correct command format for `unpin`.
+
+### Attaching a note
+1. Attaching a note to a person
+    1. Prerequisite: Multiple persons (less than 7) in the list. No notes.
+    2. Test case: `note 1 no/Note` <br>
+       Expected: Note dropdown appears. Name of contact added with the note shown in status message.
+    3. Test case: `note 1 no/` or `note 1` <br>
+       Expected: Note dropdown is deleted. Name of contact with note removed shown in status message.
+    4. Test case: `note 7 no/Note` <br>
+       Expected: Error message states that index is invalid.
+    5. Test case: `note -1 no/Note` or `note no/Note` <br>
+       Expected: Error message shows correct command format for `note`.
+
+### Adding an event
+1. Adding an event to a person
+    1. Prerequisite: Multiple persons (less than 7) in the list.
+    2. Test case: `event 2 t/Google Interview s/2025-10-12 14:00 e/2025-10-12 15:00 m/F2F l/Google Headquarters pr/H` <br>
+       Expected: A new event with the specified details is added to the second person. Details of the added event are shown in the status message.
+    3. Test case: `event 2 t/Google Interview s/2025-10-12 14:00 e/2025-10-12 15:00 m/F2F l/Google Headquarters pr/H` (after test case i) <br>
+       Expected: No event is added. Error message stating event already exists is shown in error message. 
+    4. Test case: `event 2 t/Google Interview s/2025-10-12 14:30 e/2025-10-12 15:00` (after test case i) <br>
+       Expected: No event is added due to a clash. Error message shows the event it clashes with.
+    5. Test case: `event 2 t/Google Interview s/2025-10-12 16:00 e/2025-10-12 15:00` <br>
+       Expected: No event is added as start is after end. Error message shows the correct command format for `event`.
+    6. Test case: `event 7 t/Google Interview s/2025-10-12 14:30 e/2025-10-12 15:00` <br>
+       Expected: No event is added. Error message states that the index is invalid.
+    7. Other incorrect event commands to try (Expected same as test case v):
+        1. Omitting one or more compulsory fields e.g. `TITLE`, `START`, `END`.
+        2. Title, start or end is empty
+        3. Start or end not following the `yyyy-MM-dd HH:mm` format.
+        4. `MODE` not `F2F`, `ZOOM` or `CALL` (case-insensitive)
+        5. `PRIORITY` not `H`, `M` or `L` (case-insensitive) <br>
+        6. Invalid index e.g. `0`, `-1`
+    8. Other correct event commands:
+        1. Input the fields in a different order e.g. `event 2 s/2025-10-12 14:00 e/2025-10-12 15:00 m/F2F l/Google Headquarters pr/H t/Google Interview` <br>
+           Expected: Same as test case i.
+
+### Deleting an event
+1. Deleting an event from a person
+    1. Prerequisite: Multiple persons (less than 7) in the list. First person has 3 events.
+    2. Test case: `cancel 1 3` <br>
+       Expected: Third event under the first recruiter is deleted. Details of the deleted event is shown in the status message.
+    3. Test case: `cancel 7 2` <br>
+       Expected: No event deleted. Error message states invalid recruiter index.
+    4. Test case: `cancel 1 5` <br>
+       Expected: No event deleted. Error message states invalid event index.
+    5. Test case: `cancel 1 ` or `cancel -1 3` <br>
+       Expected: No event deleted. Error message shows correct command format for `cancel`.
+
+### Getting reminders
+1. Getting reminders for both days
+    1. Prerequisite: At least one event happening today and tomorrow respectively.
+    2. Test case: `remind` <br>
+       Expected: Events happening today are listed first in the status message followed by events happening tomorrow.
+2. Getting reminders for today
+    1. Prerequisite: At least one event happening today and no events tomorrow.
+    2. Test case: `remind` <br>
+       Expected: Events happening today are listed first in the status message, followed by a message stating there are no events tomorrow.
+3. Getting reminders for both days
+    1. Prerequisite: At least one event happening tomorrow and no events today.
+    2. Test case: `remind` <br>
+       Expected: A message stating there are no events today, followed by a list of events happening tomorrow, are shown.
+4. Getting no reminders
+    1. Prerequisite: No events today or tomorrow.
+    2. Test case: `remind` <br>
+       Expected: A message stating there are no events today or tomorrow is shown.
+
+### Finding available time slots
+1. Finding available time slots
+    1. Prerequisite: `2025-10-10` is fully occupied except for a 3-hour block. 
+    2. Test case: `free h/3 d/2025-10-10` <br>
+       Expected: A list of available time slots are shown in the status message.
+    3. Test case: `free h/17 d/2025-10-10` or `free h/3 d/2025-10` <br>
+       Expected: Error message shows correct command format for `free`.
+    4. Test case: `free h/10 d/2025-10-10` <br>
+       Expected: Status message states that no such time slots can be found. 
