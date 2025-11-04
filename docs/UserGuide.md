@@ -501,6 +501,7 @@ On the other hand, any `find` and `filter` commands are case-insensitive so that
    **Workaround:** Replace them with simple letters or numbers (e.g., `softwareengineer`).
 4. The tag distribution dashboard window plays a refresh animation even if no new tag has been added. Note that this is a purely cosmetic issue and has no impact on functionality.
 5. Invalid dates such as `2025-02-29` and `2025-11-31` would be rounded to a valid date, such as `2025-02-28` and `2025-11-30` respectively.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
