@@ -14,6 +14,7 @@ title: Developer Guide
     - [Storage component](#storage-component)
     - [Common classes](#common-classes)
 - [Implementation](#implementation)
+    - [Upcoming Events and Reminders feature](#upcoming-events-and-reminders-feature)
     - [[Proposed] Undo/redo feature](#proposed-undoredo-feature)
     - [[Proposed] Data archiving](#proposed-data-archiving)
 - [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
@@ -23,9 +24,8 @@ title: Developer Guide
     - [Use cases](#use-cases)
     - [Non-functional requirements](#non-functional-requirements)
     - [Glossary](#glossary)
+- [Appendix: Planned enhancements](#appendix-planned-enhancements)
 - [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
-    - [Launch and shutdown](#launch-and-shutdown)
-    - [Deleting a person](#deleting-a-person)
 
 --------------------------------------------------------------------------------------------------------------------
 
