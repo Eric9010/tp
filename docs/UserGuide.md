@@ -15,6 +15,7 @@ This user guide will walk you through the app’s core features, helpful command
 * [Features](#features)
   * **Help & Navigation**
     * [Viewing help: `help`](#viewing-help--help)
+    * [Exiting the program: `exit`](#exiting-the-program--exit)
   * **Recruiter Basics**
     * [Adding a recruiter: `add`](#adding-a-recruiter-add)
     * [Adding a recruiter tag: `addtag`](#adding-a-tag-to-a-recruiter-addtag)
@@ -41,7 +42,7 @@ This user guide will walk you through the app’s core features, helpful command
   * **Data Management**
     * [Saving the data](#saving-the-data)
     * [Editing the data file](#editing-the-data-file)
-    * [Archiving data files `[coming in v2.0]`](#archiving-data-files-coming-in-v20)
+    * [Archiving data files `[coming in v2.0]`](#archiving-data-files-and-contacts-coming-in-v20)
 
 - [FAQ](#faq)
 - [Known issues](#known-issues)
@@ -160,6 +161,12 @@ Shows a message explaining how to access the help page.
 ![help message](images/helpMessage.png)
 
 Format: `help`
+
+### Exiting the program : `exit`
+
+Exits the program.
+
+Format: `exit`
 
 ### Adding a recruiter: `add`
 
@@ -444,12 +451,6 @@ An automatically updating dashboard is visible at all times. First window contai
 
 ![Dashboard.png](images/Dashboard.png)
 
-### Exiting the program : `exit`
-
-Exits the program.
-
-Format: `exit`
-
 ### Saving the data
 
 CareerConnect data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
@@ -499,27 +500,29 @@ On the other hand, any `find` and `filter` commands are case-insensitive so that
 3. **Tag limitations:** Tags must be strictly **alphanumeric**. Characters such as `_`, `@`, or `-` are not accepted. <br>
    **Workaround:** Replace them with simple letters or numbers (e.g., `softwareengineer`).
 4. The tag distribution dashboard window plays a refresh animation even if no new tag has been added. Note that this is a purely cosmetic issue and has no impact on functionality.
+5. Invalid dates such as `2025-02-29` and `2025-11-31` would be rounded to a valid date, such as `2025-02-28` and `2025-11-30` respectively.
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
 
 Action | Format, Examples
 --------|------------------
-**Viewall** | `viewall`
 **Help** | `help`
+**Exit** | `exit`
 **Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL o/ORGANISATION [t/TAG]…` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com o/NUS t/SWE`
-**Clear** | `clear`
-**Delete** | `delete INDEX` OR `delete NAME`<br> e.g., `delete 3` <br> e.g., `delete James Ho`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` OR <br> `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` <br> e.g., `edit 2 n/James Lee e/jameslee@example.com` <br> e.g., `edit James Lee e/jameslee@example.com`
 **Addtag** | `addtag INDEX TAG [MORE_TAGS]...` <br> e.g. `addtag 2 Banking Finance`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` OR <br> `edit NAME [p/PHONE] [e/EMAIL] [o/ORGANISATION] [t/TAG]…` <br> e.g., `edit 2 n/James Lee e/jameslee@example.com` <br> e.g., `edit James Lee e/jameslee@example.com`
+**Delete** | `delete INDEX` OR `delete NAME`<br> e.g., `delete 3` <br> e.g., `delete James Ho`
+**Clear** | `clear`
+**Viewall** | `viewall`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Findorg** | `findorg KEYWORD [MORE_KEYWORDS]` <br> e.g. `findorg Google`
+**Sort** | `sort name` OR `sort timestamp`
+**Filtertag** | `filtertag TAG [MORE_TAGS]…` <br> e.g. `filtertag Banking`
 **Pin** | `pin INDEX` OR `pin NAME`<br> e.g., `pin 3` <br> e.g. `pin Jake Thomas`
 **Unpin** | `unpin INDEX` OR `unpin NAME`<br> e.g., `unpin 3` <br> e.g. `unpin Alex Yeoh`
-**Filtertag** | `filtertag TAG [MORE_TAGS]…` <br> e.g. `filtertag Banking`
-**Sort** | `sort name` OR `sort timestamp`
+**Note** | `note RECRUITER_INDEX no/NOTE_CONTENT` <br> e.g. `note 2 no/Prefers Meetings after 5pm`
 **Event** | `event INDEX t/TITLE s/START e/END [m/MODE] [l/LOCATION] [pr/PRIORITY]` <br> e.g., `event 2 t/Google Interview s/2025-10-21 14:00 e/2025-10-21 15:00 m/F2F l/Google HQ pr/H`
 **Cancel** | `cancel RECRUITER_INDEX EVENT_INDEX` <br> e.g. `cancel 2 3`
 **Remind** | `remind`
 **Free** | `free h/NO_OF_HOURS d/DATE` <br> e.g. `free h/2 d/2025-10-10`
-**Note** | `note RECRUITER_INDEX no/NOTE_CONTENT` <br> e.g. `note 2 no/Prefers Meetings after 5pm`
